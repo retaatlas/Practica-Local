@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="mis_vehiculos.css">
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="mis_vehiculos.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+	<script type="text/javascript" src="js/mustache.js"></script>
+
+	<script id="vehiculo-template" type="text/template">
+			<div class="panel panel-{{color}}">
+				<div class="panel-heading text-center">
+					  <h3 class="panel-title" style="text-transform: uppercase">Patente - {{patente}}</h3>
+				</div>
+				<div class="panel-body" id="vehiculo-{{patente}}">
+					<div class="row">
+						<div class="col-md-12 col-lg-12 " align="center">
+							<a href="ver_vehiculo.html?id={{id}}" data-original-title="Ver vehiculo" data-placement="bottom" data-toggle="tooltip"  class="thumbnail">
+								<img alt="foto de vehiculo" src="{{foto}}" class="img-responsive" style="max-height: 150px"> 
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+	</script>
+
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+    <main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li class="active">Mis Vehiculos</li>
+			</ol>
+			<header class="">
+				<h3 class=" titulo text-center  bg-primary ">Mis Vehiculos</h3>
+			</header>
+
+			<div id="panel-vehiculos">
+				<div class="jumbotron">
+					<h4 class="text-center text-primary">No tiene vehículos asociados</h4>
+				</div>
+			</div>
+			<div class="text-center">
+				<a class="btn btn-primary" href="alta_vehiculo.html" role="button"><span class="glyphicon glyphicon-plus"></span> Agregar Vehículo</a>
+			</div>
+			
+			<div id="modal-error" class="modal fade">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content panel-danger">
+						<div class="modal-header panel-heading" >
+							<button type="button" class="close" onclick="closeModal('error')">&times;</button>
+							<h3 class="dialog-title"> Ha ocurrido un error</h3>
+						</div><!-- modal-header -->
+						<div class="modal-body">
+							<div id="error-message">
+								Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+							</div>
+						</div><!-- modal-body -->
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" onclick="closeModal('error')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+						</div><!-- .modal-footer -->
+					</div><!-- .modal-content -->
+				</div><!-- .modal-dialog -->
+			</div><!-- .modal -->
+		</div>
+    </main>
+
+</div>
+
+</body>	
+</html>

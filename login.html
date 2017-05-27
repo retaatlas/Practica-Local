@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<!--Para testear sin tener que borrar la cache cada vez-->
+		<meta http-equiv="cache-control" content="max-age=0" />
+		<meta http-equiv="cache-control" content="no-cache" />
+		<meta http-equiv="expires" content="0" />
+		<meta http-equiv="expires" content="Tue, 01 Jan 1980 1:00:00 GMT" />
+		<meta http-equiv="pragma" content="no-cache" />
+	<!--!-->
+    <title>Login</title>    
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="login.css">   
+		<script type="text/javascript" src="jquery.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script src='http://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js'></script>
+		<script type="text/javascript" src="login.js"></script>		
+  </head>
+
+<body onload="initUI()">
+		<div class="loadingScreen"></div>
+	<div class="container-fluid">
+	
+		<nav class="navbar  navbar-default">
+		  <div class="container">
+			<div class="navbar-header">
+			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			  </button>
+			  <a class="navbar-brand" href="index.html">Viajes Compartidos</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+			  <ul class="nav navbar-nav navbar-right">
+				<li><a href="registro.html">Registrarse</a></li>
+			  </ul>
+			</div><!--/.nav-collapse -->
+		  </div>
+		</nav>
+		<div class="login col-md-offset-3 col-md-6 col-lg-offset-3 col-lg-6 col-sm-6 col-sm-offset-3 col-xs-12">
+			<div class="panel panel-primary">
+			  <div class="panel-heading panel-height">
+				<h3 class="panel-title">Viajes Compartidos</h3>
+			  </div>
+			  <div class="panel-body row">
+				<form>
+					<div class="form-group form-group-md col-md-12">
+						<div class="row">
+							<label for="usuario" class="col-sm-8">Usuario <span>*</span></label>
+							<div class="col-sm-4">
+								<p class="msg_error pull-right" id="error_usuario">Minimo 6 caracteres</p>			
+							</div>
+						</div>
+						<input name="usuario" maxlength="55" type="text" class="form-control" placeholder="Usuario"/>
+					</div>
+					<div class="form-group form-group-md col-md-12">
+						<div class="row">
+							<label for="contrasena" class="col-sm-4">Contraseña <span>*</span></label>
+							<div class="col-sm-8">
+								<div class="msg_error pull-right" id="error_pass">Mínimo 6 caracteres</div>
+							</div>
+						</div>
+						<input name="pass" maxlength="55" type="password" class="form-control" placeholder="Contraseña"/>
+					</div>  
+					<div class="col-md-12">
+						<button class="btn btn-success btn-lg btn-block" id="ingresar" onClick="return validarDatos()" type="submit"><span class="glyphicon glyphicon-ok"></span> Ingresar</button>
+					</div>
+
+				</form>
+			  </div>
+			</div>
+		</div>
+		<!-- Mensaje error-->
+		<div id="myModal" class="modal fade" role="dialog">
+		  <div class="modal-dialog modal-sm">
+			<!-- contenido-->
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Error en Login</h4>
+			  </div>
+			  <div class="modal-body">
+				<p></p>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+			  </div>
+			</div>
+
+		  </div>
+		</div>		
+	</div>
+  </body>
+</html>

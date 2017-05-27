@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Notificaciones</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/common.css" />
+	<link rel="stylesheet" href="/notificaciones.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
+	
+	<script type="text/javascript" src="/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="/notificaciones.js"></script>
+	<script type="text/javascript" src="/navegacion.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="/js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="/js/mustache.js"></script>
+	
+	<script id="notificacion-template" type="text/template">
+	  <article id="notificacion-{{id_notificacion}}" class="col-lg-12 col-md-12 col-sm-12 text-center noselect notificacion {{estado}}" onclick="verNotificacion({{id_notificacion}})">
+		<time>{{fecha}}</time>
+		<p>{{texto}}</p>
+	  </article>
+	</script>
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+	<main>
+		<div class="container-fluid">
+			<div class="row">
+				<ol class="breadcrumb">
+				  <li><a href="/home.html">Home</a></li>
+				  <li class="active">Notificaciones</li>
+				</ol>
+				<header class="col-xs-12 bg-primary">
+						<h3 class="col-xs-9">Notificaciones</h3>
+
+				</header>
+
+				<div id="panel-notificaciones" class="col-xs-12">
+					<div id="contenedor-notificaciones">
+						<!-- notificaciones generadas dinamicamente-->
+					</div>	
+					<nav>
+					  <ul class="pagination pull-right" id="busqueda-paginacion">
+						<!-- paginas generadas dinamicamente-->
+					  </ul>
+					</nav>				
+				</div>			
+			</div>
+
+		</div>
+    </main>
+</body>	
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="perfil.css">
+		
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="calendarios.js"></script>
+	<script type="text/javascript" src="js/mustache.js"></script>
+	<script type="text/javascript" src="cargar_saldo.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+    <main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li class="active">Cargar saldo</li>
+			</ol>
+			<header>
+				<h3 class="text-center  bg-primary ">Cargar saldo</h3>
+			</header>
+
+			<form>
+				<div class="form-group form-group-lg">
+					<label for="saldo_cargar" class="control-label col-xs-4">Monto:</label>
+					<div class="col-xs-8 col-md-5">
+						<div class="input-group">
+							<div class="input-group-addon">$</div>
+							<input class="form-control" type="number" step="1" min="1" max="999999" value="100" name="monto_cargar">
+						</div>
+					</div>
+					<button class="btn btn-primary btn-lg col-xs-12 col-md-3" type="button" onclick="enviarCarga()"><span class="glyphicon glyphicon-usd"></span> Cargar saldo</button>
+				</div>
+			</form>
+			<div>Tu saldo actual es de: <span id="saldo_actual">$0.00</span></div>
+			<hr>
+		</div>
+
+
+    </main>
+
+</div>
+
+</body>	
+</html>

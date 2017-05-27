@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2017-05-25T19:40:36 -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vc_reporte_comisiones" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd66dfab-c34f-4963-b1db-d95541e77117">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Seminario"/>
+	<parameter name="id_viaje_desde" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_viaje_hasta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_desde" class="java.sql.Date">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="fecha_hasta" class="java.sql.Date">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="patente" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="id_comision_hasta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="conductor" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="estado" class="java.lang.String">
+		<defaultValueExpression><![CDATA[""]]></defaultValueExpression>
+	</parameter>
+	<parameter name="monto_desde" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="monto_hasta" class="java.math.BigDecimal">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="km_desde" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="km_hasta" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="asientos_desde" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="asientos_hasta" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM
+    (SELECT
+        v.id_viaje AS Viaje,
+		cc.id_comision_cobrada AS Comision,
+		cc.fecha AS Fecha,
+		u.nombre_usuario AS Conductor,
+        ROUND(pv.kilometros,2) AS Km,
+        ROUND(c.precio,2) AS Tarifa,
+        pv.nro_asientos AS Asientos,
+		ROUND(cc.monto,2) AS monto,
+		ec.nombre_estado AS Estado,
+		veh.patente AS Patente
+	FROM
+		VIAJE v
+		INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
+		INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
+		INNER JOIN COMISION c ON c.id_comision = cc.id_comision
+		INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
+		INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
+		INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo
+	) AS reporte
+    WHERE (Viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+            and (Viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
+            and (LOWER(Patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
+            and (Comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
+            and (Fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
+            and (Fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
+            and (LOWER(Conductor) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
+            and (Estado LIKE "$P!{estado}%")
+            and (Km >= $P!{km_desde} or $P!{km_desde} is null)
+            and (Km <= $P!{km_hasta} or $P!{km_hasta} is null)
+            and (monto >= $P!{monto_desde} or $P!{monto_desde} is null)
+            and (monto <= $P!{monto_hasta} or $P!{monto_hasta} is null)
+            and (Asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
+            and (Asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)
+    GROUP BY reporte.Comision
+    ORDER BY reporte.Comision, reporte.Viaje
+;]]>
+	</queryString>
+	<field name="Patente" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Viaje" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Conductor" class="java.lang.String"/>
+	<field name="Km" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Tarifa" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="monto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Asientos" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<variable name="monto_total" class="java.math.BigDecimal" calculation="Sum">
+		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
+		<initialValueExpression><![CDATA[0]]></initialValueExpression>
+	</variable>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="-20" width="595" height="92" backcolor="#006699" uuid="a7f41c07-12ed-407a-8122-9181ff598f3b"/>
+				<image>
+					<reportElement x="21" y="7" width="138" height="76" uuid="90d5dec5-782f-41ab-8559-80092c4cf910"/>
+					<imageExpression><![CDATA["vc.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="121" y="39" width="179" height="24" forecolor="#FFFFFF" uuid="87de7a2d-b90a-4271-988c-d77f00d308e6"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Viajes Compartidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="63" width="180" height="20" forecolor="#FFFFFF" uuid="0e0ec1f0-0540-4df4-bad2-2901ba962ed3"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte de Comisiones]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="e1d3487e-407c-4bee-84f8-59aa1c31c319"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="67" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5aa54663-cd51-4397-a81b-c4a8a9140e8b"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vehículo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="157" y="0" width="44" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d587e358-da74-437c-8edf-9960cbaa1772"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Viaje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="491" y="0" width="65" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="355ac9f9-83f4-45a4-aef6-c93fa947feb2"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="381" y="0" width="56" height="19" forecolor="#006699" backcolor="#E6E6E6" uuid="d42e2ff0-1104-4341-858d-e38810365014"/>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="11" isBold="true" isStrikeThrough="false"/>
+					<paragraph lineSpacing="Single"/>
+				</textElement>
+				<text><![CDATA[Asientos]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="437" y="0" width="54" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="82e93830-658e-4f1c-897f-577ed98aee9b"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="201" y="0" width="78" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5e120a17-0172-46f0-aa78-c942fd0d2a8a"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conductor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="68" y="0" width="89" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="606b671e-b8c2-4795-81d0-6fd44c29203b"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="279" y="0" width="40" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9d85cd62-e301-42c7-ac07-1caf8073e6e1"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kms]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="319" y="0" width="62" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="1d52610f-b184-4e39-8a66-800b26b0c24c"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tarifa]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="03a46b0e-1440-4238-a44b-fa5fd49c5c9a"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="319" y="0" width="62" height="20" uuid="0d2df8ed-0be2-46e7-959e-4a64aa683b81"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\$"+$F{Tarifa}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="1" y="0" width="67" height="20" uuid="eeea11b0-d900-490f-9430-a6ff5ec5f175"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Patente}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="68" y="0" width="89" height="20" uuid="f05c2d0d-18a3-4875-8965-2e8d7ef8452d"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="157" y="0" width="44" height="20" uuid="350e9da3-276a-484f-97bf-6677426b49b8"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Viaje}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="491" y="0" width="65" height="20" uuid="07a95b1d-52b3-40ae-b080-1f0c6abb6bc7"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="437" y="0" width="54" height="20" uuid="a8c950e5-49dd-4b75-a7b0-5126f97bacb6"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\$"+$F{monto}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="381" y="0" width="56" height="20" uuid="1727e30f-91f6-4ac1-8a90-bb1be0af1b09"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Asientos}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="201" y="0" width="78" height="20" uuid="805c0e71-28f0-479d-bb98-679e6012fd5e"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Conductor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="279" y="0" width="40" height="20" uuid="b94f7d88-c7b6-4e41-8a6a-92bac006bf61"/>
+				<textElement textAlignment="Center">
+					<font size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Km}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="7732a423-2900-4e8f-883c-0de2920ace03"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="3645abcf-dac6-45ca-b400-3d83375f1972"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="2ef7582d-951b-4cdf-8cec-6226a98ff0a2"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="30">
+			<textField>
+				<reportElement x="491" y="10" width="65" height="20" backcolor="#FFFFFF" uuid="647da121-d354-4d89-a043-68c5f46461af"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["\$"+$V{monto_total}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="357" y="10" width="134" height="20" forecolor="#006699" backcolor="#FFFFFF" uuid="09640a1c-4911-4f2c-8dea-abd97cf35580"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto total:]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>

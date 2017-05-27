@@ -1,0 +1,89 @@
+#tabBox a {
+	cursor: pointer;
+}
+
+.loadingScreen {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	background: white;
+	z-index: 5000;
+}
+
+.nav-tabs li.active a, .nav-tabs li.active a:hover, .modal-header {
+	background-color: #303F9F;
+	color: white;
+}
+
+#modalError .modal-header {
+	background-color: #D9534F;
+	color: white;
+}
+
+#modalDenied .modal-header {
+	background-color: #F0AD4E;
+	color: white;
+}
+
+.modal-header {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	text-align: center;
+}
+
+.modal-header .close {
+	color: white;
+}
+
+.modal-header .close:hover {
+	color: red;
+}
+
+.tabSection {
+	display: none;
+	border-bottom: 1.47px solid #DDD;
+	margin-bottom: 64px;
+	margin-top: 40px;
+}
+
+
+.tabSection form {
+	background-color: #ecf0f1;
+}
+
+.tabSection header, header.titulo {
+	background-color: #303F9F;
+	color: white;
+	margin-bottom: 1%;
+	margin-top: 0px;
+}
+
+.tabSection header h3, header.titulo h3 {
+	text-align: center;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 1px;
+}
+
+.tabSection .form-horizontal {
+	padding-bottom: 0.5%;
+}
+
+#personasTab {
+	display: block;
+}
+
+#rolesButton {
+	display: none;
+}
+
+#permisosButton {
+	display: none;
+}
+
+.modal-footer {
+	clear: both;
+}
+

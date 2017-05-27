@@ -1,0 +1,58 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="perfil.css">
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="puntos.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+</head>
+
+<body>
+  <!--
+	<div class="loadingScreen"></div>
+-->
+    <main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li class="active">Puntos</li>
+			</ol>
+			<header>
+				<h3 class="text-center  bg-primary ">Puntos</h3>
+			</header>
+
+			<h3>Puntos acumulados: <span class="label label-success" id="puntos_actual">0</span></h3>
+			<hr>
+
+			<table class="table-responsive table table-bordered table-hover" id="table-mov-puntos">
+			    <thead>
+			      <tr>
+			        <th class="success">FECHA</th>
+			        <th class="success">TIPO DE MOVIMIENTO REALIZADO</th>
+			        <th class="success">PUNTOS DE LA OPERACIÓN</th>
+			      </tr>
+			    </thead>
+			    <tbody>
+						<!--cargado dinamicamente-->
+			    </tbody>
+			 </table>
+
+		</div>
+
+
+    </main>
+
+</div>
+
+</body>
+</html>

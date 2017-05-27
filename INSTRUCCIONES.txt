@@ -1,0 +1,14 @@
+Para hacer funcionar la interfaz web es necesario instalar Tomcat 8.
+
+El directorio del sitio web (*) es donde deben estar los archivos HTML, CSS y javascript 
+
+Dentro del directorio del sitio es necesario que existan los siguientes archivos:
+[...]/WEB-INF/ directorio que va a contener los otros archivos
+[...]/WEB-INF/web.xml Archivo de configuracion
+[...]/WEB-INF/lib/ directorio para librerias .jar (**)
+[...]/WEB-INF/classes/ directorio para .class compilados. Debe respetar el arbol de paquetes
+
+
+NOTAS:
+(*): En Debian el directorio del sitio es /var/lib/tomcat8/webapps/ROOT
+(**): En lib tuve que poner los archivos json-simple-1.1.1.jar y mysql-connector-java-5.1.32.jar 

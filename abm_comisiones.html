@@ -1,0 +1,94 @@
+<html>
+<head>
+	<title>Viajes Compartidos - Administracion tarifas</title>
+	<meta charset="utf-8">
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="abm.css" />
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="abm_comisiones.js"></script>
+</head>
+<body>
+	<nav id="tabBox" class="navbar-default">
+		<div class="navbar-right">
+			<a id="exitButton" class="btn btn-primary" href="/home.html"><span class="glyphicon glyphicon-home"></span> Ir al Home</a>
+			<a id="logoutButton" class="btn btn-danger " href="/login"><span class="glyphicon glyphicon-off"></span> Salir</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+	</nav>
+
+	<header class="titulo">
+		<h3 class="pull-center">Tarifas</h3>
+	</header>
+
+	<table id="tableComisiones" class="table table-responsive">
+		<thead>
+			<tr>
+				<th>Fecha de asignacion</th>
+				<th>Limite inferior</th>
+				<th>Limite superior</th>
+				<th>Precio por KM</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	<div class="text-center navbar-fixed-bottom navbar-default">
+		<div class="btn-group" style="margin: 12px">
+			<button type="button" id="deleteButton" class="btn btn-danger btn-lg" onclick="deleteButtonPressed()"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
+			<button type="button" id="editButton" class="btn btn-primary btn-lg" onclick="editButtonPressed()"><span class="glyphicon glyphicon-edit"></span> Modificar</button>
+			<button type="button" id="newButton" class="btn btn-success btn-lg" onclick="newButtonPressed()"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
+		</div>
+	</div>
+
+	<div id="modalComision" class="modal fade">
+		<div class="modal-dialog modal-dialog-lg" >
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="$('#modalComision').modal('hide')">&times;</button>
+					<h2 class="modal-title">Tarifa</h2>
+				</div><!-- .modal-header -->
+				<div class="modal-body">
+					<input type="hidden" name="id_comision">
+
+					<div class="form-group col-md-12">
+						<label for="limite_inferior" class="col-md-6">Limite inferior</label>
+						<div class="form-group col-md-6">
+							<div class="input-group">
+								<input class="form-control col-md-6" type="number" step="1" name="limite_inferior">
+								<div class="input-group-addon">km</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group col-md-12">
+						<label for="limite_inferior" class="col-md-6">Limite superior</label>
+						<div class="form-group col-md-6">
+							<div class="input-group">
+								<input class="form-control col-md-6" type="number" step="1" name="limite_superior">
+								<div class="input-group-addon">km</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group form-group-lg col-md-12">
+						<label for="precio" class="col-md-6">Precio</label>
+						<div class="form-group col-md-6">
+							<div class="input-group">
+								<div class="input-group-addon">$</div>
+								<input class="form-control col-md-6" type="number" step="1" name="precio">
+							</div>
+						</div>
+					</div>
+
+					<div style="visibility: hidden">.</div><!-- sin esto se ve mal el layout -->
+				</div><!-- .modal-body -->
+				<div class="modal-footer">
+						<button type="button" class="btn btn-success" onclick="sendButtonPressed()"><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+</body>
+</html>

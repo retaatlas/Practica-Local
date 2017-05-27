@@ -1,0 +1,565 @@
+<!DOCTYPE HTML>
+<head>
+	<title>Administracion de usuarios</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="css/magicsuggest.css" />
+	<link rel="stylesheet" href="abm.css" />
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="js/magicsuggest-min.js"></script>
+	<script type="text/javascript" src="abm.js"></script>
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+
+	<nav id="tabBox" class="navbar-default navbar-fixed-top">
+		<!--
+		<ul class="breadcrumb" style="margin-bottom:0px;">
+		  <li><a href="/home.html">Home</a></li>
+		  <li class="active">Administración de Usuarios</li>
+		</ul>
+		-->
+		<ul class="nav nav-tabs navbar-left">
+			<li class="active"><a id="personasTabButton" class="" onclick="ui.activateTab('personas')" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Personas</a>
+			<li><a id="usuariosTabButton" class="" onclick="ui.activateTab('usuarios')" data-toggle="tab"><span class="glyphicon glyphicon-user"></span> Usuarios</a>
+			<li><a id="rolesTabButton" class="" onclick="ui.activateTab('roles')" data-toggle="tab"><span class="glyphicon glyphicon-knight"></span> Roles</a>
+			<li><a id="permisosTabButton" class="" onclick="ui.activateTab('permisos')" data-toggle="tab"><span class="glyphicon glyphicon-check"></span> Permisos</a>
+		</ul>
+		<div class="navbar-right">
+			<a id="exitButton" class="btn btn-primary" href="/home.html"><span class="glyphicon glyphicon-home"></span> Ir al Home</a>
+			<a id="logoutButton" class="btn btn-danger " href="/login"><span class="glyphicon glyphicon-off"></span> Salir</a>&nbsp;&nbsp;&nbsp;&nbsp;
+		</div>
+	</nav>
+
+	<section class="tabSection" id="personasTab">
+
+		<form class="form-horizontal" onsubmit="ui.updatePersonasTable(); return false">
+			<header><h3 class="pull-center">Administración de Personas</h3></header>
+				
+			<!-- NOMBRE-->
+			<div class="form-group">
+				<label for="nombre" class="control-label col-xs-2 col-sm-2 col-xs-offset-1">Nombre:</label>
+				<div class="col-xs-3 col-sm-3 col-lg-2">
+					<input type="text" class="form-control" name="nombre" placeholder="Nombre"></input>
+				</div>
+				<label for="apellidos" class="control-label col-xs-2 col-sm-2 col-lg-offset-1">Apellidos:</label>
+				<div class="col-xs-3 col-sm-3 col-lg-2">
+					<input type="text" class="form-control" name="apellidos" placeholder="Apellidos"></input>
+				</div>
+			</div>
+
+			<!-- TIPO DE DOC-->
+			<div class="form-group">
+				<label for="option" class="control-label col-xs-2 col-md-2 col-xs-offset-1">Tipo de documento:</label>
+				<div class="col-xs-3 col-md-3 col-lg-2">
+					<select class="form-control" name="tipo_doc">
+						<option value="*">Todos</option>
+						<option value="1">DNI</option>
+						<option value="2">LE</option>
+						<option value="3">LC</option>
+					</select>
+				</div>
+				<label for="nrodoc" class="control-label col-xs-2 col-sm-2 col-lg-offset-1">Número de documento:</label>
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+					<input type="text" class="form-control" name="nro_doc" placeholder="Nro Documento"></input>
+				</div>
+			</div>	
+
+			<!-- ESTADO-->				
+			<div class="form-group">
+				<label for="option" class="control-label col-xs-2 col-xs-offset-1">Estado:</label>
+				<div class="col-xs-3 col-md-3 col-lg-2">
+					<select class="form-control" name="estado">
+						<option value="*">Todos</option>
+						<option value="A">Activo</option>
+						<option value="B">Inactivo</option>
+					</select>
+				</div>
+			<!-- BOTON  -->
+				<div class="col-xs-3 col-md-2 col-lg-2 col-xs-offset-2 col-md-offset-3">
+					<button class="btn btn-block btn-primary " type="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+				</div>
+			</div>
+		</form>
+
+		<table id="personasTable" caption="Administrar personas">
+			<thead><tr>
+				<th>ID</th>
+				<th>Apellido</th>
+				<th>Nombres</th>
+				<th>Tipo Doc.</th>
+				<th>Nro. Doc.</th>
+				<th>Fecha nacimiento</th>
+				<th>Sexo</th>
+				<th>Domicilio</th>
+				<th>Telefono</th>
+				<th>Estado</th>
+			</tr></thead>
+			<tbody>
+			</tbody>
+		</table>
+	</section>
+
+	<section class="tabSection" id="usuariosTab">
+		<form class="form-horizontal" onsubmit="ui.updateUsuariosTable(); return false">
+			<header><h3 class="pull-center">Administración de Usuarios</h3></header>
+				<div class="form-group">
+					<label for="nombre-usuario" class="control-label col-xs-2 col-sm-2 col-xs-offset-1">Nombre de Usuario:</label>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+						<input type="text" class="form-control col-sm-2" name="nombre-usuario" placeholder="Nombre de Usuario"></input>
+					</div>
+					<label for="email" class="control-label col-xs-2 col-sm-2 col-lg-offset-1">E-Mail:</label>
+					<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+						<input type="text" class="form-control" name="email" placeholder="E-Mail"></input>
+				    </div>
+				</div>
+
+			<div class="form-group">
+				<div class="col-xs-3 col-md-2 col-lg-2 col-xs-offset-8 col-md-offset-9 col-lg-offset-8">
+					<button class="btn btn-primary btn-block " type="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+				</div>
+			</div>
+		</form>		
+
+		<table id="usuariosTable">
+			<thead><tr>
+				<th>ID</th>
+				<th>Nombre usuario</th>
+				<th>E-Mail</th>
+				<th>Estado</th>
+			</tr></thead>
+			<tbody>
+			</tbody>
+		</table>
+	</section>
+
+	<section class="tabSection" id="rolesTab">
+
+		<form class="form-horizontal" onsubmit="ui.updateRolesTable(); return false">
+			<header><h3 class="pull-center">Administración de Roles</h3></header>
+				
+			<!-- NOMBRE-->
+			<div class="form-group">
+				<label for="nombre-amigable" class="control-label col-xs-2 col-sm-2 col-xs-offset-1">Nombre amigable:</label>
+				<div class="col-xs-3 col-sm-3 col-md-3 col-lg-2">
+					<input type="text" class="form-control" name="nombre-amigable" placeholder="Nombre amigable"></input>
+				</div>
+			<!-- BOTON -->
+				<div class="col-xs-3 col-md-2 col-lg-2 col-xs-offset-2 col-md-offset-3">
+					<button class="btn btn-primary btn-block " type="submit"><span class="glyphicon glyphicon-search"></span> Buscar</button>
+				</div>
+			</div> 
+		</form>
+
+		<table id="rolesTable">
+			<thead><tr>
+				<th>ID</th>
+				<th>Nombre Rol</th>
+				<th>Nombre amigable</th>
+				<th>Estado</th>
+			</tr></thead>
+			<tbody>
+			</tbody>
+		</table>
+	</section>
+
+	<section class="tabSection" id="permisosTab">
+		<header><h3 class="pull-center">Administración de Permisos</h3></header>
+		<table id="permisosTable">
+			<thead><tr>
+				<th>ID</th>
+				<th>Funcionalidad</th>
+				<th>Nombre Permiso</th>
+				<th>Estado</th>
+			</tr></thead>
+			<tbody>
+			</tbody>
+		</table>
+
+
+	</section>
+
+	<div class="text-center navbar-fixed-bottom navbar-default">
+		<div class="btn-group" style="margin: 12px">
+			<button type="button" id="deleteButton" class=" btn-danger btn-lg" onclick="ui.deleteButtonPressed()"><span class="glyphicon glyphicon-trash"></span> Eliminar</button>
+			<button type="button" id="editButton" class=" btn-primary btn-lg" onclick="ui.editButtonPressed()"><span class="glyphicon glyphicon-edit"></span> Modificar</button>
+			<button type="button" id="rolesButton" class=" btn-primary btn-lg" onclick="ui.rolesButtonPressed()"><span class="glyphicon glyphicon-knight"></span> Roles</button>
+			<button type="button" id="permisosButton" class=" btn-primary btn-lg" onclick="ui.permisosButtonPressed()"><span class="glyphicon glyphicon-check"></span> Permisos</button>
+			<button type="button" id="newButton" class=" btn-success btn-lg" onclick="ui.newButtonPressed()"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
+		</div>
+	</div>
+
+	<div id="modalPersona" class="modal fade">
+		<div class="modal-dialog modal-lg" id="formPersona">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('Persona')">&times;</button>
+					<h2 id="formPersonaTitle" class="modal-title">Persona</h2>
+				</div> <!-- .modal-header -->
+				<div class="modal-body">
+					<form class="form-horizontal col-md-12">
+					<!-- Las fotos no estan habilitadas todavia -->
+					<input type="hidden" name="id">
+					<input type="hidden" name="foto" value="">
+					<input type="hidden" name="foto_registro" value="">
+
+					<div class="form-group col-md-6">
+						<label for="apellidos" class="col-md-4">Apellido (*)</label>
+						<div class="col-md-8"><input type="text" name="apellidos" required></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="nombres" class="col-md-4">Nombre (*)</label>
+						<div class="col-md-8"><input type="text" name="nombres" required></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+					<label for="tipo_doc" class="col-md-4">Tipo de documento (*)</label>
+						<div class="col-md-8"><select name="tipo_doc" required>
+							<option value="1">DNI</option>
+							<option value="2">LE</option>
+							<option value="3">LC</option>
+						</select></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="nro_doc" class="col-md-4">Numero de documento (*)</label>
+						<div class="col-md-8"><input type="number" name="nro_doc" required></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="fecha_nacimiento" class="col-md-4">Fecha de nacimiento (*)</label>
+						<div class="input-group date form_date col-md-8">
+							<input class="form-control" type="text" name="fecha_nacimiento" required>
+							<span class="input-group-addon " onclick="$('#formPersona input[name=fecha_nacimiento]').datetimepicker('show')");><span class="glyphicon glyphicon-calendar"></span> </span>
+						</div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="domicilio" class="col-md-4">Domicilio (*)</label>
+						<div class="col-md-8"><input type="text" name="domicilio" required></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="sexo" class="col-md-4">Sexo (*)</label>
+						<div class="col-md-8"><select name="sexo" required>
+							<option value="M">Masculino</option>
+							<option value="F">Femenino</option>
+							<option value="O">Otro</option>
+						</select></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="telefono" class="col-md-4">Telefono (*)</label>
+						<div class="col-md-8"><input type="text"  name="telefono" required></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-12">
+						<label for="descripcion" class="col-md-2">Descripcion</label>
+						<div class="col-md-10"><textarea  name="descripcion"></textarea></div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="Estado" class="col-md-4">Estado (*)</label>
+						<div class="col-md-8"><select name="estado" required></div>
+							<option value="A">Activo</option>
+							<option value="B">Inactivo</option>
+						</select></div>
+					</div><!-- .form-group -->
+				</form>
+				</div><!-- .modal-body -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success " onclick="ui.sendPersonaForm()"><span class="glyphicon glyphicon-ok"></span> Guardar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- modal -->
+
+	<div id="modalUsuario" class="modal fade">
+		<div class="modal-dialog modal-lg" id="formUsuario">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('Usuario')">&times;</button>
+					<h2 class="modal-title">Usuario</h2>
+				</div><!-- .modal-header -->
+				<div class="modal-body">
+
+					<form class="form-horizontal col-md-12">
+
+					<input type="hidden" id="usuarioIdInput" name="id">
+
+					<div class="form-group col-md-6">
+						<label for="nombre_usuario" class="col-md-4">Nombre de Usuario (*)</label>
+						<div class="col-md-8">
+							<input type="text" name="nombre_usuario" required>
+						</div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="password" class="col-md-4">Contraseña (*)</label>
+						<div class="col-md-8">
+							<input type="password" name="password" required>
+						</div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="buscar_persona" class="col-md-4">Persona (*)</label>
+							<input type="hidden" name="id_persona">
+						<div class="col-md-8">
+							<input type="text" name="buscar_persona">
+						</div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="email" class="col-md-4">E-Mail (*)</label>
+						<div class="col-md-8">
+							<input type="text" name="email" required>
+						</div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-12">
+						<label for="descripcion" class="col-md-2">Descripcion</label>
+						<div class="col-md-10">
+							<textarea name="descripcion"></textarea>
+						</div>
+					</div><!-- .form-group -->
+
+					<div class="form-group col-md-6">
+						<label for="estado" class="col-md-4">Estado (*)</label>
+						<div class="col-md-8">
+							<select name="estado" required>
+								<option value="A">Activo</option>
+								<option value="B">Inactivo</option>
+								<option value="S">Suspendido</option>
+							</select>
+						</div>
+					</div><!-- .form-group -->
+
+					</form>
+
+				</div><!-- .modal-body -->
+				<div class="modal-footer">
+					<button type="button" id="usuarioRolesButton" class="btn-primary " onclick="ui.rolesButtonPressed()"><span class="glyphicon glyphicon-knight"></span> Gestionar roles</button>
+					<button type="button" class="btn btn-success " onclick="ui.sendUsuarioForm()"><span class="glyphicon glyphicon-ok"></span> Guardar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-content -->
+	</div><!-- .modal -->
+
+	<div id="modalUsuarioRol" class="modal fade">
+		<div class="modal-dialog modal-dialog-lg" id="formUsuarioRol">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('UsuarioRol')">&times;</button>
+					<h2 class="modal-title">Roles del usuario</h2>
+					<h3 class="modal-title">NOMBRE DE USUARIO</h3><!-- Sera modificado desde javascript -->
+				</div><!-- .modal-header -->
+				<div class="modal-body">
+					<input type="hidden" name="id_usuario" value="">
+
+					<div class="col-md-4">
+						<select size="12" name="roles_asignados"></select>
+					</div>
+
+					<div class="btn-group-vertical col-md-4">
+						<button type="button" class="btn-primary " onclick="ui.assignRolUsuario()"><span class="glyphicon glyphicon-arrow-left"></span> Asignar</button>
+						<button type="button" class="btn-primary " onclick="ui.removeRolUsuario()" ><span class="glyphicon glyphicon-arrow-right"></span> Quitar</button>
+					</div>
+
+					<div class="col-md-4">
+						<select size="12" name="roles_no_asignados"></select>
+					</div>
+
+					<div style="visibility: hidden">.</div><!-- sin esto se ve mal el layout -->
+				</div><!-- .modal-body -->
+				<div class="modal-footer">
+						<button type="button" class="btn-success " onclick="ui.closeModal('UsuarioRol')"><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+	<div id="modalRol" class="modal fade">
+		<div class="modal-dialog modal-lg" id="formRol">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('Rol')">&times;</button>
+					<h2 class="dialog-title">Rol</h2>
+				</div><!-- .modal-header -->
+				<div class="modal-body">
+					<form class="form-horizontal">
+					<input type="hidden" name="id">
+
+					<div class="form-group col-md-6">
+						<label for="nombre_rol" class="col-md-4">Nombre de Rol (*)</label>
+						<div class="col-md-8">
+							<input type="text" name="nombre_rol" required>
+						</div>
+					</div><!-- .form-group-->
+
+					<div class="form-group col-md-6">
+						<label for="nombre_amigable" class="col-md-4">Nombre Amigable (*)</label>
+						<div class="col-md-8">
+							<input type="text" name="nombre_amigable" required>
+						</div>
+					</div><!-- .form-group-->
+
+					<div class="form-group col-md-12">
+						<label for="descripcion" class="col-md-2">Descripcion</label>
+						<div class="col-md-10">
+							<textarea name="descripcion" ></textarea>
+						</div>
+					</div><!-- .form-group-->
+
+					<div class="form-group col-md-6">
+						<label for="estado" class="col-md-4">Estado (*)</label>
+						<div class="col-md-8">
+							<select name="estado" required>
+								<option value="A">Activo</option>
+								<option value="B">Inactivo</option>
+							</select>
+						</div>
+					</div><!-- .form-group-->
+
+					</form>
+				</div><!-- .modal-body -->
+				<div class="modal-footer">
+					<button type="button" id="rolPermisosButton" class="btn-primary " onclick="ui.permisosButtonPressed()"><span class="glyphicon glyphicon-check"></span> Gestionar permisos</button>
+					<button type="button" class="btn btn-success " onclick="ui.sendRolForm()"><span class="glyphicon glyphicon-ok"></span> Guardar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+	<div id="modalPermisoRol" class="modal fade">
+		<div class="modal-dialog modal-dialog-lg" id="formPermisoRol">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('PermisoRol')">&times;</button>
+					<h2 class="dialog-title">Permisos del rol</h2>
+					<h3 class="dialog-title">NOMBRE DE ROL</h3><!-- Sera modificado desde javascript -->
+				</div><!-- .modal-header -->
+				<div class="modal-body">
+					<input type="hidden" name="id_rol" value="">
+
+					<div class="col-md-4">
+						<select size="12" name="permisos_asignados">
+						</select>
+					</div>
+
+					<div class="btn-group-vertical col-md-4">
+						<button type="button" class="btn-primary " onclick="ui.assignPermisoRol()"><span class="glyphicon glyphicon-arrow-left"></span> Asignar</button>
+						<button type="button" class="btn-primary " onclick="ui.revokePermisoRol()"><span class="glyphicon glyphicon-arrow-right"></span> Quitar</button>
+					</div>
+
+					<div class="col-md-4">
+						<select size="12" name="permisos_no_asignados">
+						</select>
+					</div>
+					<div style="visibility: hidden">.</div><!-- sin esto se ve mal el layout -->
+				</div><!-- .modal-body -->
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success " onclick="ui.closeModal('PermisoRol')"><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+	<div id="modalPermiso" class="modal fade">
+		<div class="modal-dialog modal-lg" id="formPermiso">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('Permiso')">&times;</button>
+					<h2 class="dialog-title">Permiso</h2>
+				</div><!-- modal-header -->
+				<div class="modal-body">
+					<form class="form-horizontal">
+
+					<input type="hidden" name="id">
+
+					<div class="form-group col-md-6">
+						<label for="nombre_permiso" class="col-md-4">Nombre del permiso (*)</label>
+						<div class="col-md-8">
+							<input type="text" name="nombre_permiso" required>
+						</div>
+					</div><!-- .form-group-->
+
+					<div class="form-group col-md-6">
+						<label for="funcionalidad" class="col-md-4">Funcionalidad (*)</label>
+						<div class="col-md-8">
+							<input type="text" name="funcionalidad" required>
+						</div>
+					</div><!-- .form-group-->
+
+					<div class="form-group col-md-12">
+						<label for="descripcion" class="col-md-2">Descripcion</label>
+						<div class="col-md-10">
+							<textarea name="descripcion"></textarea>
+						</div>
+					</div><!-- .form-group-->
+
+					<div class="form-group col-md-6">
+						<label for="estado" class="col-md-4">Estado (*)</label>
+						<div class="col-md-8">
+							<select name="estado" required>
+								<option value="A">Activo</option>
+								<option value="B">Inactivo</option>
+							</select>
+						</div>
+					</div><!-- .form-group-->
+					</form>
+				</div><!-- modal-body -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success " onclick="ui.sendPermisoForm()"><span class="glyphicon glyphicon-ok"></span> Guardar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+	<div id="modalError" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('Error')">&times;</button>
+					<h3 class="dialog-title"> Ha ocurrido un error</h3>
+				</div><!-- modal-header -->
+				<div class="modal-body">
+					<div id="errorMessage">
+						Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+					</div>
+				</div><!-- modal-body -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger " onclick="ui.closeModal('Error')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+	<div id="modalDenied" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="ui.closeModal('Denied')">&times;</button>
+					<h3 class="dialog-title">Permiso denegado</h3>
+				</div><!-- modal-header -->
+				<div class="modal-body">
+					<div id="deniedMessage">
+						Permiso Denegado. <!-- Esto sera modificado desde javascript -->
+					</div>
+				</div><!-- modal-body -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-warning " onclick="ui.closeModal('Denied')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+</body>

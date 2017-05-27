@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/magicsuggest.css" />
+	<link rel="stylesheet" href="perfil.css">
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="js/magicsuggest-min.js"></script>
+	<script type="text/javascript" src="js/mustache.js"></script>
+	<script type="text/javascript" src="perfil.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+
+
+		<script id="perfil-template" type="text/template">
+			{{#cliente}}
+			<div class="row">
+      			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title">{{usuario.nombre_usuario}}</h3>
+						</div>
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3 col-lg-3" align="center">
+									<div class="col-md-12">
+										<p class="reputacion" id="reputacion">{{cliente.reputacion_stars}}</p>
+									</div>
+									<img id="foto_perfil" alt="Foto Perfil" src="{{cliente.foto_revisada}}" class="img-circle img-responsive" style="max-height: 200px">
+									{{#usuario_logueado.es_perfil_propio}}
+									<div>
+										<span class="btn btn-default btn-file ">Examinar <input type="file" name="foto_perfil" accept="image/*"></span>
+									</div>
+									{{/usuario_logueado.es_perfil_propio}}
+								</div>
+								<div class=" col-md-9 col-lg-9 ">
+									<table class="table table-user-information" id="table-perfil">
+										<tbody class="tabla" id="tableCliente">
+											<tr>
+												<td><strong>Usuario:</strong></td>
+												<td id="nombre_usuario">{{usuario.nombre_usuario}}</td>
+											</tr>
+											{{#usuario_logueado.es_perfil_propio}}
+											<tr>
+												<td><strong>Contraseña:</strong></td>
+												<td><input name="pass-cliente" type="text" class="form-control validar" value="{{usuario.pass}}"  maxlength="30" disabled></td>
+											</tr>
+											{{/usuario_logueado.es_perfil_propio}}
+											<tr>
+												<td><strong>Apellido:</strong></td>
+												<td><input name="apellidos-cliente" type="text" class="form-control" value="{{persona.apellidos}}"  maxlength="58" disabled></td>
+											</tr>
+											<tr>
+												<td><strong>Nombre:</strong></td>
+												<td><input name="nombres-cliente" type="text" class="form-control" value="{{persona.nombres}}" maxlength="58"  disabled></td>
+											</tr>
+											{{#usuario_logueado.es_perfil_propio}}
+											<tr>
+												<td><strong>Tipo de documento:</strong></td>
+												<td id="tipo_doc">{{persona.tipo_doc_string}}</td>
+											</tr>
+											<tr>
+												<td><strong>Nro de documento:</strong></td>
+												<td id="nro_doc">{{persona.nro_doc}}</td>
+											</tr>
+											{{/usuario_logueado.es_perfil_propio}}
+											<tr>
+												<td><strong>Fecha Nacimiento:</strong></td>
+												<td class="input-group date form_date">
+														<input type="text" class="form-control" name="fecha_nacimiento" value="{{persona.fecha_revisada}}" id="fecha" disabled>
+														<span class="input-group-addon ocultable" onclick="$('#fecha').datetimepicker('show')"><span class="glyphicon glyphicon-calendar ocultable"></span></span>
+												</td>
+											</tr>
+											{{#usuario_logueado.es_perfil_propio}}
+											<tr>
+												<td><strong>Domicilio:</strong></td>
+												<td>
+													<input name="domicilio-cliente" type="text" class="form-control" placeholder="" value="{{persona.domicilio}}"  maxlength="118" disabled></td>
+											</tr>
+											<tr>
+												<td><strong>E-mail:</strong></td>
+												<td><input name="mail-cliente" type="text" class="form-control validar" value="{{usuario.mail}}"  maxlength="38" disabled></td>
+											</tr>
+											<tr>
+												<td><strong>Teléfono:</strong></td>
+												<td><input name="telefono-cliente" type="text" class="form-control" placeholder="" value="{{persona.telefono}}"  maxlength="15" disabled></td>
+											</tr>
+											{{/usuario_logueado.es_perfil_propio}}
+											<tr>
+												<td><strong>Sexo:</strong></td>
+												<td id="sexo">
+													<select class="form-control validar" name="sexo" disabled>
+														<option value="M" {{#persona.esM}}selected{{/persona.esM}}>Masculino</option>
+														<option value="F" {{#persona.esF}}selected{{/persona.esF}}>Femenino</option>
+														<option value="O" {{#persona.esO}}selected{{/persona.esO}}>Otro</option>
+													</select>
+												</td>
+											</tr>
+											{{#usuario_logueado.es_perfil_propio}}
+											<tr>
+												<td><strong>Registro de conducir:</strong></td>
+												<td align="center">
+												<img id="foto_registro" alt="Foto Registro" src="{{cliente.foto_registro_revisada}}" class="img-responsive" style="max-height: 160px">
+												<span class="btn btn-default btn-file ">Examinar <input type="file" name="foto_registro" accept="image/*"></span>
+												</td>
+											</tr>
+											{{/usuario_logueado.es_perfil_propio}}
+										</tbody>
+									</table>
+	                			</div>
+							</div>
+							{{#usuario_logueado.es_perfil_propio}}
+							<div align="center">
+								<a class="btn btn-success" href="/puntos.html"><span class="glyphicon glyphicon-screenshot"></span> Puntos</a>
+								<a class="btn btn-success" href="/saldo.html"><span class="glyphicon glyphicon-piggy-bank"></span> Saldo</a>
+							</div>
+							{{/usuario_logueado.es_perfil_propio}}
+	            		</div>
+						{{#usuario_logueado.es_perfil_propio}}
+						<div class="panel-footer clearfix">
+							<button class="btn btn-danger" onclick="desactivarCuenta();"><span class="glyphicon glyphicon-remove"></span> Desactivar Cuenta</button>
+							<span class="pull-right" id="botonera-modificar-cliente-{{usuario.nombre_usuario}}">
+								<button class="btn btn-primary" onclick="activarModificar();"><span class="glyphicon glyphicon-edit"></span> Modificar</button>
+							</span>
+						</div>
+						{{/usuario_logueado.es_perfil_propio}}
+					</div>
+				</div>
+			</div>
+			{{/cliente}}
+			{{#super_usuario}}
+			<div class="row">
+      			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+					<div class="panel panel-success">
+						<div class="panel-heading">
+							<h3 class="panel-title">{{usuario.nombre_usuario}} - Administrador</h3>
+						</div>
+						<div class="panel-body bg-success">
+							<table class="table table-user-information" id="table-perfil">
+								<tbody class="tabla">
+									<tr>
+										<td><strong>Usuario:</strong></td>
+										<td id="nombre_usuario">{{usuario.nombre_usuario}}</td>
+									</tr>
+									<tr>
+										<td><strong>Apellido:</strong></td>
+										<td id="apellidos">{{persona.apellidos}}</td>
+									</tr>
+									<tr>
+										<td><strong>Nombre:</strong></td>
+										<td id="nombres">{{persona.nombres}}</td>
+									</tr>
+									<tr>
+										<td><strong>Tipo de documento:</strong></td>
+										<td id="tipo_doc">{{persona.tipo_doc_string}}</td>
+									</tr>
+									<tr>
+										<td><strong>Nro de documento:</strong></td>
+										<td id="nro_doc">{{persona.nro_doc}}</td>
+									</tr>
+									<tr>
+										<td><strong>Fecha Nacimiento:</strong></td>
+										<td id="fecha_nacimiento">{{persona.fecha_revisada}}</td>
+									</tr>
+									<tr>
+										<td><strong>Domicilio:</strong></td>
+										<td><input name="domicilio" type="text" class="form-control" placeholder="" value="{{persona.domicilio}}" disabled></td>
+									</tr>
+									<tr>
+										<td><strong>E-mail:</strong></td>
+										<td><input name="mail" type="text" class="form-control" placeholder="" value="{{usuario.mail}}" disabled></td>
+									</tr>
+									<tr>
+										<td><strong>Teléfono:</strong></td>
+										<td><input name="telefono" type="text" class="form-control" placeholder="" value="{{persona.telefono}}" disabled></td>
+									</tr>
+									<tr>
+										<td><strong>Sexo:</strong></td>
+										<td id="sexo">{{persona.sexo_string}}</td>
+									</tr>
+								</tbody>
+							</table>
+	            		</div>
+					</div>
+				</div>
+			</div>
+			{{/super_usuario}}
+			{{#sponsor}}
+			<div class="row">
+      			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+					<div class="panel panel-warning">
+						<div class="panel-heading">
+							<h3 class="panel-title">{{sponsor.nombre}} - Sponsor</h3>
+						</div>
+						<div class="panel-body bg-warning">
+							<table class="table table-user-information" id="table-perfil">
+								<tbody class="tabla">
+									<tr>
+										<td><strong>Nombre Asociación:</strong></td>
+										<td id="nombre_asociacion">{{sponsor.nombre}}</td>
+									</tr>
+									<tr>
+										<td><strong>CUIT:</strong></td>
+										<td><input name="cuit" type="text" class="form-control" placeholder="" value="{{sponsor.cuit}}" disabled></td>
+									</tr>
+									<tr>
+										<td><strong>Rubro:</strong></td>
+										<td id="rubro">{{sponsor.rubro}}</td>
+									</tr>
+									<tr>
+										<td><strong>Teléfono Asociación:</strong></td>
+										<td id="telefono_asociacion">{{sponsor.telefono}}</td>
+									</tr>
+									<tr>
+										<td><strong>Domicilio Asociación:</strong></td>
+										<td id="domicilio_asociacion">{{sponsor.domicilio}}</td>
+									</tr>
+									<tr>
+										<td><strong>Usuario:</strong></td>
+										<td id="nombre_usuario">{{usuario.nombre_usuario}}</td>
+									</tr>
+									<tr>
+										<td><strong>Apellido:</strong></td>
+										<td id="apellidos">{{persona.apellidos}}</td>
+									</tr>
+									<tr>
+										<td><strong>Nombre:</strong></td>
+										<td id="nombres">{{persona.nombres}}</td>
+									</tr>
+									<tr>
+										<td><strong>Tipo de documento:</strong></td>
+										<td id="tipo_doc">{{persona.tipo_doc_string}}</td>
+									</tr>
+									<tr>
+										<td><strong>Nro de documento:</strong></td>
+										<td id="nro_doc">{{persona.nro_doc}}</td>
+									</tr>
+									<tr>
+										<td><strong>Fecha Nacimiento:</strong></td>
+										<td id="fecha_nacimiento">{{persona.fecha_nacimiento}}</td>
+									</tr>
+									<tr>
+										<td><strong>Domicilio:</strong></td>
+										<td><input name="domicilio" type="text" class="form-control" placeholder="" value="{{persona.domicilio}}" disabled></td>
+									</tr>
+									<tr>
+										<td><strong>E-mail:</strong></td>
+										<td><input name="mail" type="text" class="form-control" placeholder="" value="{{usuario.mail}}" disabled></td>
+									</tr>
+									<tr>
+										<td><strong>Teléfono:</strong></td>
+										<td><input name="telefono" type="text" class="form-control" placeholder="" value="{{persona.telefono}}" disabled></td>
+									</tr>
+									<tr>
+										<td><strong>Sexo:</strong></td>
+										<td id="sexo">{{persona.sexo_string}}</td>
+									</tr>
+								</tbody>
+							</table>
+	            		</div>
+					</div>
+				</div>
+			</div>
+			{{/sponsor}}
+
+	</script>
+
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+    <main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li class="active">Perfil</li>
+			</ol>
+				<button class="btn btn-success btn-xs" onclick="activarBuscarCliente();"><span class="glyphicon glyphicon-search"></span> Buscar cliente</button>
+			<header>
+				<h3 class="text-center  bg-primary ">Perfil</h3>
+			</header>
+			<div id="panel-perfil">
+
+			</div>
+		</div>
+
+		<div id="modal-error" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-danger">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('error')">&times;</button>
+						<h3 class="dialog-title"> Ha ocurrido un error</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="error-message">
+							Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+						</div>
+					</div><!-- modal-body -->
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="closeModal('error')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+		<div id="modal-warning" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-warning">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('warning')">&times;</button>
+						<h3 class="dialog-title"> Atención</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="warning-message">
+							Usuario debe saber esto <!-- Esto sera modificado desde javascript -->
+						</div>					</div><!-- modal-body -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeModal('warning');"> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+    </main>
+		<div id="modal-buscar-cliente" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-primary">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('buscar-cliente')">&times;</button>
+						<h3 class="dialog-title">Buscar usuario</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<form id="form-alta-viaje" onsubmit="return false">
+							<div class="form-group">
+								<label for="cliente" class="control-label">Ingrese usuario:</label>
+								<input type="text" class="form-control conductores-input" id="cliente" name="cliente" placeholder="Usuario"></input>
+							</div>
+						</form>
+					</div><!-- modal-body -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeModal('buscar-cliente');"> Cerrar</button>
+						<button type="button" class="btn btn-success" onclick="buscarCliente();"><span class="glyphicon glyphicon-eye-open"></span> Ver perfil</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+</div>
+
+</body>
+</html>

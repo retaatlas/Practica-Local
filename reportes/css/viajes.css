@@ -1,0 +1,21 @@
+form {
+	background-color: #ecf0f1;
+}
+
+form header {
+	--background-color: #303F9F;
+	color: white;
+	margin-bottom: 1%;
+	margin-top: 0px;
+}
+
+form header h3 {
+	text-align: center;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 1px;
+}
+
+.form-horizontal {
+	padding-bottom: 0.5%;
+}

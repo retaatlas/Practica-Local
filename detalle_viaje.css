@@ -1,0 +1,60 @@
+.clickeable{
+ cursor:pointer;
+}
+.reputacion{
+	color: orange;
+}
+
+.panel .panel-body{
+	background-color: #ecf0f1;
+}
+
+.mapa{
+	height: 300px;
+	margin:auto;
+	border: 10px groove #ecf0f1;
+}
+.subpanel{
+	margin:auto;
+	margin-top:20px;
+		margin-bottom:20px;
+	--border: 5px groove #ecf0f1;
+}
+.tabla-conductor{
+	margin-top:25px;
+}
+header h3,h5 {
+	text-align: center;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 1px;
+}
+/*comentarios*/
+#panel-comentarios .thumbnail {
+    padding:0px;
+}
+#panel-comentarios .panel {
+	position:relative;
+}
+#panel-comentarios .panel>.panel-heading:after,.panel>.panel-heading:before{
+	position:absolute;
+	top:11px;left:-16px;
+	right:100%;
+	width:0;
+	height:0;
+	display:block;
+	content:" ";
+	border-color:transparent;
+	border-style:solid solid outset;
+	pointer-events:none;
+}
+#panel-comentarios .panel>.panel-heading:after{
+	border-width:7px;
+	border-right-color:#f7f7f7;
+	margin-top:1px;
+	margin-left:2px;
+}
+#panel-comentarios .panel>.panel-heading:before{
+	border-right-color:#ddd;
+	border-width:8px;
+}

@@ -1,0 +1,43 @@
+body{
+
+}
+.panel_func{
+  text-align: center;
+}
+.funcionalidad{
+  display: inline-block;  
+  width:200px;
+  margin: 1% 1% 1% 1%;
+  box-shadow: 0 0 10px #1a0d00; 
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  cursor:pointer;
+}
+.funcionalidad img{
+  max-width: 100%; 
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  --border-bottom: groove 10px #101010;
+  --border-style:solid;
+  --border-width:1px;
+}
+.funcionalidad p{
+  --background-color:#303F9F;
+  background-color:#44f;
+  color:white;
+  padding: 5% 5% 5% 5%;
+  --border:inherit;
+  text-align:center;
+  padding: auto;
+}
+ a {
+  text-decoration:none;
+}
+.funcionalidad:hover { 
+  -moz-box-shadow: 0 0 10px #ccc; 
+  -webkit-box-shadow: 0 0 10px #ccc; 
+  box-shadow: 0 0 30px #ccc; 
+}
+.texto{
+	text-align:left;
+}

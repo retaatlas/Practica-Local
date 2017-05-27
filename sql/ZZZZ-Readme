@@ -1,0 +1,7 @@
+Solucion para acentos fallidos:
+
+Create schema seminario; (ejecutarlo)
+Alter Database seminario charset=utf8; (ejecutarlo)
+ejecutar ddl
+ejecutar dml_geonames
+ejecutar dml2

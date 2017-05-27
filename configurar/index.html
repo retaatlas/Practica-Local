@@ -1,0 +1,186 @@
+<!DOCTYPE HTML>
+<head>
+	<title>Viajes Compartidos - Configuración</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="/registro.css" />
+	<script type="text/javascript" src="/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/configurar/configurar.js"></script>
+
+</head>
+
+<body>
+
+	<div class="col-md-offset-1 col-md-10 col-lg-offset-1 col-lg-10">
+
+		<div class="panel panel-primary" id="panel_db">
+		  <div class="panel-heading">
+			<h3 class="panel-title">Configuración - Paso 1</h3>
+		  </div>
+		  <div class="panel-body">
+			<form class="form-horizontal">
+				<div class="alert">
+				Bienvenido al asistente de configuración de Viajes Compartidos<br>
+				Para completar la instalación del sistema, es necesario configurar los parametros de conexión e inicializar la base de datos MySQL.<br>
+				En el caso de haber instalado MySQL conjuntamente con Viajes Compartidos, la configuración preestablecida debería funcionar.
+				</div>
+	
+			  <div class="form-group col-lg-6 row">
+				<label for="db_host" class="col-lg-6">Servidor </label>
+				<div class="col-lg-6">
+				  <input type="text" name="db_host" class="form-control" value="localhost" required>
+				</div>
+			  </div><!-- .form-group -->
+
+			  <div class="form-group col-lg-6 row">
+				<label for="db_port" class="col-lg-6">Puerto </label>
+				<div class="col-lg-6">
+				  <input type="number" step="1" name="db_port" class="form-control" value="3306" required>
+				</div>
+			  </div><!-- .form-group -->
+
+			  <div class="form-group col-lg-6 row">
+				<label for="db_username" class="col-lg-6">Usuario </label>
+				<div class="col-lg-6">
+				  <input type="text" name="db_username" class="form-control" value="root" required>
+				</div>
+			  </div><!-- .form-group -->
+
+			  <div class="form-group col-lg-6 row">
+				<label for="db_password" class="col-lg-6">Contraseña </label>
+				<div class="col-lg-6">
+				  <input type="password" name="db_password" class="form-control" value="root" required>
+				</div>
+			  </div><!-- .form-group -->
+
+			  <div class="form-group col-lg-6 row">
+				<label for="db_dbname" class="col-lg-6">Nombre de base de datos </label>
+				<div class="col-lg-6">
+				  <input type="text" name="db_dbname" class="form-control" value="viajescompartidos" required>
+				</div>
+			  </div><!-- .form-group -->
+
+			  <div class="form-group col-lg-6 row">
+				<label for="db_crear" class="col-lg-6">Modo de operación </label>
+				<div class="col-lg-6">
+				  <select name="db_mode" class="form-control" value="crear">
+					<option value="crear">Crear nueva base de datos</option>
+					<option value="usar_existente">Usar base de datos existente</option>
+				  </select>
+				</div>
+			  </div><!-- .form-group -->
+
+			</form>
+			<div class="form-group panel-error col-md-12"></div>
+		  </div>
+		  <div class="panel-footer clearfix">
+			<button class="btn btn-success pull-right" type="submit" onclick="paso2()"><span class="glyphicon glyphicon-step-forward"></span> Siguiente</button>
+		  </div>
+		</div>
+
+		<div class="panel panel-primary" id="panel_progreso">
+		  <div class="panel-heading">
+			<h3 class="panel-title">Configuracion - Paso 2</h3>
+		  </div>
+		  <div class="panel-body">
+			<p>Se estan creando los archivos de configuración e inicializando la base de datos. Esta operación puede tardar algun tiempo, por favor sea paciente.</p>
+			<ul>
+				<li><span id="icon-step-1" class="glyphicon glyphicon-hourglass"></span> Crear archivos de configuración</li>
+				<li><span id="icon-step-2" class="glyphicon glyphicon-hourglass"></span> Conectarse con servidor de base de datos</li>
+				<li><span id="icon-step-3" class="glyphicon glyphicon-hourglass"></span> Crear esquema de base de datos</li>
+				<li><span id="icon-step-4" class="glyphicon glyphicon-hourglass"></span> Cargar informacion geografica</li>
+				<li><span id="icon-step-5" class="glyphicon glyphicon-hourglass"></span> Cargar datos iniciales</li>
+			</ul>
+			<div class="progress">
+				<div id="progressbar_instalacion" class="progress-bar progress-bar-striped"  style="width: 1%">
+					<span class="sr-only">Configurando</span>
+				</div>
+
+			</div>
+		  </div>
+
+		  <div class="panel-footer clearfix">
+			<div class="btn-group pull-right" role="group">
+				<p></p>
+			  <button id="buttonVolverAPaso1" class="btn btn-default" type="submit" onclick="paso1()"><span class="glyphicon glyphicon-step-backward"></span> Volver</button>
+			  <button id="buttonSiguienteAPaso3" id="button_paso3" class="btn btn-success" type="button" onclick="paso3()" disabled><span class="glyphicon glyphicon-step-forward"></span> Siguiente</button>
+			</div>
+		  </div>
+		</div>
+
+		<div class="panel panel-primary" id="panel_adminpass">
+		  <div class="panel-heading">
+			<h3 class="panel-title">Configuracion - Paso 3</h3>
+		  </div>
+		  <div class="panel-body">
+			<p class="alert alert-success">La configuración e inicialización de la base de datos ha sido exitosa</p>
+			<p class="alert">Para acceder a las funciones de administración deberá establecer una contraseña para el usuario administrador</p>
+			<div class="form-horizontal">
+				<div class="form-group">
+					<label class="col-md-4">Nombre de usuario: </label>
+					<div class="col-md-8">
+						<strong>administrador</strong><br>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-4">Contraseña: </label>
+					<div class="col-md-8">
+						<input id="adminpass" class="form-control" type="password" placeholder="Escriba una contraseña"/></p>
+					</div>
+				</div>
+			</div>
+		  </div>
+		  <div class="panel-footer clearfix">
+			<div class="btn-group pull-right" role="group">
+			  <button class="btn btn-default" type="button" onclick="paso2()"><span class="glyphicon glyphicon-step-backward"></span> Volver</button>
+			  <button id="button_paso4" class="btn btn-success" type="submit" onclick="paso4()"><span class="glyphicon glyphicon-step-forward"></span> Siguiente</button>
+			</div>
+		  </div>
+		</div>
+
+	<div id="modalError" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" onclick="$('#modalError').modal('hide')">&times;</button>
+					<h3 class="dialog-title"> Ha ocurrido un error</h3>
+				</div><!-- modal-header -->
+				<div class="modal-body">
+					<div id="errorMessage">
+						Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+					</div>
+				</div><!-- modal-body -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-danger" onclick="$('#modalError').modal('hide')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+	<div id="modalSuccess" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-success">
+					<button type="button" class="close" onclick="$('#modalSuccess').modal('hide')">&times;</button>
+					<h3 class="dialog-title"> Configuracion exitosa!</h3>
+				</div><!-- modal-header -->
+				<div class="modal-body">
+					<div id="successMessage">
+						Registrado correctamente <!-- Esto sera modificado desde javascript -->
+					</div>
+				</div><!-- modal-body -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-success" onclick="window.location='/login.html'"><span class="glyphicon glyphicon-ok"></span> Ingresar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+  </div>
+
+
+</body>

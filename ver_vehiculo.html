@@ -1,0 +1,224 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="ver_vehiculo.css">
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="css/magicsuggest.css" />
+	
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/mustache.js"></script>
+	<script type="text/javascript" src="ver_vehiculo.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+	<script type="text/javascript" src="js/magicsuggest-min.js"></script>
+
+	
+
+	<script id="vehiculo-template" type="text/template">
+		<div class="row">
+      			<div class="col-xs-12 col-sm-12 col-md-10 col-lg-10 col-xs-offset-0 col-sm-offset-0 col-md-offset-1 col-lg-offset-1">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<h3 class="panel-title" style="text-transform: uppercase">Patente de vehículo - {{vehiculo.patente}}</h3>
+						</div> 
+						<div class="panel-body">
+							<div class="row">
+								<div class="col-md-3 col-lg-3" align="center">
+									<img id="foto_vehiculo" alt="Foto Vehiculo" src="{{vehiculo.foto_revisada}}" class="img-responsive" style="max-height: 200px">
+									<div>
+										<span class="btn btn-default btn-file ">Examinar <input type="file" name="foto_vehiculo" accept="image/*"></span>
+									</div>
+								</div>
+								<div class=" col-md-9 col-lg-9 ">
+									<table class="table table-user-information" id="table-vehiculo">
+										<tbody class="tabla" id="tablaVehiculo">
+											<tr>
+												<td><strong>Patente:</strong></td>
+												<td id="patente" style="text-transform: uppercase">{{vehiculo.patente}}</td>
+											</tr>
+											<tr>
+												<td><strong>Marca:</strong></td>
+												<td id="marca">{{vehiculo.marca}}</td>
+											</tr>
+											<tr>
+												<td><strong>Modelo:</strong></td>
+												<td id="modelo">{{vehiculo.modelo}}</td>
+											</tr>
+											<tr>
+												<td><strong>Color:</strong></td>
+												<td id="color"><input name="color" type="text" class="form-control jscolor" style="font-size: 0px" value="{{vehiculo.color_hex}}" disabled></td>
+											</tr>
+											<tr>
+												<td><strong>Año:</strong></td>
+												<td id="anio"><input type="number" min="1920" step="1" class="form-control" name="anio" value="{{vehiculo.anio}}" disabled></td>
+											</tr>
+											<tr>
+												<td><strong>Cantidad de asientos:</strong></td>
+												<td id="cantidad_asientos"><input type="number" min="1" max="30" step="1"  name="cantidad_asientos" class="form-control" value="{{vehiculo.cantidad_asientos}}" disabled>
+												</td>
+											</tr>
+											<tr>
+												<td><strong>Seguro:</strong></td>
+												<td id="seguro">
+													<select name="seguro" class="form-control" disabled>
+														<option value="S" {{#vehiculo.tieneSeguro}}selected{{/vehiculo.tieneSeguro}}>Si</option>
+														<option value="N" {{^vehiculo.tieneSeguro}}selected{{/vehiculo.tieneSeguro}}>No</option>
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td><strong>Aire acondicionado:</strong></td>
+												<td id="aire_acondicionado">
+													<select name="aire" class="form-control" disabled>
+														<option value="S" {{#vehiculo.tieneAire}}selected{{/vehiculo.tieneAire}}>Si</option>
+														<option value="N" {{^vehiculo.tieneAire}}selected{{/vehiculo.tieneAire}}>No</option>
+													</select>		
+												</td>
+											</tr>
+										</tbody>
+									</table>
+	                			</div>
+							</div>
+							<div align="center">
+								<div class="col-md-12">
+									<div class="btn-group">
+										<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#conductores" aria-expanded="false" aria-controls="conductores"><span class="glyphicon glyphicon-eye-open"></span> Conductores</button>
+										<button class="btn btn-primary" onclick="activarAsignarConductor()"  data-toggle="tooltip" data-placement="right" title="Asignar conductor"><span class="glyphicon glyphicon-plus"></span></button>
+									</div>
+								</div>
+								<div class="collapse col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3" id="conductores">
+									<ul class="list-group" id="list-conductores">
+										{{#conductores}}
+										<li class="list-group-item list-group-item-success">
+											<span class="badge btn btn-danger" onclick="desasignarConductor({{id}});" data-toggle="tooltip" data-placement="right" title="Desasignar conductor"><span class="glyphicon glyphicon-minus" ></span></span>
+											<a href="/perfil.html?usuario={{nombre_usuario}}"  data-toggle="tooltip" data-placement="top" title="Ver perfil">{{nombre_usuario}}</a>
+										</li>
+										{{/conductores}}
+									</ul>
+								</div>	
+							</div>
+	            		</div>
+						<div class="panel-footer clearfix">
+							<button class="btn btn-danger" onclick="eliminarVehiculo();"><span class="glyphicon glyphicon-remove"></span> Eliminar vehículo</button>
+							<span class="pull-right" id="botonera-modificar-vehiculo">
+								<button class="btn btn-primary" onclick="activarModificar();"><span class="glyphicon glyphicon-edit"></span> Modificar</button>							
+							</span>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</script>
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+	<script src="js/jscolor.min.js"></script>
+    <main>
+    	<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li><a href="/mis_vehiculos.html">Mis vehiculos</a></li>
+			  <li class="active">Ver vehiculo</li>
+			</ol>
+			<header>
+				<h3 class="text-center  bg-primary ">Datos del vehículo</h3>
+			</header>
+			<div id="panel-vehiculo">
+			
+			</div>
+		</div>
+
+		<div id="modal-asignar-conductor" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-primary">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('asignar-conductor')">&times;</button>
+						<h3 class="dialog-title">Asignar conductor a vehiculo</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<form id="form-alta-viaje" onsubmit="return false">
+							<div class="form-group">
+								<label for="conductores" class="control-label">Ingrese conductores:</label>
+								<input type="text" class="form-control conductores-input" id="conductores" name="conductores" placeholder="Conductores"></input>
+							</div>
+						</form>
+					</div><!-- modal-body -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeModal('asignar-conductor');"> Cerrar</button>
+						<button type="button" class="btn btn-success" onclick="asignarConductores();"><span class="glyphicon glyphicon-plus"></span> Asignar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+		
+		<div id="modal-success" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-success">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('success')">&times;</button>
+						<h3 class="dialog-title"> Éxito!</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="success-message">
+							Todo salió bien. <!-- Esto sera modificado desde javascript -->
+						</div>					</div><!-- modal-body -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeModal('success');"> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+		
+		<div id="modal-warning" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-warning">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('warning')">&times;</button>
+						<h3 class="dialog-title"> Atención</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="warning-message">
+							Usuario debe saber esto <!-- Esto sera modificado desde javascript -->
+						</div>					</div><!-- modal-body -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeModal('warning');"> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+		
+		<div id="modal-error" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-danger">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('error')">&times;</button>
+						<h3 class="dialog-title"> Ha ocurrido un error</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="error-message">
+							Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+						</div>
+					</div><!-- modal-body -->
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="closeModal('error')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+    </main>
+
+</div>
+
+</body>	
+</html>

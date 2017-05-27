@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="css/magicsuggest.css" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="alta_viaje.css" />
+	
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/magicsuggest-min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="alta_viaje2.js"></script>
+    <script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu2P6zmQmOyESf872DSdZgYam9PMJnzwg&callback=initMapa"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+</head>
+<body>
+	<main>
+		<div class="container-fluid">
+			<form class="form-horizontal" onsubmit="return enviarForm()" id="form-alta-viaje">
+				<header class="bg-primary"><h3 class="pull-center">Crear Viaje</h3></header>
+				<div class="form-group col-xs-12 col-lg-4" id="orgdest">
+					<label for="origen" class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-4">Origen:</label>
+					<div class="col-xs-9 col-sm-9 col-md-3 col-lg-8">
+						<input type="text" class="form-control localidad-origen-input" name="origen" placeholder="Origen"></input>
+					</div>
+					<label for="destino" class="control-label col-xs-3 col-sm-2 col-md-3 col-lg-4">Destino:</label>
+					<div class="col-xs-9 col-sm-9 col-md-3 col-lg-8">
+						<input type="text" class="form-control localidad-destino-input" name="destino" placeholder="Destino"></input>
+					</div>
+				</div>
+				<div id="divMapa" class="col-xs-12 col-lg-8" style="height:300px"></div>
+				<div class="form-group">
+					<label for="nombre_amigable" class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2">Nombre:</label>
+					<div class="col-xs-9 col-sm-9 col-md-3 col-lg-3">
+						<input type="text" class="form-control" name="nombre_amigable" placeholder="Nombre"></input>
+					</div>
+					<label for="precio" class="control-label col-xs-3 col-sm-2 col-md-3 col-lg-2">Precio Estimado:</label>
+					<div class="col-xs-9 col-sm-9 col-md-3 col-lg-3">
+						<input type="text" class="form-control" name="precio" placeholder="Precio"></input>
+					</div>
+				</div>
+				<div class="form-group" id="tipo_viaje">
+					<label for="tipo_viaje" class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2">Tipo de Viaje:</label>
+					<div class="col-xs-9 col-sm-9 col-md-3 col-lg-3">
+						<select class="form-control" name="tipo_viaje">
+							<option value="ida">Ida</option>
+							<option value="ida_vuelta">Ida y Vuelta</option>
+						</select>		
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-6" id="ida">
+						<h3 class="text-center">Ida</h3>
+						<div class="col-md-12" id="infov">
+							<label for="fecha-ida" class="control-label col-md-2">Fecha:</label>
+							<div class="col-md-4">
+								<div class="input-group date form_date">
+									<input type="text" class="form-control" name="fecha-ida" id="fecha">
+									<span class="input-group-addon " onclick="$('#fecha').datetimepicker('show');"> <span class="glyphicon glyphicon-calendar"></span></span>
+								</div>
+							</div>
+							<label for="vehiculo-ida" class="control-label col-md-2">Vehículo:</label>
+							<div class="col-md-4">	
+								<select class="form-control" name="vehiculo-ida" id="vehiculo-ida">
+			 						<option value="abc123">Vehículo1</option>
+									<option value="abc123">Vehículo2</option>
+								</select>		
+							</div>
+						</div>
+						
+						<div class="col-md-12" id="asientos">
+							<label for="asientos-ida" class="control-label col-md-2">Asientos libres:</label>
+							<div class="col-md-4">
+								<select class="form-control" name="asientos-ida" id="asientos-ida">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+								</select>		
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6" id="vuelta">
+						<h3 class="text-center">Vuelta</h3>
+						<div class="col-md-12" id="infov">
+							<label for="fecha-vuelta" class="control-label col-md-2">Fecha:</label>
+							<div class="col-md-4">
+								<div class="input-group date form_date">
+									<input type="text" class="form-control" name="fecha-vuelta" id="fechahasta">
+									<span class="input-group-addon" onclick="$('#fechahasta').datetimepicker('show');"><span class="glyphicon glyphicon-calendar"></span></span>					
+								</div>
+							</div>
+							<label for="vehiculo-vuelta" class="control-label col-md-2">Vehículo:</label>
+							<div class="col-md-4">	
+								<select class="form-control" name="vehiculo-vuelta" id="vehiculo-vuelta">
+			 						<option value="abc123">Vehículo1</option>
+									<option value="abc123">Vehículo2</option>
+								</select>		
+							</div>
+						</div>
+						
+						<div class="col-md-12" id="asientos">
+							<label for="asientos-vuelta" class="control-label col-md-2">Asientos libres:</label>
+							<div class="col-md-4">
+								<select class="form-control" name="asientos-vuelta" id="asientos">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+									<option value="5">5</option>
+									<option value="6">6</option>
+									<option value="7">7</option>
+								</select>		
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-group" id="puntos">
+					<label for="puntos" class="control-label col-xs-4 col-md-4">Puntos Intermedios:</label>
+					<div class="col-xs-4 col-md-4">
+						<input type="text" class="form-control localidad-intermedias-input" nam="puntos" id="punto" placeholder=""></input>
+					</div>
+				</div>
+				<div class="form-group">
+				<div class="col-xs-offset-9 col-sm-offset-9 col-md-offset-10">
+					<button class="btn btn-success"><span class="glyphicon glyphicon-road"></span> Crear Viaje</button>
+				</div>
+			</div>
+			</form>
+    	</div>
+	</main>
+</body>	
+</html>

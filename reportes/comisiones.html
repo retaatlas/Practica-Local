@@ -1,0 +1,161 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Reporte de comisiones</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/common.css" />
+	<link rel="stylesheet" href="/reportes/css/comisiones.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="/css/magicsuggest.css" />
+	<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
+
+	<script type="text/javascript" src="/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="/js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="/reportes/js/comisiones.js"></script>
+	<script type="text/javascript" src="/js/magicsuggest-min.js"></script>
+	<script type="text/javascript" src="/navegacion.js"></script>
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+	<main>
+		<div class="container-fluid">
+			<ul class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li class="active">Reporte de comisiones</li>
+			</ul>
+			<form class="form-horizontal" id="reportForm" onsubmit="generarReporte(); return false">
+				<header class="bg-primary">
+					<h3 class="pull-center">Reporte de Comisiones</h3>
+				</header>
+				<div class="form-group">
+					<label for="fechadesde" class="control-label col-md-3">Fecha desde:</label>
+					<div class="col-md-3">
+						<div class="input-group date form_date">
+							<span class="input-group-addon " onclick="$('#fechadesde').datetimepicker('show');"> <span class="glyphicon glyphicon-calendar"></span></span>
+							<input type="text" class="form-control" name="fechadesde"  placeholder="Fecha desde" id="fechadesde">
+						</div>
+					</div>
+					<label for="fechahasta" class="control-label col-md-2">Fecha hasta:</label>
+					<div class="col-md-3">
+						<div class="input-group date form_date">
+							<span class="input-group-addon" onclick="$('#fechahasta').datetimepicker('show');"><span class="glyphicon glyphicon-calendar"></span></span>
+							<input type="text" class="form-control" placeholder="Fecha hasta" name="fechahasta" id="fechahasta">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="id-viaje-desde" class="control-label col-md-3">Id viaje desde:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-send"></span></span>
+							<input type="number" class="form-control" min="0" step="1" name="id-viaje-desde" placeholder="Id viaje desde">
+						</div>
+					</div>
+					<label for="id-viaje-hasta" class="control-label col-md-2">Id viaje hasta:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-send"></span></span>
+							<input type="number" class="form-control" min="0" step="1" name="id-viaje-hasta" placeholder="Id viaje hasta">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="id-comision-desde" class="control-label col-md-3">Patente:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-credit-card"></span></span>
+							<input type="text" class="form-control" min="0" step="1" name="id-comision-desde" placeholder="Patente">
+						</div>
+					</div>
+					<label for="id-comision-hasta" class="control-label col-md-2">Id comisión hasta:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-credit-card"></span></span>
+							<input type="number" class="form-control" min="0" step="1" name="id-comision-hasta" placeholder="Id comisión hasta">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="monto-desde" class="control-label col-md-3">Monto mínimo:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon "> <span class="glyphicon glyphicon-usd"></span></span>
+							<input type="number" class="form-control" min="0" step="0.01" name="monto-desde"  placeholder="Monto Mínimo" id="monto-desde">
+						</div>
+					</div>
+					<label for="monto-hasta" class="control-label col-md-2">Monto máximo:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></span>
+							<input type="number" class="form-control" min="0" step="0.01" placeholder="Monto Máximo" name="monto-hasta" id="monto-hasta">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="kmdesde" class="control-label col-md-3">Kms Mínimo:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon "> <span class="glyphicon glyphicon-scale"></span></span>
+							<input type="number" class="form-control" min="0" step="0.01" name="kmdesde"  placeholder="Km Mínimo" id="kmdesde">
+						</div>
+					</div>
+					<label for="kmhasta" class="control-label col-md-2">Kms Máximo:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-scale"></span></span>
+							<input type="number" class="form-control" min="0" step="0.01" placeholder="Km Máximo" name="kmhasta" id="kmhasta">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="asientos-desde" class="control-label col-md-3">Asientos desde:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+							<input type="number" class="form-control" min="0" step="1" name="asientos-desde" placeholder="Asientos desde">
+						</div>
+					</div>
+					<label for="asientos-hasta" class="control-label col-md-2">Asientos hasta:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
+							<input type="number" class="form-control" min="0" step="1" name="asientos-hasta" placeholder="Asientos hasta">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="conductor" class="control-label col-md-3">Conductor:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span>
+							<input type="text" class="form-control" name="conductor" placeholder="Conductor">
+						</div>
+					</div>
+					<label for="estado" class="control-label col-md-2">Estado:</label>
+					<div class="col-md-3">
+						<div class="input-group">
+							<span class="input-group-addon"><span class="glyphicon glyphicon-adjust"></span></span>
+							<select type="text" class="form-control" name="estado" placeholder="Estado">
+								<option value="">Todos</option>
+								<option value="Pendiente">Pendiente</option>
+								<option value="Debitado">Debitado</option>
+								<option value="Vencido">Vencido</option>
+								<option value="Informativa">Informativa</option>
+								<option value="Desestimada">Desestimada</option>
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-5 col-md-offset-6">
+						<button class="btn btn-block btn-primary " type="submit"><span class="glyphicon glyphicon-list-alt"></span> Generar Reporte</button>
+					</div>
+				</div>
+			</form>
+		</div>
+	</main>
+</body>

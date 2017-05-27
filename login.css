@@ -1,0 +1,51 @@
+
+body {
+  background-image: url("img/login/fondo1.jpg");
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-attachment: fixed;
+}
+
+form label span {
+  color: #44f;
+}
+.panel{
+  margin-top:10%;
+}
+form .msg_error {
+  color:#911;
+  font-size:0.8em;
+}
+.loadingScreen {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	background: white;
+	z-index: 5000;
+}
+#myModal {
+  position: absolute;
+  top: 10%;
+}
+.flash-error {
+    background-color: #fcdede;
+    border-color: #d2b2b2;
+	color: #911;
+}
+#myModal .modal-header{
+      background-color: #d2322d;
+      color:white !important;
+      text-align: center;
+}
+#myModal  .modal-footer {
+      background-color: #f9f9f9;
+}
+#myModal .modal-body p{
+      color:#d2322d;
+	  font-size:16px;
+	  text-align:center;
+	  margin:auto;
+}

@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="home.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="common.css" />
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="calendarios.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+
+</head>
+
+<body>
+    <main>
+    	<h1 class="text-center">Modificar Vehículo</h1>
+    	<div class="container-fluid">
+    		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="marca" class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2">Marca:</label>
+				<div class="col-xs-9 col-sm-9 col-md-3 col-lg-3">
+					<input type="text" class="form-control" id="marca" placeholder="Marca"></input>
+				</div>
+				<label for="patente" class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1">Patente:</label>
+				<div class="col-xs-9 col-sm-9 col-md-3 col-lg-3">
+					<input type="text" class="form-control" id="patente" placeholder="Patente"></input>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="modelo" class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2">Modelo:</label>
+				<div class="col-xs-9 col-sm-9 col-md-3 col-lg-3">
+					<input type="text" class="form-control" id="modelo" placeholder="Modelo">
+				</div>
+				<label for="color" class="control-label col-xs-3 col-sm-2 col-md-1 col-lg-1">Color:</label>
+				<div class="col-xs-9 col-sm-9 col-md-3 col-lg-3">
+					<input type="text" class="form-control" id="color" placeholder="Color">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="anio" class="control-label col-xs-3 col-sm-2 col-md-2 col-lg-2">Año:</label>
+				<div class="input-group date form_date col-xs-5 col-sm-2 col-md-3 col-lg-2" id="divanio">
+					<input type="text" class="form-control" id="anio" placeholder="Año" required>
+					<span class="input-group-addon " onclick="$('#anio').datetimepicker('show')");><span class="glyphicon glyphicon-calendar"></span></span>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="asientos" class="control-label col-xs-8 col-sm-2 col-md-2 col-lg-2">Cantidad de asientos:</label>
+				<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+					<select class="form-control" name="" id="asientos">
+						<option value="">1</option>
+						<option value="">2</option>
+						<option value="">3</option>
+						<option value="">4</option>
+						<option value="">5</option>
+						<option value="">6</option>
+						<option value="">7</option>
+					</select>					
+				</div>
+				<label for="seguro" class="control-label col-xs-8 col-sm-2 col-md-1 col-lg-1 col-md-offset-1 col-lg-offset-1">Seguro:</label>
+				<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+					<select class="form-control" name="" id="seguro">
+						<option value="">Sí</option>
+						<option value="">No</option>
+					</select>					
+				</div>
+			</div>	
+
+			<div class="form-group">
+				<label for="aire_acondicionado" class="control-label col-xs-8 col-sm-2 col-md-2 col-lg-2">Aire acondicionado:</label>
+				<div class="col-xs-4 col-sm-2 col-md-2 col-lg-2">
+					<select class="form-control" name="" id="aire_acondicionado">
+						<option value="">Sí</option>
+						<option value="">No</option>
+					</select>					
+				</div>
+				<label for="file" class="control-label col-xs-12 col-sm-2 col-md-2 col-lg-2 col-md-offset- col-lg-offset-">Foto:</label>
+				<label class="file control-label 12">
+  					<input type="file" id="file">
+  					<span class="file-custom"></span>
+				</label>
+				<div class="col-xs-offset-1 col-sm-offset-5 col-sm-offset-6 col-md-offset-6 col-lg-offset-6">
+					<img src="" alt="foto del auto">
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="col-xs-offset-7 col-sm-offset-9 col-md-offset-8 col-lg-offset-8">
+					<button class="btn btn-primary">Guardar</button>
+				</div>
+			</div>
+		</form>
+    	</div>
+		
+    </main>
+
+</div>
+
+</body>	
+</html>

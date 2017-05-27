@@ -1,0 +1,70 @@
+body{
+  background-image: url("img/login/fondo1.jpg");
+  background-size: cover;
+  background-repeat:no-repeat;
+  background-position:center;
+  background-attachment: fixed;
+}
+.panel{
+margin:auto;
+margin-top:8%;
+}
+label span {
+	font-size:0.8em;
+}
+.loadingScreen {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	background: white;
+	z-index: 5000;
+}
+
+
+/*
+	Estilo a mensajes de error
+*/
+
+#modalError .modal-header {
+	background-color: #D9534F;
+	color: white;
+}
+
+.modal-header {
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+	text-align: center;
+}
+
+.modal-header .close {
+	color: white;
+}
+
+.modal-header .close:hover {
+	color: red;
+}
+
+/*
+ Para darle estilo al input type="file"
+*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}

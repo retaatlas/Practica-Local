@@ -1,0 +1,124 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="home.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="common.css" />
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="calendarios.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+</head>
+
+<body>
+
+    <main>
+		<h1 class="text-center">Buscador de Viajes</h1>
+    	<div class="container-fluid">
+    		<form class="form-horizontal">
+				<div class="form-group">
+					<label for="origen" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2">Origen:</label>
+					<div class="col-xs-8 col-sm-4 col-md-3 col-lg-3">
+					<!--SE QUE ESTO ESTo MAL PERO ANDaBA PROBANDO -->
+						<input list="ciudades" class="form-control" id="origen"></input>
+						<datalist id="ciudades">
+							<option value="Luján"></option>
+							<option value="Moreno"></option>
+							<option value="Gral Rodriguez"></option>
+							<option value="Once"></option>
+							<option value="Palermo"></option>
+							<option value="Avellaneda"></option>
+						</datalist>
+					</div>
+					<label for="destino" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2">Destino:</label>
+					<div class="col-xs-8 col-sm-4 col-md-3 col-lg-3">
+						<input type="text" class="form-control" id="destino"></input>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="fechadesde" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2">Fecha desde:</label>
+					<div class="input-group date form_date col-xs-6 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" class="form-control" id="fechadesde" required>
+						<span class="input-group-addon " onclick="$('#fechadesde').datetimepicker('show')");><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="fechahasta" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2">Fecha hasta:</label>
+					<div class="input-group date form_date col-xs-6 col-sm-3 col-md-2 col-lg-2">
+						<input type="text" class="form-control" id="fechahasta" required>
+						<span class="input-group-addon " onclick="$('#fechahasta').datetimepicker('show')");><span class="glyphicon glyphicon-calendar"></span></span>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="conductor" class="control-label col-xs-4 col-sm-2 col-md-2 col-lg-2">Conductor:</label>
+					<div class="col-xs-8 col-sm-4 col-md-3 col-lg-3">
+						<input type="text" class="form-control" id="conductor">
+					</div>
+					<label for="asientos" class="control-label col-xs-7 col-sm-2 col-md-2 col-lg-2">Cantidad de asientos:</label>
+					<div class="col-xs-5 col-sm-4 col-md-2 col-lg-2">
+						<select class="form-control" name="" id="asientos">
+							<option value="">1</option>
+							<option value="">2</option>
+							<option value="">3</option>
+							<option value="">4</option>
+							<option value="">5</option>
+							<option value="">6</option>
+							<option value="">7</option>
+						</select>					
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="estadoviaje" class="control-label col-xs-7 col-sm-2 col-md-2 col-lg-2">Estado de viaje:</label>
+					<div class="col-xs-5 col-sm-4 col-md-2 col-lg-2">
+						<select class="form-control" name="" id="estadoviaje">
+							<option value="">Terminado</option>
+							<option value="">No iniciado</option>
+							<option value="">Iniciado</option>
+							<option value="">Cancelado</option>
+						</select>					
+					</div>
+				</div>
+				
+			<div class="form-group">
+				<div class="col-xs-offset-8 col-sm-offset-8 col-md-offset-7 col-lg-offset-7">
+					<button class="btn btn-primary">Buscar</button>
+				</div>
+			</div>
+			</form>
+			<div class="table-responsive">
+				<table id="resultadosviaje" class="table table-bordered table-hover table-condensed">
+					<thead>
+						<tr class="info">
+							<th>Destino</th>
+							<th>Origen</th>
+							<th>Fecha desde</th>
+							<th>Fecha hasta</th>
+							<th>Hora</th>
+							<th>Conductor</th>
+							<th>Reputación</th>
+						</tr>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+
+
+    	</div>
+    </main>
+
+</div>
+
+</body>	
+</html>

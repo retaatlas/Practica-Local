@@ -1,0 +1,67 @@
+.reputacion{
+	margin:auto;
+	color: orange;
+}
+.loadingScreen {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	background: white;
+	z-index: 5000;
+}
+form header{
+	margin-bottom: 1%;
+	margin-top: 0px;
+}
+header h3,h5 {
+	text-align: center;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	margin-top: 1px;
+}
+ form {
+	margin-top:2%;
+	padding-bottom:1%;
+	background-color: #ecf0f1;
+}
+
+article{
+	margin-bottom:2%;
+	border-radius: 5px;
+	background-color:
+#c6dcef;
+	--background-color: hsl(240, 100%, 99%);
+	box-shadow: 0px 5px 15px rgba(0,0,0,0.15);
+	transition: box-shadow 0.3s ease-in-out;
+}
+article:hover{
+	background-color:#a0c5e4;//#c1e2b3;//hsl(240, 100%, 98%);
+	box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.precio{
+	padding-bottom: 8px;
+	padding-top: 8px;
+}
+.valor-precio{
+	font-size:1.3em;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* Internet Explorer/Edge */
+  user-select: none;           /* Non-prefixed version, currently
+								  not supported by any browser */
+}
+article a, article a:visited, article a:link, article a:hover article a:active{
+	text-decoration: none;
+	color:inherit;
+}
+article p{
+	word-break:break-all
+
+}

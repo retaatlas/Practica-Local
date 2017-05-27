@@ -1,0 +1,94 @@
+.table-user-information > tbody > tr {
+    border-top: 1px solid rgb(221, 221, 221);
+}
+
+.table-user-information > tbody > tr:first-child {
+    border-top: 0;
+}
+
+.table-user-information > tbody > tr > td {
+    border-top: 0;
+}
+.reputacion {
+	font-size: 2em;
+    color: orange;
+}
+#table-perfil input[disabled], #table-perfil select[disabled] {
+	background-color: transparent;
+	border: none;
+	cursor: auto;
+	box-shadow: none;
+	padding: 0;
+	height: auto;
+	color: #000;
+}
+#table-perfil select[disabled] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    text-indent: 1px;
+    text-overflow: '';
+}
+.tabla td {
+    color: #000;
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+#foto_perfil {
+	margin-bottom: 0.5em;
+}
+
+.panel{
+    background-color: #ecf0f1;
+}
+header h3 {
+    text-align: center;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    margin-top: 1px;
+}
+/* POP TOOLTIP*/
+  .popover-error {
+      border: 2px dotted red;
+  }
+  /* Popover Header */
+.popover-title-error {
+ /*no hay title*/
+}
+/* Popover Body */
+.popover-content-error {
+	background-color: #D9534F;
+	color: white;
+}
+/* Popover Arrow */
+.arrow-error {
+  border-top-color: red !important ;
+}
+
+.popover-success {
+      border: 2px dotted green;
+  }
+.popover-content-success {
+	background-color: #5cb85c;
+	color: white;
+	padding:3px 6px 3px 6px;
+}
+.arrow-success {
+  border-left-color: #5cb85c !important ;
+}

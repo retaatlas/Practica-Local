@@ -1,0 +1,193 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Crear viaje</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="/css/magicsuggest.css" />
+	<link rel="stylesheet" href="/common.css" />
+	<link rel="stylesheet" href="/alta_viaje.css" />
+
+	<script type="text/javascript" src="/jquery.js"></script>
+	<script type="text/javascript" src=""></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="/js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="/js/magicsuggest-min.js"></script>
+	<script type="text/javascript" async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCu2P6zmQmOyESf872DSdZgYam9PMJnzwg&callback=initMapa"></script>
+	<script type="text/javascript" src="/alta_viaje.js"></script>
+	<script type="text/javascript" src="/navegacion.js"></script>
+
+	<script id="comisiones-template"  type="text/template">
+		{{#comisiones}}
+		<p>
+				<span class="label label-primary">{{origen.nombre}}</span>
+				<span class="glyphicon glyphicon-arrow-right"></span>
+				<span class="label label-primary">{{destino.nombre}}</span>
+				<span class="glyphicon ">=</span>
+				<span class="label label-success"><span class="glyphicon glyphicon-usd"></span> {{comision}}</span>
+		</p>
+		{{/comisiones}}
+	</script>
+</head>
+<body>
+	<div class="loadingScreen"></div>
+	<main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li class="active">Crear Viaje</li>
+			</ol>
+			<form id="form-alta-viaje" onsubmit="return activarConfirmarViaje()" class="form-horizontal">
+				<header class="bg-primary"><h3 class="pull-center">Crear Viaje</h3></header>
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="nombre_amigable" class="control-label col-md-4">Nombre viaje:</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control" id="nombre" name="nombre_amigable" placeholder="Nombre" maxlength="23"></input>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="vehiculo" class="control-label col-md-4">Vehículo:</label>
+						<div class="col-md-8">
+							<select class="form-control" name="vehiculo" id="vehiculo">
+							</select>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="origen" class="control-label col-md-4">Origen:</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control localidad-origen-input" id="origen" name="origen" placeholder="Origen"></input>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="destino" class="control-label col-md-4">Destino:</label>
+						<div class="col-md-8">
+							<input type="text" class="form-control localidad-destino-input" id="destino" name="destino" placeholder="Destino"></input>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-12">
+						<label for="puntos" class="control-label col-md-2">Puntos Intermedios:</label>
+						<div class="col-md-10">
+						  	<input type="text" class="form-control localidad-intermedias-input" id="punto" name="puntos" placeholder=""></input>
+						</div>
+	  				</div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="col-md-12">
+						<h3 class="text-center">Recorrido</h3>
+					</div>
+						<div class="col-xs-10 col-xs-offset-1" style="height:300px" id="divMapa"></div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="tipo_viaje" class="control-label col-md-4">Tipo de Viaje:</label>
+						<div class="col-md-6">
+							<select class="form-control" name="tipo_viaje" id="tipo">
+								<option value="ida">Solo ida</option>
+								<option value="ida_vuelta">Ida y Vuelta</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-12">
+						<h3 class="text-center">Viaje de ida</h3>
+					</div>
+					<div class="col-md-6">
+						<label for="fecha" class="control-label col-md-4">Fecha:</label>
+						<div class="col-md-8">
+							<div class="input-group date form_date">
+								<input type="text" class="form-control" name="fecha-ida" id="fecha">
+								<span class="input-group-addon " onclick="$('#fecha').datetimepicker('show');"> <span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="precio-ida" class="control-label col-md-4">Precio estimado total:</label>
+						<div class="input-group col-md-8">
+						<div class="input-group-addon">$</div>
+							<input type="number" min="0" step="0.01" class="form-control" name="precio-ida" id="precio-ida" value="20.00">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="asientos-ida" class="control-label col-md-4">Asientos libres:</label>
+						<div class="col-md-8">
+							<select class="form-control" name="asientos-ida" id="asientos">
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div id="divVuelta" class="form-group">
+					<div class="col-md-12">
+						<h3 class="text-center">Viaje de vuelta</h3>
+					</div>
+					<div class="col-md-6">
+						<label for="fecha" class="control-label col-md-4">Fecha:</label>
+						<div class="col-md-8">
+							<div class="input-group date form_date">
+								<input type="text" class="form-control" name="fecha-vuelta" id="fechahasta">
+								<span class="input-group-addon " onclick="$('#fechahasta').datetimepicker('show');"> <span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="precio-vuelta" class="control-label col-md-4">Precio estimado:</label>
+						<div class="input-group col-md-8">
+							<div class="input-group-addon">$</div>
+							<input type="number" min="0" step="0.01" class="form-control" name="precio-vuelta" id="precio-vuelta" value="20.00">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="asientos-vuelta" class="control-label col-md-4">Asientos libres:</label>
+						<div class="col-md-8">
+							<select class="form-control" name="asientos-vuelta" id="asientos">
+							</select>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="form-group">
+					<div class="col-xs-offset-7 col-sm-offset-9 col-md-offset-10">
+						<button class="btn btn-primary" id="boton" ><span class="glyphicon glyphicon-road"></span> Crear</button>
+					</div>
+				</div>
+
+			</form>
+    	</div>
+
+			<div id="modal-confirmar-viaje" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content panel-success">
+						<div class="modal-header panel-heading">
+							<button type="button" class="close" onclick="closeModal('confirmar-viaje')">&times;</button>
+							<h3 class="dialog-title"> Confirmar Viaje</h3>
+						</div><!-- modal-header -->
+						<div class="modal-body">
+							<div id="confirmar-viaje-message" class="">
+								<p>Comisión a abonar por pasajero segun los tramos seleccionados: </p>
+							</div>
+							<div id="comisiones" class="text-center">
+								<!-- Generado dinamicamente-->
+							</div>
+							<p><small>No se le cobrara comisión en caso de no existir pasajeros inscriptos a su viaje en el momento de finalizado el viaje.</small></p>
+						</div><!-- modal-body -->
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default" onclick="closeModal('confirmar-viaje');"> Cerrar</button>
+							<button type="button" class="btn btn-primary" onclick="enviarForm()"><span class="glyphicon glyphicon-road"></span> Confirmar viaje</button>
+						</div><!-- .modal-footer -->
+					</div><!-- .modal-content -->
+				</div><!-- .modal-dialog -->
+			</div><!-- .modal -->
+	</main>
+</body>
+</html>

@@ -1,0 +1,28 @@
+body{
+  width:800px;
+  margin:auto;
+}
+header{
+    margin-top:5px;
+  background-color: #ffff33;
+  text-align:center;
+  padding-top:1px;
+  padding-bottom:1px;
+  border-style:solid;
+}
+.content{
+  padding: 40px 30px 10px 30px;
+  background-color: #f2f2f2;
+  border-style:solid;
+  font-weight:bold;
+  font-family: "Courier New", Courier, monospace;
+}
+.enlaces{
+  margin-top:40px;
+    padding-top:30px;
+  border-top:groove;
+}
+.enlaces p a{
+  text-align:center;
+  margin-left:50px;
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="calificar_usuarios.css">
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="calificar_usuarios.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+	<script type="text/javascript" src="js/mustache.js"></script>
+
+	<script id="postulante-template" type="text/template">
+			<div class="panel panel-{{color_panel}}">
+				<div class="panel-heading" style="cursor:pointer" data-toggle="collapse" data-target="#postulante-{{nombre_usuario}}" aria-expanded="true">
+					<div  data-toggle="tooltip" data-original-title="Extender/Contraer" data-placement="top">
+					  <h3 class="panel-title">{{nombre_usuario}} - {{estado_string}}</h3>
+					</div>
+				</div>
+				<div class="panel-body collapse {{#calificable}}in{{/calificable}}" id="postulante-{{nombre_usuario}}">
+					<div class="row">
+						<div class="col-md-3 col-lg-3 " align="center">
+							<a href="perfil.html?usuario={{nombre_usuario}}" data-original-title="Ver perfil" data-placement="bottom" data-toggle="tooltip"  class="thumbnail">
+								<img alt="foto de usuario" src="{{foto}}" class="img-responsive" style="max-height: 200px">
+							</a>
+						</div>
+						<div class=" col-md-9 col-lg-9 ">
+							{{#es_pendiente}}
+							<!-- SELECT-->
+							<div class="form-group col-md-12 col-lg-12">
+								<label for="confirmacion" class="text-right control-label col-lg-4">¿Realizó el viaje?</label>
+								<div class="col-lg-8">
+									<select class="form-control" name="" id="confirmacion_{{nombre_usuario}}">
+				 						<option value="Sí">Sí</option>
+										<option value="No">No</option>
+									</select>
+								</div>
+							</div>
+							<!-- Puntuacion -->
+							<div class="estrellitas form-group col-md-12 col-lg-12">
+								<label for="calificacion" class="text-right control-label col-lg-4">Calificación: </label>
+								<p class="calificacion col-lg-8" id="califica-{{nombre_usuario}}">
+									<input id="radio1-{{nombre_usuario}}" type="radio" name="estrellas_{{nombre_usuario}}" value="5">
+									<label for="radio1-{{nombre_usuario}}">★</label>
+									<input id="radio2-{{nombre_usuario}}" type="radio" name="estrellas_{{nombre_usuario}}" value="4">
+									<label for="radio2-{{nombre_usuario}}">★</label>
+									<input id="radio3-{{nombre_usuario}}" type="radio" name="estrellas_{{nombre_usuario}}" value="3">
+									<label for="radio3-{{nombre_usuario}}">★</label>
+									<input id="radio4-{{nombre_usuario}}" type="radio" name="estrellas_{{nombre_usuario}}" value="2">
+									<label for="radio4-{{nombre_usuario}}">★</label>
+									<input id="radio5-{{nombre_usuario}}" type="radio" name="estrellas_{{nombre_usuario}}" value="1">
+									<label for="radio5-{{nombre_usuario}}">★</label>
+				 				</p>
+							</div>
+							<!-- COMENTARIOS -->
+							<div class="form-group col-md-12 col-lg-12">
+								<label class="text-right control-label col-lg-4">Deje un comentario:</label>
+								<div class="col-lg-8">
+									<textarea id="comments_{{nombre_usuario}}" class="form-control" rows="4"></textarea>
+								</div>
+							</div>
+							<div class="btn-group col-xs-12" id="botonera-postulante-{{nombre_usuario}}">
+								<button class="btn btn-success col-xs-6" onclick="calificarPendiente('{{nombre_usuario}}')"><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+							</div>
+							{{/es_pendiente}}
+							{{#es_listo}}
+								<div class="col-md-12 text-center">
+									<p><strong>{{participacion}}</strong></p>
+								</div>
+								<div class="col-md-12" align="center">
+										<p class="reputacion">{{cantidad_estrellas}}</p>
+									</div>
+								<div class="col-md-12">
+									<p class="comentario">{{comentario}}</p>
+								</div>
+							{{/es_listo}}
+						</div>
+					</div>
+				</div>
+												<!--
+				<div class="panel-footer">
+
+							<a data-original-title="Broadcast Message" data-toggle="tooltip" type="button" class="btn btn-sm btn-primary"><i class="glyphicon glyphicon-envelope"></i></a>
+							<span class="pull-right">
+								<a href="edit.html" data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning"><i class="glyphicon glyphicon-edit"></i></a>
+								<a data-original-title="Remove this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+							</span>
+				</div>
+												-->
+			</div>
+	</script>
+	<script id="misCalificaciones-template" type="text/template">
+			<div class="panel panel-{{color_panel}}">
+				<div class="panel-heading" style="cursor:pointer" data-toggle="collapse" data-target="#miCalificacionDe-{{nombre_usuario}}" aria-expanded="true">
+					<div  data-toggle="tooltip" data-original-title="Extender/Contraer" data-placement="top">
+					  <h3 class="panel-title">Calificación de {{nombre_usuario}}</h3>
+					</div>
+				</div>
+				<div class="panel-body collapse" id="miCalificacionDe-{{nombre_usuario}}">
+					<div class="row">
+						<div class="col-md-3 col-lg-3 " align="center">
+							<a href="perfil.html?usuario={{nombre_usuario}}" data-original-title="Ver perfil" data-placement="bottom" data-toggle="tooltip"  class="thumbnail">
+								<img alt="foto de usuario" src="{{foto}}" class="img-responsive" style="max-height: 200px">
+							</a>
+						</div>
+						<div class=" col-md-9 col-lg-9 ">
+							{{#es_mc}}
+								<div class="col-md-12">
+									<p><strong>{{participacion}}</strong></p>
+								</div>
+								<div class="col-md-12" align="center">
+										<p class="reputacion">{{cantidad_estrellas}}</p>
+									</div>
+								<div class="col-md-12">
+									<p class="comentario">{{comentario_recibido}}</p>
+								</div>
+							{{/es_mc}}
+						</div>
+					</div>
+				</div>
+			</div>
+	</script>
+</head>
+
+<body>
+	<!--<div class="loadingScreen"></div>-->
+    <main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li><a href="javascript:verViaje()">Detalle del Viaje</a></li>
+			  <li class="active">Calificaciones</li>
+			</ol>
+			<section class="row">
+				<header class="col-md-12">
+					<h3 class="titulo bg-primary ">Calificaciones pendientes y dadas</h3>
+				</header>
+				<div class="col-md-12" id="panel-postulantes">
+					<div class="jumbotron">
+					  <h4 class="text-center text-primary">Sin calificaciones pendientes</h4>
+					</div>
+				</div>
+			</section>
+			<section class="row">
+				<header class="col-md-12">
+					<h3 class="titulo  bg-primary ">Calificaciones recibidas</h3>
+				</header>
+				<div class="col-md-12 " id="panel-calif">
+					<div class="jumbotron">
+					  <h4 class="text-center text-primary">Sin calificaciones recibidas</h4>
+					</div>
+				</div>
+			</section>
+			<div id="modal-error" class="modal fade">
+				<div class="modal-dialog modal-sm">
+					<div class="modal-content panel-danger">
+						<div class="modal-header panel-heading" >
+							<button type="button" class="close" onclick="closeModal('error')">&times;</button>
+							<h3 class="dialog-title"> Ha ocurrido un error</h3>
+						</div><!-- modal-header -->
+						<div class="modal-body">
+							<div id="error-message">
+								Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+							</div>
+						</div><!-- modal-body -->
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" onclick="closeModal('error')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+						</div><!-- .modal-footer -->
+					</div><!-- .modal-content -->
+				</div><!-- .modal-dialog -->
+			</div><!-- .modal -->
+		</div>
+    </main>
+</body>
+</html>

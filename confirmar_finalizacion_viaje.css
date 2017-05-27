@@ -1,0 +1,31 @@
+
+
+.estrellitas p {
+  text-align: center;
+  margin-bottom: 0;
+}
+
+.estrellitas p label {
+  font-size: 2em;
+}
+
+.clasificacion input[type="radio"] {
+  display: none;
+}
+.clasificacion label {
+  color: grey;
+}
+
+.clasificacion {
+  direction: rtl;
+  unicode-bidi: bidi-override;
+}
+
+.clasificacion label:hover,
+.clasificacion label:hover ~ label {
+  color: orange;
+}
+
+.clasificacion input[type="radio"]:checked ~ label {
+  color: orange;
+}

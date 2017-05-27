@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="home.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="css/magicsuggest.css" />
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="js/mustache.js"></script>
+	<script type="text/javascript" src="js/magicsuggest-min.js"></script>
+	<script type="text/javascript" src="home.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+
+
+	<script id="viaje-template" type="text/template">
+	  <article class="col-sm-12 text-center noselect">
+			<a href="/detalle_viaje.html?id={{id}}">
+				<div class=" col-sm-3 " align="center">
+					<img alt="foto de usuario" src="{{foto}}" class="img-responsive img-circle" style="max-height: 70px">
+					<span class="label label-default">{{conductor}}</span>
+					<span id="reputacion" class="label label-warning" >{{reputacion_stars}}</span>
+				</div>
+				<div class="col-sm-7">
+					<div class="">
+							<h4  class="bg-primary">{{nombre_amigable}}</h4>
+							<h4 class="bg-success">{{fecha_inicio}}</h4>
+					</div>
+					<p class="">
+						{{#recorrido}}
+							<span class="label label-primary">{{nombre_localidad}}</span>
+							{{^es_destino}}
+								<span class="glyphicon glyphicon glyphicon-arrow-right"></span>
+							{{/es_destino}}
+						{{/recorrido}}
+					</p>
+				</div>
+				<div class="col-sm-2">
+					<h5 class="bg-success precio">
+						<span class=" glyphicon glyphicon-usd"></span>
+						<span class="valor-precio">{{precio}}</span>
+						</br><small class="bg-info">Recorrido completo</small>
+					</h5>
+				</div>
+			</a>
+	  </article>
+	</script>
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+	<main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li class="active">Home</li>
+			</ol>
+			<form class="form-horizontal" id="formBusqueda" onsubmit="buscarViaje(); return false;">
+				<header class="bg-primary"><h3 class="pull-center">Buscador de Viajes</h3></header>
+				<div class="form-group">
+					<label for="origen" class="control-label col-md-3">Origen:</label>
+					<div class="col-md-3">
+						<input class="form-control" name="origen" placeholder="Origen">
+					</div>
+					<label for="destino" class="control-label col-md-2">Destino:</label>
+					<div class="col-md-3">
+						<input type="text" class="form-control" name="destino" placeholder="Destino">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="fechadesde" class="control-label col-md-3">Fecha desde:</label>
+					<div class="col-md-3">
+						<div class="input-group date form_date">
+							<input type="text" class="form-control" name="fechadesde" id="fechadesde"  placeholder="Fecha desde">
+							<span class="input-group-addon " onclick="$('#fechadesde').datetimepicker('show');"> <span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+					<label for="fechahasta" class="control-label col-md-2">Fecha hasta:</label>
+					<div class="col-md-3">
+						<div class="input-group date form_date">
+							<input type="text" class="form-control" name="fechahasta" id="fechahasta" placeholder="Fecha hasta">
+							<span class="input-group-addon" onclick="$('#fechahasta').datetimepicker('show');"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="conductor" class="control-label col-md-3">Conductor:</label>
+					<div class="col-md-3">
+						<input type="text" class="form-control" name="conductor"  placeholder="Conductor">
+					</div>
+					<label for="estadoviaje" class="control-label col-md-2">Estado de viaje:</label>
+					<div class="col-md-3">
+						<select class="form-control" name="estadoviaje" placeholder="Estado">
+							<option value="ambas">Todos</option>
+							<option value="no_iniciado">No iniciado</option>
+							<option value="iniciado">Iniciado</option>
+							<!--<option value="2">Terminado</option> -->
+							<!--<option value="3">Cancelado</option> -->
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-3 col-md-offset-8">
+						<button type = "submit" class="btn btn-primary btn-block" ><span class="glyphicon glyphicon-search"></span> Buscar</button>
+					</div>
+				</div>
+			</form>
+			<div id="panel-resultados">
+				<header class="bg-info"><h5 class="pull-center">Resultados</h5></header>
+				<div id="viajes-busqueda">
+
+				</div>
+				<nav>
+				  <ul class="pagination pull-right" id="busqueda-paginacion">
+					<!-- paginas generadas dinamicamente-->
+				  </ul>
+				</nav>
+			</div>
+
+
+
+		</div>
+		<!-- MENSAJE DE ERROR -->
+			<div id="modalError" class="modal fade">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" onclick="ui.closeModal('Error')">&times;</button>
+							<h3 class="dialog-title"> Ha ocurrido un error</h3>
+						</div><!-- modal-header -->
+						<div class="modal-body">
+							<div id="errorMessage">
+								Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+							</div>
+						</div><!-- modal-body -->
+
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger " onclick="ui.closeModal('Error')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+						</div><!-- .modal-footer -->
+					</div><!-- .modal-content -->
+				</div><!-- .modal-dialog -->
+			</div><!-- .modal -->
+	</main>
+</body>
+</html>

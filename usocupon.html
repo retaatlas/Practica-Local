@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="common.css" />
+	<link rel="stylesheet" href="usocupon.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<!--script type="text/javascript" src="home.js"></script-->
+	<script type="text/javascript" src="navegacion.js"></script>
+</head>
+
+<body>
+
+    <main class="panel_func">
+      <title> Buscador de Cupones</title>
+	  <div class="form-group">
+		<label  type= texto for="CodigoCupon" class="control-label">Código Cupón:</label>
+		<input type="text" name="id_cupon" class="form-control" required>
+		<button type="button" id="editButton" class="glyphicon glyphicon-pencil btn-primary btn-lg" onclick="ui.editButtonPressed()">Verificar</button>
+	  </div>
+	  <label for="EstadoCupon" class="control-label col-xs-2 col-sm-2 col-xs-offset-1">Estado del Cupón:</label>
+	  <textarea name="ResultadoEstado"></textarea>
+	  <div class="container">
+		<label for="CartelUso" class="control-label col-xs-2 col-sm-2 col-xs-offset-1">Desea confirmar la utilización del cupón?</label>
+		<button type="button" id="CancelarButton" class="glyphicon glyphicon-trash btn-danger btn-lg" onclick="ui.deleteButtonPressed()">Cancelar</button>
+		<button type="button" id="editButton" class="glyphicon glyphicon-pencil btn-primary btn-lg" onclick="ui.editButtonPressed()">Confirmar</button>
+	  </div>
+    </main>
+
+</div>
+
+</body>	
+</html>

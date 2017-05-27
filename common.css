@@ -1,0 +1,217 @@
+body {
+	overflow-x: hidden;
+}
+sidebar {
+	background-color: #303F9F;
+	bottom: 0px;
+	top: 50px;
+	position: fixed;
+	left: 0px;
+	transition: width 0.5s ease;
+	overflow: hidden;
+	box-shadow: 0px 0px 2px black;
+}
+sidebar nav {
+	width: 100%;
+	height: 100%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+sidebar img {
+	margin-top: 20px;
+	max-height: 50%;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+
+		}
+
+sidebar a{
+	color: white;
+}
+
+sidebar hr{
+	visibility: hidden;
+}
+
+		main {
+	margin-top: 50px;
+	border: 8px solid white;
+	min-height: 399px;
+	transition: margin-left 0.5s ease;
+	overflow: auto;
+}
+
+main h1{
+	margin-bottom: 20px;
+}
+
+nav#common-navbar {
+olor: white;
+	background-color: #303F9F;
+	box-shadow: 0px 0px 2px black;
+}
+
+nav#common-navbar .navbar-header a {
+	color: white;
+}
+
+.dropdown a{
+	color:white;
+}
+
+.dropdown .dropdown-menu{
+	color:white;
+	background-color: #303F9F;
+}
+
+.dropdown .dropdown-menu a{
+	color:white;
+}
+
+.loadingScreen {
+	position: fixed;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	z-index: 1039;
+	background-color: white;
+	background-image: url("img/navegacion/vc_loading.svg");
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: contain;
+}
+
+#divanio {
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+@media (max-width: 767px) {
+		sidebar {
+			width: 0px;
+		}
+		main {
+			width: 100%;
+			
+		}
+
+		body.sidebar-on sidebar{
+			width: 240px;
+		}
+		body.sidebar-on main {
+			margin-left: 240px;
+		}
+		.mobile-only {
+			display: block;
+		}
+
+	}
+
+@media (min-width: 768px) {
+	sidebar {
+			width: 240px;
+	}
+	main {
+		width: calc (100% - 240px);
+		margin-left: 240px;
+
+	}
+	.mobile-only {
+		display: none;
+	}
+}
+
+
+/*
+ Para darle estilo al input type="file"
+*/
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+/* POP TOOLTIP*/
+  .popover-error {
+      z-index: 1029;
+      border: 2px dotted red;
+  }
+  /* Popover Header */
+.popover-title-error {
+ /*no hay title*/
+}
+/* Popover Body */
+.popover-content-error {
+    background-color: #D9534F;
+    color: white;
+}
+/* Popover Arrow */
+.arrow-error {
+  border-top-color: red !important ;
+}
+
+.popover-success {
+      z-index: 1029;
+      border: 2px dotted green;
+  }
+.popover-content-success {
+    background-color: #5cb85c;
+    color: white;
+    padding:3px 6px 3px 6px;
+}
+.arrow-success {
+  border-left-color: #5cb85c !important ;
+}
+
+
+/* MODAL DIALOG */
+.modal-header {
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	text-align: center;
+	background-color: #303F9F;
+	color: white;
+}
+
+.modal.error .modal-header {
+	background-color: #D9534F;
+	color: white;
+}
+
+.modal.success .modal-header {
+	background-color: #117711;
+	color: white;
+}
+
+
+.modal-header .close {
+	color: white;
+}
+
+.modal-header .close:hover {
+	color: red;
+}
+
+.modal-footer {
+	clear: both;
+}
+
+
+#common-modal-dialog modal-header {
+}

@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Ayuda</title>
+	<link rel="stylesheet" href="manual_de_usuario.css">
+</head>
+<body>
+	<header>	
+	</header>
+	<div class="contenedor">
+		<div class="main">
+			<section class="articles">
+				<article id="introduccion">
+					<h2>Introducción</h2>
+					<p>Viajes compartidos es una página web destinada a aquellas personas que habitualmente por necesidad o placer realizan distintos viajes a lo largo y ancho de la República Argentina. Mediante este sistema, dichas personas pueden acordar compartir un viaje para así obtener una disminución de gastos y a la vez tener la posibilidad de obtener beneficios con descuentos en ciertas marcas.
+					Estando registrado en el sistema se permite, mediante la página principal, la búsqueda de viajes que sean de interés, así como la creación de los mismos. 
+					Una vez que un cliente desea participar en un viaje, el sistema le proveerá información de contacto y una sección de comentarios, para que ambas partes coordinen su viaje en común.</p>
+				</article>
+				<!--<article id="instalacion">
+					<h2>Instalación</h2>
+					<p>A continuación se detalla cómo instalar el software necesario para el funcionamiento de Viajes Compartidos.</p>
+					<p>Todo el software necesario para la instalación de la aplicación proporciona en el CD-ROM.
+					Es necesario seguir los siguientes pasos. </p>
+					<p>Primero se mostrará una pantalla con la bienvenida al programa, en la cual se podrá saber que es necesario haber instalado previamente el entorno de ejecución Java en una versión 8 o superior. Luego de notar esto, se debe hacer click en el botón “Siguiente”.</p>
+					<figure>
+						<img src="img_manual/rinst01.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>En este paso se deben tildar preferiblemente y para ahorrar problemas los siguientes tres componentes:</p>
+					<ul>
+						<li>Viajes compartidos</li>
+						<li>Servidor Web Tomcat 8</li>
+						<li>Servidor de Base de Datos MySQL</li>
+					</ul>
+					<p>Para esto se necesitarán 1.6GB de espacio en el disco.</p>
+					<p>Nuevamente hacer click en el botón “Siguiente”.</p>
+					<figure>
+						<img src="img_manual/rinst02.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>En este paso se elegirá dónde se desea instalar el programa. </p>
+					<p>Hacer click en “Instalar”.</p>
+					<figure>
+						<img src="img_manual/rinst03.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>En la siguiente pantalla se muestra el proceso de instalación, que puede durar unos minutos dependiendo del equipo que se posea.</p>
+					<figure>
+						<img src="img_manual/rinst04.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Una vez completado este proceso, se activará el botón “Siguiente” necesario para seguir con la instalación.</p>
+					<figure>
+						<img src="img_manual/rinst05.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Por último, una vez finalizada la instalación, es necesario iniciar y configurar el servidor.</p>
+					<figure>
+						<img src="img_manual/rinst06.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Como primer paso de la configuración se deben configurar los parámetros de conexión e inicializar la base de datos. En la imagen se puede obtener ayuda sobre los valores a completar.</p>
+					<figure>
+						<img src="img_manual/rinst07.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>En el paso 2 se crearán archivos de configuración e inicialización de la base de datos. Como la creación de archivos de configuración, se conectará con el servidor de la base de datos, se creará su esquema y cargarán los datos iniciales. Además se cargará toda la información geográfica necesaria.</p>
+					<figure>
+						<img src="img_manual/rinst08.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Después de que se haya completado, se deberá hacer click en el botón “Siguiente”.</p>
+					<figure>
+						<img src="img_manual/rinst09.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Concluyendo exitosamente, el siguiente paso será crear una contraseña para el administrador, y hacer click en el botón “Siguiente” una vez más.</p>
+					<figure>
+						<img src="img_manual/rinst10.jpg" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>-->
+				<article id="modAdmUsuarios">
+					<h2>Módulo de administración de usuario</h2>
+					<p>Se contará con un sección para el administrador, con el siguiente contenido.</p>
+					<figure>
+						<img src="img_manual/image001.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="miPerfilAdm">
+					<h3>Mi Perfil</h3>
+					<p>El administrador contará con una solapa “Mi perfil” para ver su información personal.</p>
+					<figure>
+						<img src="img_manual/image003.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="admUsuario">
+					<h3>Administración de usuario</h3>
+					<p>Presionando en “Administración Usuarios”, se podrá gestionar tanto los roles como los permisos de los usuarios creados.</p>
+				</article>
+				<article id="personas">
+					<h4>Personas</h4>
+					<p>En “personas” se observan las personas vinculadas a los usuarios creados en el sistema. Se cuenta también con un buscador para las mismas.</p>
+					<figure>
+						<img src="img_manual/image005.png" alt="Administración de personas">
+						<figcaption>
+							Administración de personas
+						</figcaption>
+					</figure>
+					<p>Seleccionando una persona de la lista se los podrá eliminar y modificar.</p>
+					<figure>
+						<img src="img_manual/image007.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>También se cuenta con la opción de agregar un nueva persona, presionando en “Agregar”.</p>
+					<figure>
+						<img src="img_manual/image009.png" alt="Nueva persona">
+						<figcaption>
+							Administración de personas
+						</figcaption>
+					</figure>
+				</article>
+				<article id="usuarios">
+					<h4>Usuarios</h4>
+					<p>En “Usuarios” se observa información de los usuarios registrados en el sistema.</p>
+					<figure>
+						<img src="img_manual/image011.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Seleccionando un usuario de la lista se los podrá eliminar y modificar.</p>
+
+					<p>Seleccionando la opción “Modificar” del usuario aparecerá la siguiente pantalla, en la cual podrá modificar los datos.</p>
+					<figure>
+						<img src="img_manual/image013.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>En roles se podrá asignar o desasignar roles a dicho usuario.</p>
+					<figure>
+						<img src="img_manual/image015.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Para agregar un nuevo usuario presionamos en “Agregar” y se completan los campos requeridos</p>
+					<figure>
+						<img src="img_manual/image017.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="roles">
+					<h4>Roles</h4>
+					<p>En la sección roles aparecerán los roles que tiene definido el sistema.</p>
+					<figure>
+						<img src="img_manual/image019.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Clickeando en uno de ellos se podrá eliminar y modificar.</p>
+					<figure>
+						<img src="img_manual/image021.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>En la sección roles se podrá observar los permisos de dichos roles, así como también agregarlos y quitarlos.</p>
+					<figure>
+						<img src="img_manual/image023.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>A su vez se cuenta con el botón “agregar”, que permite definir nuevos roles.</p>
+					<figure>
+						<img src="img_manual/image025.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="permisos">
+					<h4>Permisos</h4>
+					<p>En esta sección se describen los permisos asociados a los roles de los usuarios.</p>
+					<figure>
+						<img src="img_manual/image027.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Se podrá agregar permisos.</p>
+					<figure>
+						<img src="img_manual/image029.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Como también eliminar y modificar.</p>
+					<figure>
+						<img src="img_manual/image031.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="admComisiones">
+					<h3>Administración de comisiones</h3>
+					<p>En esta sección el usuario administrador podrá visualizar una lista con los precios de las comisiones que él fija, teniendo en cuenta un rango de kilometrajes.</p>
+					<p>A su  vez se pueden agregar más comisiones o eliminar/modificar las existentes.</p>
+					<figure>
+						<img src="img_manual/image033.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Clickeando en una de ellas y presionando “Modificar” aparecerá la siguiente pantalla, para su modificación.</p>
+					<figure>
+						<img src="img_manual/image035.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+					<p>Para agregar una nueva comisión deberá apretar el botón “Agregar” y visualizará la siguiente pantalla. Al completar los campos requerido y presionando “Aceptar” la nueva comisión estará dada de alta.</p>
+					<figure>
+						<img src="img_manual/image035.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="reporteViajes">
+					<h3>Reporte de viajes</h3>
+					<p>Se cuenta con la opción de generar reportes por viajes.
+					Utilizando los diferentes filtros usted podrá acceder a reportes en formato PDF, presionando en “Generar reportes”.</p>
+					<figure>
+						<img src="img_manual/image038.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="reporteComisiones">
+					<h3>Reporte de comisiones</h3>
+					<p>Se cuenta con la opción de generar reportes por comisiones.
+					Utilizando los diferentes filtros usted podrá acceder a reportes en formato PDF, presionando en “Generar reportes”.</p>
+					<figure>
+						<img src="img_manual/image040.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="viajesCompartidos">
+					<h2>Viajes compartidos</h2>
+				</article>
+				<article id="primeraEleccion">
+					<h3>Primera elección</h3>
+					<p>Si es un usuario ya registrado en el sistema, se deberá elegir la opción de la izquierda llamada “Ingresa”, mientras que si es un usuario que nunca se ha registrado, debe ir a la opción “Registrate”.</p>
+					<figure>
+						<img src="img_manual/image042.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+				<article id="crearCuenta">
+					<h3>Crear una cuenta</h3>
+					<p>Una vez ingresado en la opción “Registrate”, para crear una cuenta en Viajes Compartidos, es necesaria cierta información obligatoria  de la persona siguiendo tres pasos:</p>
+					<ol>
+						<li>Paso 1:</li>
+						<figure>
+							<img src="img_manual/image044.png" alt="">
+							<figcaption>
+								
+							</figcaption>
+						</figure>
+						<li>Paso 2:</li>
+						<figure>
+							<img src="img_manual/image046.png" alt="">
+							<figcaption>
+								
+							</figcaption>
+						</figure>
+						<li>Paso 3:
+							<p>Las fotos de registro de conducir y foto de perfil son opcionales.</p>
+						</li>
+						<figure>
+							<img src="img_manual/image048.png" alt="">
+							<figcaption>
+								
+							</figcaption>
+						</figure>
+					</ol>
+				</article>
+				<article id="ingresar">
+					<h3>Ingresar al sistema</h3>
+					<p>Se deben completar obligatoriamente tanto el usuario como la contraseña, siendo éstos los datos que se utilizaron en el registro hecho previamente. Una vez completados los campos se debe hacer click en el botón verde “Ingresar”.</p>
+					<figure>
+						<img src="img_manual/image050.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Luego de esto, se redirige hacia la página principal del sistema.</p>
+				</article>
+				<article id="buscarViaje">
+					<h3>Página principal - “Buscar viaje”</h3>
+					<p>Una vez en la página principal de Viajes Compartidos se puede realizar la búsqueda de los viajes deseados, mediante los campos Origen (obligatorio), Destino (obligatorio), Fecha desde (obligatorio), Fecha hasta, Conductor o Estado viaje.
+					Los campos Fecha desde y Fecha hasta serán utilizados para buscar los viajes que están pautados para ese rango de fechas.</p>
+					<p>Con respecto al Estado de viajes, se podrá filtran por viajes, iniciados o no iniciados.</p>
+					<figure>
+							<img src="img_manual/image052.png" alt="">
+							<figcaption>
+								
+							</figcaption>
+						</figure>
+					<p>Presionando el botón Buscar, aparecerán todos los resultados, si los hubiera.</p>
+				</article>
+				<article id="crearViaje">
+					<h3>“Crear viaje”</h3>
+					<p>Si el usuario anteriormente agregó su vehículo al sistema, puede llevar a cabo la creación de viajes. Caso contrario aparecerá la siguiente pantalla indicando que tener un vehículo es necesario.</p>
+					<figure>
+						<img src="img_manual/image054.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Seleccionando la opción “Nuevo vehículo” se redirigirá a la página que permite agregar un nuevo vehículo asociado al usuario.</p>
+					<p>Por el contrario, si ya se tiene un vehículo asociado, entonces se permite la creación del viaje completando todos los datos obligatoriamente.</p>
+					<figure>
+						<img src="img_manual/image056.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Si se elige como tipo de viaje “Ida y vuelta”, aparecerán las opciones adicionales de fecha, precio estimado total y asientos libres correspondientes a el viaje de vuelta. 
+					Los asientos libres corresponden a los asientos que posee el vehículo para ser utilizados (sin contar el del conductor).</p>
+					<p>Para poder crear viaje, el usuario deberá contar con saldo suficiente en su cuenta.</p>
+					<figure>
+						<img src="img_manual/image058.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Al presionar “Crear” su viaje se habrá creado con éxito.</p>
+				</article>
+				<article id="notificaciones">
+					<h3>“Notificaciones”</h3>
+					<p>Se cuenta con una opción de notificaciones ubicada en la sección superior, representada con el ícono de una campana.</p>
+					<p>Aquí se podrán observar los diferentes eventos que requieren ser notificados.
+					Por ejemplo la postulación, aceptación y rechazo de un pasajero, inicio cancelación y finalización de un viaje, etc.</p>
+					<figure>
+						<img src="img_manual/image060.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="misViajes">
+					<h3>“Mis viajes”</h3>
+					<p>En la sección de “Mis viajes” se tiene un listado de los viajes en los que se participa y los propios creados previamente.</p>
+					<figure>
+						<img src="img_manual/image062.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Se cuenta con un filtro, ubicado en la barra titulada “Mis Viajes”, representado con un embudo, para buscar entre los propios viajes. En donde se puede filtrar por Localidad, Conductor, Fecha desde, Fecha hasta, y por un precio mínimo y/o máximo. Luego haciendo click en el botón “Filtrar” se mostrarán los resultados correspondientes si los hubiera.</p>
+					<figure>
+						<img src="img_manual/image064.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Como vista previa de cada viaje se puede ver la fecha y horario de salida del mismo, así como también el precio de todo el viaje junto con la localidad de subida y la de bajada. Si se hace click en alguno de ellos se redirecciona hacia información más detallada.
+					Dichos viajes están ordenados por fecha de inicio.</p>
+				</article>
+				<article id="viajeDetallado">
+					<h4>Viaje detallado</h4>
+					<p>Dentro de esta opción se encuentra toda la información con respecto a un viaje. La primer parte muestra el mapa de viaje indicando punto de origen, destino y los intermedios, si los hubiese. A su vez también muestra el estado del usuario con respecto a ese viaje. En el ejemplo, como es un viaje propio, entonces el usuario es el conductor del mismo y puede modificarlo, si fuera un usuario pasajero, se muestra si está postulado en el viaje, o bien si fue aceptado o rechazado.</p>
+					<p>Al viaje se lo puede cancelar, modificar y ver si hay postulantes, siempre y cuando el usuario sea el creador del viaje. </p>
+					<p>Para modificar el viaje es necesario que no haya ni postulantes ni pasajeros aceptados.</p>
+					<figure>
+						<img src="img_manual/image066.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>También se muestra la información más específica del viaje:</p>
+					<ul>
+						<li>El estado del viaje puede ser no iniciado (si la fecha de salida no llegó aún), iniciado (cuando llegó el día y hora de salida), finalizado y cancelado.</li>
+						<li>Fecha y hora de salida.</li>
+						<li>El tipo del viaje puede ser de ida o de vuelta, si así se especificó en su creación.</li>
+						<li>El precio estimado que tiene el viaje completo.</li>
+						<li>Recorrido del viaje. Se muestra el origen, intermedios (si los hay) y destino.</li>
+					</ul>
+					<p>Siendo el creador del viaje (conductor), aparecerá el botón “Ver Postulantes”, el cual permite ver a los pasajeros interesados en viajar. También aparecerá el botón “Cancelar viaje”, con el cual se puede cancelar el viaje pero, dependiendo de si el viaje tiene o no pasajeros aceptados, se recibirá una sanción o no.</p>
+					<p>Debajo se muestra la información principal del vehículo junto con la del conductor. Haciendo click en el nombre del conductor se redireccionará a hacia el perfil del mismo para una vista más completa.</p>
+					<figure>
+						<img src="img_manual/image068.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Al final se encuentran los comentarios. Para poder comentar es necesario escribir en la zona de texto y hacer click en el botón “Comentar”. Una vez hecho esto aparecerán los comentarios debajo. Esto será notificado al conductor y, si el conductor comenta, será notificado a todos los usuarios que hayan realizado comentarios.</p>
+					<figure>
+						<img src="img_manual/image070.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>En los pasajeros (es decir usuarios que no son quién ha creado el viaje), aparecerá el botón “Participar” para poder unirse al viaje, y luego el botón “Cancelar Participación” si se quiere cancelar. </p>
+					<figure>
+						<img src="img_manual/image072.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<figure>
+						<img src="img_manual/image074.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="seguirViaje">
+					<h4>Seguir un viaje</h4>
+					<p>Una vez ubicado en el detalle del viaje que desea también se puede realizar un seguimiento del viaje presionando el botón “Seguir”. Con el mismo se tendrá información de un viaje del que no se es participante.</p>
+					<figure>
+						<img src="img_manual/image076.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<figure>
+						<img src="img_manual/image078.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="participar">
+					<h4>Participar en viaje</h4>
+					<p>Una vez ubicado en el detalle del viaje que desea, presione el botón “Participar”.</p>
+					<figure>
+						<img src="img_manual/image080.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Se pedirá ingresar punto de subida, bajada y asientos a ocupar.</p>
+					<figure>
+						<img src="img_manual/image082.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Luego de presionar “Participar”, se muestran los datos del conductor.</p>
+					<figure>
+						<img src="img_manual/image084.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Se tiene la opción de redireccionar a mis viajes, clickeando en el botón “Mis viajes”. </p>
+				</article>
+				<article id="aceptarRechazarPostulantes">
+					<h4>Aceptar o rechazar postulantes</h4>
+					<p>Entrando a la información detallada de un viaje propio y presionando el botón “Ver Postulantes” (el cual aparecerá únicamente si es quien creó viaje) se redirige a la pantalla en la que se muestran los usuarios postulantes. Una vez en ésta se puede aceptar o rechazarlos. </p>
+					<p>La información que se puede ver del postulante es el nombre de usuario, el apellido, nombres, e-mail, teléfono y las localidades en las localidades de origen y destino.</p>
+					<figure>
+						<img src="img_manual/image086.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="finalizarViaje">
+					<h4>Finalizar viaje</h4>
+					<p>Siendo tanto el creador del viaje (conductor) como el pasajero, aparecerá el botón “Viaje Finalizado” siempre y cuando el viaje haya iniciado, para que los mismos puedan dar por finalizado el viaje. Ambos habilitan el botón de calificar para puntuar a la otra parte. Adicionalmente el botón “Viaje finalizado” del conductor también cambia el estado del viaje a <<finalizado>>.</p>
+					<figure>
+						<img src="img_manual/image088.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Se pedirá confirmación para la finalización del mismo.</p>
+					<figure>
+						<img src="img_manual/image090.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="calificar">
+					<h4>Calificar a la otra parte</h4>
+					<p>Una vez finalizado el viaje, se clickea en “Calificar”.</p>
+					<figure>
+						<img src="img_manual/image092.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Luego se mostrará la siguiente pantalla, con los usuarios a calificar. Los pasajeros sólo podrán calificar al conductor y el conductor podrá calificar a todos los pasajeros del viaje. Presionar “Aceptar” para enviar la calificación.</p>
+					<figure>
+						<img src="img_manual/image094.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Las calificaciones recibidas también pueden ser observadas en la misma pantalla.</p>
+					<figure>
+						<img src="img_manual/image096.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Si no se quiere calificar en ese momento, en el detalle del viaje le aparecerá el siguiente aviso(“Aún no has calificado”).</p>
+					<figure>
+						<img src="img_manual/image098.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="misVehiculos">
+					<h3>“Mis vehículos”</h3>
+				</article>
+				<article id="verMisVehiculos">
+					<h4>Ver mis vehículos</h4>
+					<p>En la sección “Mis vehículos” se muestran los vehículos activos que posee el usuario.</p>
+					<figure>
+						<img src="img_manual/image100.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Clickeando en uno de ellos se accede a la información detallada del mismo. El color celeste indica que el vehículo ya está verificado por otro usuario, mientras que el color rosa significa que no lo está.</p>
+					<figure>
+						<img src="img_manual/image102.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="agregarVehiculo">
+					<h4>Agregar vehículo</h4>
+					<p>Para agregar un vehículo es necesario completar cierta información sobre éste, como lo es la marca, patente, modelo, color, año, foto, si posee aire acondicionado y seguro, y la cantidad de asientos de dicho vehículo, contabilizando el del conductor.</p>
+					<figure>
+						<img src="img_manual/image104.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="asociarUsuario">
+					<h4>Asociar un usuario como conductor del vehículo</h4>
+					<p>Una vez que se tiene un vehículo, se podrá asociar un nuevo usuario para que conduzca el mismo y puede realizar viajes con él.</p>
+					<p>Clickeando en uno de mis vehículos, se podrá realizar esta operación. Presionando el botón “+” se mostrará la siguiente pantalla.</p>
+					<figure>
+						<img src="img_manual/image106.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>A su vez también se puede desasignar un usuario a un vehículo. Clickeando en “Conductores” aparecerán los usuarios asociados a ese vehículo. Con el botón “-” se realizará la operación de desasignar.</p>
+					<figure>
+						<img src="img_manual/image108.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Al ser un vehículo compartido, este no podrá ser usado en dos viajes que están pautados a la misma hora o cercanos.
+					Si esto ocurre le aparecerá el siguiente cartel.</p>
+					<figure>
+						<img src="img_manual/image110.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="eliminarVehiculo">
+					<h4>Eliminar vehículo</h4>
+					<p>Al presionar “Eliminar vehículo” se observa la siguiente pantalla. Se puede confirmar la operación o cerrarla.</p>
+					<figure>
+						<img src="img_manual/image112.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="moficicarVehiculo">
+					<h4>Modificar vehículo</h4>
+					<p>Presionando “Modificar” se pueden modificar los campos permitidos para el cambio del vehículo, guardando los cambios o cancelando la operación. Los campos modificables son el año, cantidad de asientos, seguro y aire acondicionado.</p>
+					<figure>
+						<img src="img_manual/image114.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="miPerfil">
+					<h3>“Mi perfil”</h3>
+					<p>Presionando en el botón “Mi perfil” se observa información del usuario. Desde aquí se podrá también consultar su saldo y sus puntos.</p>
+					<figure>
+						<img src="img_manual/image116.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="modificarPerfil">
+					<h4>Modificar perfil</h4>
+					<p>Presionando “Modificar” se pueden modificar los campos permitidos para el cambio del perfil, pudiendo guardar los cambios o cancelar la operación. Estos campos son la contraseña, apellido, nombre, fecha de nacimiento, domicilio, e-mail, teléfono, sexo, y las fotos del registro de perfil y de perfil.</p>
+					<figure>
+						<img src="img_manual/image118.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="buscarCliente">
+					<h4>Buscar cliente</h4>
+					<p>Una vez ubicado en la sección mi perfil, se tendrá un botón “Buscar cliente”, que permitirá buscar otros clientes registrados en el sistema.</p>
+					<figure>
+						<img src="img_manual/image120.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+					<p>Presionando en este botón se observa la siguiente información.</p>
+					<figure>
+						<img src="img_manual/image122.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="desactivarCuenta">
+					<h4>Desactivar cuenta</h4>
+					<p>Al presionar “Desactivar cuenta” se observa la siguiente pantalla. Se puede confirmar la operación o cerrarla.</p>
+					<figure>
+						<img src="img_manual/image124.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="saldo">
+					<h3>“Saldo”</h3>
+					<p>En esta sección el usuario podrá obtener información acerca de su saldo y de los movimientos del mismo. Así como a su vez cargar crédito en su cuenta.</p>
+					<p>Para ello se debe ingresar el monto y luego presionar el botón “Cargar saldo” y automáticamente se actualizará la cantidad a la derecha de “Saldo actual:”</p>
+					<figure>
+						<img src="img_manual/image126.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="puntos">
+					<h3>“Puntos”</h3>
+					<p>En esta sección el usuario podrá obtener información acerca de sus puntos y los movimientos de los mismos.</p>
+					<figure>
+						<img src="img_manual/image128.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="cerrarSesion">
+					<h3>Cerrar sesión</h3>
+					<p>Haciendo click en el nombre del usuario en la esquina superior derecha, aparece la opción “Salir”, que permite al usuario salir del sistema.</p>
+					<figure>
+						<img src="img_manual/image130.png" alt="">
+						<figcaption>
+								
+						</figcaption>
+					</figure>
+				</article>
+				<article id="ayuda">
+					<h2>Ayuda</h2>
+					<p>Haciendo click en el botón “Ayuda” ubicado en el menú de la izquierda, se mostrará una pantalla con el manual de usuario.</p>
+					<figure>
+						<img src="img_manual/image132.png" alt="">
+						<figcaption>
+							
+						</figcaption>
+					</figure>
+				</article>
+			</section>
+			<aside>
+				<a href="/home.html" id="volver">Ir a home</a>
+				<ul>
+					<li><a href="#introduccion">Introducción</a></li>
+<!--					<li><a href="#instalacion">Instalación</a></li>-->
+					<li><a href="#modAdmUsuarios">Módulo de administración de usuario</a>
+						<ul>
+							<li><a href="#miPerfilAdm">Mi Perfil</a></li>
+							<li><a href="#admUsuario">Administración de usuario</a></li>
+								<ul>
+									<li><a href="#personas">Personas</a></li>
+									<li><a href="#usuarios">Usuarios</a></li>
+									<li><a href="#roles">Roles</a></li>
+									<li><a href="#permisos">Permisos</a></li>
+								</ul>
+							<li><a href="#admComisiones">Administración</a></li>
+							<li><a href="#reporteViajes">Reporte de viajes</a></li>
+							<li><a href="#reporteComisiones">Reporte de comisiones</a></li>
+						</ul>
+					</li>
+					<li><a href="#viajesCompartidos">Viajes compartidos</a>
+						<ul>
+							<li><a href="#primeraEleccion">Primera elección</a></li>
+							<li><a href="#crearCuenta">Crear una cuenta</a></li>
+							<li><a href="#ingresar">Ingresar al sistema</a></li>
+							<li><a href="#buscarViaje">Página principal - “Buscar viaje”</a></li>
+							<li><a href="#crearViaje">Crear viaje</a></li>
+							<li><a href="#notificaciones">Notificaciones</a></li>
+							<li><a href="#misViajes">Mis viajes</a>
+								<ul>
+									<li><a href="#viajeDetallado">Viaje detallado</a></li>
+									<li><a href="#seguirViaje">Seguir un viaje</a></li>
+									<li><a href="#participar">Participar en viaje</a></li>
+									<li><a href="#aceptarRechazarPostulantes">Aceptar o rechazar postulantes</a></li>
+									<li><a href="#finalizarViaje">Finalizar viaje</a></li>
+									<li><a href="#calificar">Calificar a la otra parte</a></li>
+								</ul>
+							</li>
+							<li><a href="#misVehiculos">Mis vehículos</a>
+								<ul>
+									<li><a href="#verMisVehiculos">Ver mis vehículos</a></li>
+									<li><a href="#agregarVehiculo">Agregar vehículo</a></li>
+									<li><a href="#asociarUsuario">Asociar usuario como conductor del vehículo</a></li>
+									<li><a href="#eliminarVehiculo">Eliminar vehículo</a></li>
+									<li><a href="#modificarVehiculo">Modificar vehículo</a></li>
+								</ul>
+							</li>
+							<li><a href="#miPerfil">Mi perfil</a>
+								<ul>
+									<li><a href="#modificarPerfil">Modificar perfil</a></li>
+									<li><a href="#buscarCliente">Buscar cliente</a></li>
+									<li><a href="#desactivarCuenta">Desactivar cuenta</a></li>
+								</ul>
+							</li>
+							<li><a href="#saldo">Saldo</a></li>
+							<li><a href="#puntos">Puntos</a></li>
+							<li><a href="#cerrarSesion">Cerrar sesión</a></li>
+						</ul>
+					</li>
+					<li><a href="#ayuda">Ayuda</a></li>
+				</ul>
+			</aside>
+		</div>
+	</div>
+</body>
+</html>

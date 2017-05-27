@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Mis Viajes</title>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" href="/common.css" />
+	<link rel="stylesheet" href="/mis_viajes.css" />
+	<link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="/css/bootstrap-datetimepicker.min.css" />
+
+	<script type="text/javascript" src="/jquery.js"></script>
+	<script type="text/javascript" src="/js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="/mis_viajes.js"></script>
+
+	<script type="text/javascript" src="/navegacion.js"></script>
+	<script type="text/javascript" src="/js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="/js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="/js/mustache.js"></script>
+
+	<script id="viaje-template" type="text/template">
+	  <article class="row text-center noselect">
+			<a href="/detalle_viaje.html?id={{id}}">
+				<div class=" col-sm-3 " align="center">
+					<img alt="foto de usuario" src="{{foto_revisada}}" class="img-responsive img-circle" style="max-height: 70px">
+					<span class="label label-default">{{conductor}}</span>
+					<span id="reputacion" class="label label-warning" >{{reputacion_stars}}</span>
+				</div>
+				<div class="col-sm-7">
+					<div class="">
+							<h4  class="bg-primary">{{nombre_amigable}}</h4>
+							<h4 class="bg-success">{{fecha_inicio_revisada}}</h4>
+					</div>
+					<p class="">
+						{{#recorrido}}
+							<span class="label label-primary">{{nombre_localidad}}</span>
+							{{^es_destino}}
+								<span class="glyphicon glyphicon glyphicon-arrow-right"></span>
+							{{/es_destino}}
+						{{/recorrido}}
+					</p>
+				</div>
+				<div class="col-sm-2">
+					<h5 class="bg-success precio">
+						<span class=" glyphicon glyphicon-usd"></span>
+						<span class="valor-precio">{{precio}}</span>
+						</br><small class="bg-info">Recorrido completo</small>
+					</h5>
+				</div>
+			</a>
+	  </article>
+	</script>
+</head>
+
+<body>
+	<div class="loadingScreen"></div>
+	<main>
+		<div class="container-fluid">
+			<ol class="breadcrumb">
+			  <li><a href="/home.html">Home</a></li>
+			  <li class="active">Mis Viajes</li>
+			</ol>
+				<header class="col-xs-12 bg-primary">
+						<h3 class="col-xs-9">Mis Viajes</h3>
+						<div class="pull-right">
+							<span class="clickable alinear col-xs-3" onclick="toggleFilter()">
+								<i class="glyphicon glyphicon-filter"  data-toggle="tooltip" title="Filtrar viajes" data-container="body"></i>
+							</span>
+						</div>
+				</header>
+				<form class="form-horizontal col-xs-12" id="formFilter" onsubmit="showViajes(); return false">
+					<div class="form-group">
+						<label for="localidad" class="control-label col-xs-12 col-sm-3 col-sm-offset-0">Localidad:</label>
+						<div class="col-xs-12 col-sm-3 col-lg-3">
+							<input type="text" class="form-control" name="localidad" placeholder="Localidad">
+						</div>
+
+						<label for="conductor" class="control-label col-xs-12 col-sm-2 col-lg-2 col-sm-offset-0">Conductor:</label>
+						<div class="col-xs-12 col-sm-3 col-lg-3 col-lg-offset-0 ">
+							<input type="text" class="form-control" name="conductor" placeholder="Conductor">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="fechadesde" class="control-label col-xs-12  col-sm-3 col-sm-offset-0">Desde:</label>
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<div class="input-group date form_date">
+								<input type="text" class="form-control" name="fechadesde"  placeholder="Fecha desde" id="fechadesde">
+								<span class="input-group-addon " onclick="$('#fechadesde').datetimepicker('show');"> <span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+						<label for="fechahasta" class="control-label col-xs-12 col-sm-2 col-lg-offset-0">Hasta:</label>
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<div class="input-group date form_date">
+								<input type="text" class="form-control" placeholder="Fecha hasta" name="fechahasta" id="fechahasta">
+								<span class="input-group-addon" onclick="$('#fechahasta').datetimepicker('show');"><span class="glyphicon glyphicon-calendar"></span></span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="preciodesde" class="control-label col-xs-12  col-sm-3 col-sm-offset-0">Mínimo:</label>
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<div class="input-group">
+								<span class="input-group-addon "> <span class="glyphicon glyphicon-usd"></span></span>
+								<input type="number" class="form-control" min="0" step="0.01" name="preciodesde"  placeholder="Precio desde" id="preciodesde">
+							</div>
+						</div>
+						<label for="preciohasta" class="control-label col-xs-12 col-sm-2 col-lg-offset-0">Máximo:</label>
+						<div class="col-xs-12 col-sm-3 col-md-3 col-lg-3">
+							<div class="input-group">
+								<span class="input-group-addon"><span class="glyphicon glyphicon-usd"></span></span>
+								<input type="number" class="form-control" min="0" step="0.01" placeholder="Precio hasta" name="preciohasta" id="preciohasta">
+							</div>
+						</div>
+					</div>
+					<div class="form-group">
+					<!--
+						<label for="origen-destino" class="control-label col-xs-12 col-sm-3 col-sm-offset-0">Origen/Destino:</label>
+						<div class="col-xs-12 col-sm-3 col-lg-2">
+							<input type="text" class="form-control" name="origen-destino" placeholder="Origen/Destino">
+						</div>
+					-->
+						<div class="col-sm-3 col-md-3 col-lg-3 col-lg-offset-8 col-sm-offset-8 col-md-offset-8">
+							<button class="btn btn-block btn-primary " type="submit"><span class="glyphicon glyphicon-filter"></span> Filtrar</button>
+						</div>
+					</div>
+				</form>
+
+				<div id="panel-mis-viajes" class="col-xs-12">
+					<div id="mis-viajes">
+						<!-- viajes generados dinamicamente-->
+					</div>
+					<nav>
+					  <ul class="pagination pull-right" id="busqueda-paginacion">
+						<!-- paginas generadas dinamicamente-->
+					  </ul>
+					</nav>
+				</div>
+		</div>
+    </main>
+</body>
+</html>

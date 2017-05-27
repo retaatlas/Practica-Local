@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Viajes Compartidos</title>
+	<meta charset="utf-8" />
+
+	<link rel="stylesheet" href="alta_vehiculo.css" />
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css" />
+	<link rel="stylesheet" href="common.css" />
+
+	<script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+	<script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="js/locales/bootstrap-datetimepicker.es.js"></script>
+	<script type="text/javascript" src="alta_vehiculo.js"></script>
+	<script type="text/javascript" src="navegacion.js"></script>
+</head>
+
+<body>
+
+	<script src="js/jscolor.min.js"></script>
+    <main>
+    	<div class="container-fluid">
+    		<form id="form-vehiculo" class="form-horizontal" onsubmit="return submitFormVehiculo()">
+	    		<header class="bg-primary"><h3 class="pull-center">Alta de vehículo</h3></header>
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="marca" class="control-label col-md-4">Marca:</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control vc-validar" id="marca" name="marca" placeholder="Marca" required maxlength="30"></input>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="patente" class="control-label col-md-5">Patente:</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control vc-validar" id="patente" name="patente"  maxlength="15" placeholder="Patente" pattern="([A-Z]{3}[0-9]{3})|([A-Z]{2}[0-9]{3}[A-Z]{2})" data-invalid-msg="Formato: ABC123 o AB123CD "></input>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="modelo" class="control-label col-md-4">Modelo:</label>
+						<div class="col-md-6">
+							<input type="text" class="form-control vc-validar" id="modelo" name="modelo" placeholder="Modelo" required maxlength="30">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="color" class="control-label col-md-5">Color:</label>
+						<div class="col-md-6">
+							<input class="form-control jscolor" id="color" name="color" style="font-size: 0px" placeholder="Color" value="ff0000" required pattern="[0-9a-fA-F]{6}">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="anio" class="control-label col-md-4">Año:</label>
+						<div class="input-group date form_date col-md-6" id="divanio">
+							<input type="text" class="form-control vc-validar" id="anio" name="anio" placeholder="Año" required pattern="[0-9]{4}" data-invalid-msg="Ingresar un año en formato 4 digitos. Ejemplo: 2012">
+							<span class="input-group-addon " onclick="$('#anio').datetimepicker('show')"><span class="glyphicon glyphicon-calendar"></span></span>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="asientos" class="control-label col-md-5">Cantidad de asientos:</label>
+						<div class="col-md-6">
+							<input type="number" step="1" value="4" class="form-control vc-validar" name="asientos" id="asientos" min="2" max="30" required pattern="[0-9]*" data-invalid-msg="Ingresar un numero entre 2 y 30">
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="aire_acondicionado" class="control-label col-md-4">Aire acondicionado:</label>
+						<div class="col-md-6">
+							<select class="form-control" name="aire" id="aire">
+								<option value="S">Sí</option>
+								<option value="N">No</option>
+							</select>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<label for="seguro" class="control-label col-md-5">Seguro:</label>
+						<div class="col-md-6">
+							<select class="form-control" name="seguro" id="seguro">
+								<option value="S">Sí</option>
+								<option value="N">No</option>
+							</select>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-md-6">
+						<label for="foto" class="control-label col-md-4">foto:</label>
+						<div class="col-md-6">
+							<img id="foto_vehiculo" alt="Foto Vehiculo" class="img-responsive" style="max-height: 200px">
+					        <span class="btn btn-default btn-file ">Examinar <input type="file" name="foto_vehiculo" accept="image/*"></span>
+					     </div>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="col-xs-offset-7 col-sm-offset-9 col-md-offset-8 col-lg-offset-9">
+						<button type="button" class="btn btn-primary" onclick="submitFormVehiculo()"><span class="glyphicon glyphicon-plus"></span> Agregar</button>
+					</div>
+				</div>
+			</form>
+    	</div>
+
+		<div id="modal-success" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-success">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('success')">&times;</button>
+						<h3 class="dialog-title"> Éxito!</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="success-message">
+							Todo salió bien. <!-- Esto sera modificado desde javascript -->
+						</div>					</div><!-- modal-body -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeModal('success');"> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+
+		<div id="modal-warning" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-warning">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('warning')">&times;</button>
+						<h3 class="dialog-title"> Atención</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="warning-message">
+							Usuario debe saber esto <!-- Esto sera modificado desde javascript -->
+						</div>					</div><!-- modal-body -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" onclick="closeModal('warning');"> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+
+		<div id="modal-error" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content panel-danger">
+					<div class="modal-header panel-heading">
+						<button type="button" class="close" onclick="closeModal('error')">&times;</button>
+						<h3 class="dialog-title"> Ha ocurrido un error</h3>
+					</div><!-- modal-header -->
+					<div class="modal-body">
+						<div id="error-message">
+							Ha ocurrido un error. <!-- Esto sera modificado desde javascript -->
+						</div>
+					</div><!-- modal-body -->
+
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" onclick="closeModal('error')"><span class="glyphicon glyphicon-remove"></span> Cerrar</button>
+					</div><!-- .modal-footer -->
+				</div><!-- .modal-content -->
+			</div><!-- .modal-dialog -->
+		</div><!-- .modal -->
+    </main>
+
+</div>
+
+</body>
+</html>

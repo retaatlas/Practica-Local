@@ -1,0 +1,212 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte_comisiones" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd66dfab-c34f-4963-b1db-d95541e77117">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT * FROM
+    (SELECT
+        v.id_viaje AS Viaje,
+		cc.id_comision_cobrada AS Comision,
+		cc.fecha AS Fecha,
+		u.nombre_usuario AS Conductor,
+        pv.kilometros AS Km,
+		cc.monto AS "Monto total",
+		ec.nombre_estado AS Estado
+	FROM
+		VIAJE v
+		INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
+		INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
+		INNER JOIN COMISION c ON c.id_comision = cc.id_comision
+		INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
+		INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
+	ORDER BY v.id_viaje, cc.id_comision_cobrada) AS reporte
+
+;]]>
+	</queryString>
+	<field name="Comision" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Fecha" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Viaje" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Conductor" class="java.lang.String"/>
+	<field name="Km" class="java.lang.Float">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Monto total" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Estado" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="-20" width="595" height="92" backcolor="#006699" uuid="a7f41c07-12ed-407a-8122-9181ff598f3b"/>
+				<image>
+					<reportElement x="21" y="7" width="138" height="76" uuid="90d5dec5-782f-41ab-8559-80092c4cf910"/>
+					<imageExpression><![CDATA["vc.png"]]></imageExpression>
+				</image>
+				<staticText>
+					<reportElement x="121" y="20" width="321" height="43" forecolor="#FFFFFF" uuid="87de7a2d-b90a-4271-988c-d77f00d308e6"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[Viajes Compartidos]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="396" y="63" width="180" height="20" forecolor="#FFFFFF" uuid="0e0ec1f0-0540-4df4-bad2-2901ba962ed3"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Reporte de Viajes]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="e1d3487e-407c-4bee-84f8-59aa1c31c319"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="1" y="0" width="68" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5aa54663-cd51-4397-a81b-c4a8a9140e8b"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Comisión]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="69" y="0" width="123" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="606b671e-b8c2-4795-81d0-6fd44c29203b"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="192" y="0" width="51" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="d587e358-da74-437c-8edf-9960cbaa1772"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Viaje]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="243" y="0" width="106" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="5e120a17-0172-46f0-aa78-c942fd0d2a8a"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Conductor]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="349" y="0" width="50" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="9d85cd62-e301-42c7-ac07-1caf8073e6e1"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Kms]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="398" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="82e93830-658e-4f1c-897f-577ed98aee9b"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Monto total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="477" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="355ac9f9-83f4-45a4-aef6-c93fa947feb2"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="03a46b0e-1440-4238-a44b-fa5fd49c5c9a"/>
+			</line>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="14" y="0" width="42" height="20" uuid="eeea11b0-d900-490f-9430-a6ff5ec5f175"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Comision}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="69" y="0" width="123" height="20" uuid="f05c2d0d-18a3-4875-8965-2e8d7ef8452d"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Fecha}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="192" y="0" width="51" height="20" uuid="350e9da3-276a-484f-97bf-6677426b49b8"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Viaje}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="243" y="0" width="106" height="20" uuid="805c0e71-28f0-479d-bb98-679e6012fd5e"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Conductor}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="349" y="0" width="50" height="20" uuid="b94f7d88-c7b6-4e41-8a6a-92bac006bf61"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Km}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="398" y="0" width="79" height="20" uuid="a8c950e5-49dd-4b75-a7b0-5126f97bacb6"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Monto total}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true">
+				<reportElement x="477" y="0" width="79" height="20" uuid="07a95b1d-52b3-40ae-b080-1f0c6abb6bc7"/>
+				<textElement textAlignment="Center">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Estado}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="7732a423-2900-4e8f-883c-0de2920ace03"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="3645abcf-dac6-45ca-b400-3d83375f1972"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="2ef7582d-951b-4cdf-8cec-6226a98ff0a2"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

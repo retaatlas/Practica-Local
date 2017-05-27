@@ -1,0 +1,154 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" type="text/css" href="/common.css" />
+	<script type="application/javascript" src="/jquery.js"></script>
+	<script type="application/javascript">
+		toggleSidebar = function () {
+			$('body').toggleClass("sidebar-on");
+		}
+	</script>
+	<script id="navbar-navegacion-template" type="text/template">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle pull-left collapsed glyphicon glyphicon-menu-hamburger" onclick="toggleSidebar()">
+				</button>
+				<a class="navbar-brand" href="/home.html"><span class="glyphicon glyphicon-home"></span> Viajes compartidos</a>
+				{{#acceder_notificaciones}}
+				<a id="boton_notificaciones" class="navbar-brand pull-right" href="/notificaciones.html" title="Ver notificaciones"> <span class="glyphicon glyphicon-bell"><span id="cantidad_notificaciones"></span></span></a>
+				{{/acceder_notificaciones}}
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+		<!--<a href="/login" class=" navbar-right btn"><span class="glyphicon glyphicon-off"></span> Salir</a>-->
+				<ul class="nav navbar-nav navbar-right">
+		<li class="dropdown">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span id="dropdown-usuario"></span> <span class="caret"></span></a>
+			<ul class="dropdown-menu" id="dropdown-menu">
+				<!--ESTO LO SOBRE ESCRIBE PERMISOS.JS-->
+				{{#acceder_perfil}}
+				<li><a href="/perfil.html">Mi perfil</a></li>
+				{{/acceder_perfil}}
+				{{#acceder_mis_viajes}}
+				<li><a href="/mis_viajes.html">Mis viajes</a></li>
+				{{/acceder_mis_viajes}}
+				{{#acceder_mis_vehiculos}}
+				<li><a href="/mis_vehiculos.html">Mis vehículos</a></li>
+				{{/acceder_mis_vehiculos}}
+				<li role="separator" class="divider"></li>
+				<li><a href="/login"><span class="glyphicon glyphicon-off"></span> Salir</a></li>
+			</ul>
+		</li>
+				</ul>
+			</div><!--/.nav-collapse -->
+	</script>
+	<script id="botonera-sidebar-template" type="text/template">
+		<hr>
+		<div class="btn-group-vertical col-xs-12">
+			{{#crear_viajes}}
+			<a href="/alta_viaje.html" class="btn btn-primary" id="link-alta-viaje">Crear Viaje <span class="glyphicon glyphicon-road"></span></a>
+			{{/crear_viajes}}
+			{{#buscar_viajes}}
+			<a href="/home.html" class="btn btn-primary" id="link-alta-viaje">Buscar Viaje <span class="glyphicon glyphicon-search"></span></a>
+			{{/buscar_viajes}}
+		</div>
+		{{#crear_viajes}}{{#buscar_viajes}}
+		<hr class="col-xs-12">
+		{{/buscar_viajes}}{{/crear_viajes}}
+		<div class="btn-group-vertical col-xs-12">
+			{{#acceder_mis_viajes}}
+			<a href="/mis_viajes.html" class="btn btn-primary" id="link-mis-viajes">Mis viajes <span class="glyphicon glyphicon-globe"></span></a>
+			{{/acceder_mis_viajes}}
+			{{#acceder_mis_vehiculos}}
+			<a href="/mis_vehiculos.html" class="btn btn-primary" id="link-mis-vehiculos">Mis Vehiculos <span class="glyphicon glyphicon-plane"></span></a>
+			{{/acceder_mis_vehiculos}}
+			{{#acceder_perfil}}
+			<a href="/perfil.html" class="btn btn-primary" id="link-mi-perfil">Mi Perfil <span class="glyphicon glyphicon-user"></span></a>
+			{{/acceder_perfil}}
+		</div>
+		{{#acceder_mis_viajes}}{{#acceder_mis_vehiculos}}{{#acceder_perfil}}
+		<hr class="col-xs-12">
+		{{/acceder_perfil}}{{/acceder_mis_vehiculos}}{{/acceder_mis_viajes}}
+		<div class="btn-group-vertical col-xs-12">
+			{{#cargar_saldo}}
+			<a href="/saldo.html" class="btn btn-primary">Saldo <span class="glyphicon glyphicon-usd"></span></a>
+			{{/cargar_saldo}}
+			{{#acceder_puntos}}
+			<a href="/puntos.html" class="btn btn-primary">Puntos <span class="glyphicon glyphicon-credit-card"></span></a>
+			{{/acceder_puntos}}
+		<!-- Esto todavia no esta implementado(ni lo va a estar nunca)
+			<a href="#" class="btn btn-success">Beneficios <span class="glyphicon glyphicon-gift"></span><a>
+		-->
+		</div>
+		<hr class="col-xs-12">
+		<div class="btn-group-vertical col-xs-12">
+			{{#administrar_usuarios}}
+			<a href="/abm.html" class="btn btn-primary">Administrar Usuarios <span class="glyphicon glyphicon-wrench"></span></a>
+			{{/administrar_usuarios}}
+			{{#administrar_comisiones}}
+			<a href="/abm_comisiones.html" class="btn btn-primary">Administrar Tarifas <span class="glyphicon glyphicon-wrench"></span></a>
+			{{/administrar_comisiones}}
+			{{#generar_reportes}}
+			<hr class="">
+			<a href="/reportes/viajes.html" class="btn btn-primary">Reporte de Viajes <span class="glyphicon glyphicon-list-alt"></span></a>
+			<a href="/reportes/comisiones.html" class="btn btn-primary">Reporte de Comisiones <span class="glyphicon glyphicon-list-alt"></span></a>
+			{{/generar_reportes}}
+		</div>
+		{{#acceder_ayuda}}
+		<div class="btn-group-vertical col-xs-12">
+			<a href="/manual_de_usuario.html" class="btn btn-primary">Ayuda <span class="glyphicon glyphicon-book"></span></a>
+		</div>
+		{{/acceder_ayuda}}
+	</script>
+
+	<title>Ejemplo de sidebar</title>
+</head>
+
+<body>
+    <nav id="common-navbar" class="navbar navbar-fixed-top" id="commonbar">
+      <div class="container" id="navbar-dinamico">
+				<!-- NAVBAR GENERADA DINAMICAMENTE SEGUN PERMISOS-->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar -->
+
+	<sidebar id="common-sidebar">
+		<nav>
+			<a href="/home.html"><img src="/img/navegacion/vc.svg" alt="Viajes compartidos"></a>
+			<div id="botonera-sidebar">
+				<!-- BOTONERA GENERADA DINAMICAMENTE SEGUN PERMISOS-->
+			</div>
+
+			<div class="mobile-only" id="panel-mobile">
+				<hr class="col-xs-12">
+				<div class="btn-group-vertical col-xs-12">
+					<a href="/login" class="btn btn-danger">Salir <span class="glyphicon glyphicon-off"></span></a>
+				</div>
+			</div>
+		</nav>
+	</sidebar>
+
+	<main>
+	</main>
+	<div id="common-modal" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h3 id="common-modal-title" class="dialog-title">Titulo del mensaje</h3>
+				</div><!-- modal-header -->
+				<div class="modal-body">
+					<div id="common-modal-body">
+						Texto del mensaje
+					</div>
+				</div><!-- modal-body -->
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> Aceptar</button>
+				</div><!-- .modal-footer -->
+			</div><!-- .modal-content -->
+		</div><!-- .modal-dialog -->
+	</div><!-- .modal -->
+
+</body>
+</html>
