@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-06-04T14:16:51 -->
+<!-- 2017-06-04T17:15:02 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vc_reporte_comisiones" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd66dfab-c34f-4963-b1db-d95541e77117">
+	<property name="net.sf.jasperreports.chart.pie.ignore.duplicated.key" value="true"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -88,10 +89,24 @@
 						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
 						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo				
 						   
-			    GROUP BY u.nombre_usuario) as ViajesXUsuario
+			    GROUP BY u.nombre_usuario
+			    ) as ViajesXUsuario		    
 		    
-		    
-            on Reporte.Conductor=ViajesXUsuario.usuario        
+            on Reporte.Conductor=ViajesXUsuario.usuario 
+            
+            inner join 
+	            (SELECT ec.nombre_estado AS EstadoComision, count(v.id_viaje) as Cant_comision_x_estado
+					FROM
+						VIAJE v
+						INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
+						INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
+						INNER JOIN COMISION c ON c.id_comision = cc.id_comision
+						INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
+						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
+						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo				
+						   
+			    GROUP BY ec.nombre_estado) as ComisionesXEstado
+			    on Reporte.Estado = ComisionesXEstado.EstadoComision       
             
             WHERE (
 		   				 	(Viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
@@ -112,7 +127,8 @@
 						
 		    GROUP BY reporte.Comision
 		    ORDER BY reporte.Comision, reporte.Viaje
-		    
+		 				
+						    
 ;]]>
 	</queryString>
 	<field name="Patente" class="java.lang.String">
@@ -141,6 +157,7 @@
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
 	<field name="Cant_viajes_x_usuario" class="java.lang.Integer"/>
+	<field name="Cant_comision_x_estado" class="java.lang.Integer"/>
 	<variable name="monto_total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -338,7 +355,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="328">
+		<band height="334">
 			<textField>
 				<reportElement x="491" y="10" width="65" height="20" backcolor="#FFFFFF" uuid="647da121-d354-4d89-a043-68c5f46461af"/>
 				<textElement textAlignment="Center">
@@ -353,32 +370,58 @@
 				</textElement>
 				<text><![CDATA[Monto total:]]></text>
 			</staticText>
-			<barChart>
+			<pieChart>
 				<chart evaluationTime="Report">
-					<reportElement positionType="Float" isPrintRepeatedValues="false" x="0" y="40" width="279" height="287" uuid="96bbea9a-983b-42f8-9705-8df48dbc51c2"/>
-					<chartTitle/>
+					<reportElement x="280" y="39" width="275" height="287" uuid="46ac8f63-75ec-48cd-92bb-3a43de35d6ef"/>
+					<box>
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<chartTitle>
+						<font size="19"/>
+						<titleExpression><![CDATA["Comisiones según estado"]]></titleExpression>
+					</chartTitle>
 					<chartSubtitle/>
 					<chartLegend/>
 				</chart>
-				<categoryDataset>
-					<categorySeries>
-						<seriesExpression><![CDATA[$F{Conductor}]]></seriesExpression>
-						<categoryExpression><![CDATA["Viajes por usuario"]]></categoryExpression>
-						<valueExpression><![CDATA[$F{Cant_viajes_x_usuario}]]></valueExpression>
-						<labelExpression><![CDATA[$F{Conductor}]]></labelExpression>
-					</categorySeries>
-				</categoryDataset>
-				<barPlot>
+				<pieDataset>
+					<keyExpression><![CDATA[$F{Estado}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Cant_comision_x_estado}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{2}" legendLabelFormat="{0}({1})">
 					<plot/>
 					<itemLabel/>
-					<categoryAxisFormat>
-						<axisFormat/>
-					</categoryAxisFormat>
-					<valueAxisFormat>
-						<axisFormat/>
-					</valueAxisFormat>
-				</barPlot>
-			</barChart>
+				</piePlot>
+			</pieChart>
+			<pieChart>
+				<chart isShowLegend="true" evaluationTime="Report">
+					<reportElement x="0" y="39" width="279" height="287" uuid="75f6d67b-5328-4453-bf0a-47d21fe17f78"/>
+					<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+						<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+						<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					</box>
+					<chartTitle>
+						<font size="21"/>
+						<titleExpression><![CDATA["Top 6 - Conductores"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<pieDataset maxCount="6">
+					<keyExpression><![CDATA[$F{Conductor}]]></keyExpression>
+					<valueExpression><![CDATA[$F{Cant_viajes_x_usuario}]]></valueExpression>
+					<otherKeyExpression><![CDATA[]]></otherKeyExpression>
+					<otherLabelExpression><![CDATA["Otros"]]></otherLabelExpression>
+				</pieDataset>
+				<piePlot isShowLabels="true" isCircular="true" labelFormat="{2}" legendLabelFormat="{0}({1})">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
 		</band>
 	</summary>
 </jasperReport>
