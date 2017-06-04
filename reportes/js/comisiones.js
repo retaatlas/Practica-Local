@@ -16,35 +16,6 @@ reporte.loadData = function(){
 window.onload= function(){
 	reporte.loadData();
 	$('[data-toggle="tooltip"]').tooltip();
-	$('#fechadesde, #fechahasta').datetimepicker({
-        format: 'dd/mm/yyyy',
-    	language: "es",
-    	startView: 3,
-    	minView: 2,
-    	maxView: 2,
-		autoclose: true,
-    	todayBtn: true,
-		clearBtn: true,
-	});
-	
-	inputConductor = $('#reportForm input[name=conductor]').magicSuggest({
-		method: 'GET',
-		data: '/autocompletado',
-		mode: 'remote',
-		allowFreeEntries: false,
-		selectFirst: true,
-		maxSelection: 1,
-		hideTrigger: true,
-		placeholder: 'Conductor',
-		noSuggestionText: 'No hay sugerencias',
-		minChars: 3,
-		maxSelectionRenderer: function(){},
-		minCharsRenderer: function() {},
-		valueField: 'nombre_usuario',
-		dataUrlParams: {
-			entity: "cliente"
-		}
-	});	
 	/*
 	inputPatente = $('#reportForm input[name=id-comision-desde]').magicSuggest({
 		method: 'GET',
@@ -63,8 +34,76 @@ window.onload= function(){
 		dataUrlParams: {
 			entity: "vehiculo"
 		}
-	});	
+	});
 	*/
+		$('#fechadesde, #fechahasta').datetimepicker({
+        format: 'dd/mm/yyyy',
+    	language: "es",
+    	startView: 3,
+    	minView: 2,
+    	maxView: 2,
+		autoclose: true,
+    	todayBtn: true,
+		clearBtn: true,
+	});
+	inputConductor = $('#reportForm input[name=conductor]').magicSuggest({
+		method: 'GET',
+		data: '/autocompletado',
+		mode: 'remote',
+		allowFreeEntries: false,
+		selectFirst: true,
+		maxSelection: 1,
+		hideTrigger: true,
+		placeholder: 'Conductor',
+		noSuggestionText: 'No hay sugerencias',
+		minChars: 3,
+		maxSelectionRenderer: function(){},
+		minCharsRenderer: function() {},
+		valueField: 'nombre_usuario',
+		dataUrlParams: {
+			entity: "cliente"
+		}
+	});	
+	
+	inputOrigen = $('#reportForm input[name=id-viaje-desde]').magicSuggest({
+		method: 'GET',
+		data: '/autocompletado',
+		mode: 'remote',
+		allowFreeEntries: false,
+		selectFirst: true,
+		maxSelection: 1,
+		hideTrigger: true,
+		placeholder: 'Buscar Localidades',
+		noSuggestionText: 'No hay sugerencias',
+		minChars: 3,
+		maxSelectionRenderer: function(){},
+		minCharsRenderer: function() {},
+		dataUrlParams: {
+			entity: "localidad"
+		}
+	});
+	
+	inputOrigen = $('#reportForm input[name=id-viaje-hasta]').magicSuggest({
+		method: 'GET',
+		data: '/autocompletado',
+		mode: 'remote',
+		allowFreeEntries: false,
+		selectFirst: true,
+		maxSelection: 1,
+		hideTrigger: true,
+		placeholder: 'Buscar Localidades',
+		noSuggestionText: 'No hay sugerencias',
+		minChars: 3,
+		maxSelectionRenderer: function(){},
+		minCharsRenderer: function() {},
+		dataUrlParams: {
+			entity: "localidad"
+		}
+	});
+	
+	 
+		
+	 
 	
 	
 }
@@ -72,9 +111,10 @@ window.onload= function(){
 
 var generarReporte = function(){
 	var data = {};
+	data.id_comision_desde = $("#reportForm input[name=id-comision-desde]").val(); //es la patente
 	data.id_viaje_desde = $("#reportForm input[name=id-viaje-desde]").val();
 	data.id_viaje_hasta = $("#reportForm input[name=id-viaje-hasta]").val();	
-	data.id_comision_desde = $("#reportForm input[name=id-comision-desde]").val(); //es la patente
+	
 	//data.id_comision_desde = (inputPatente.getValue()[0]==undefined)? "" : inputPatente.getValue()[0];
 	data.id_comision_hasta = $("#reportForm input[name=id-comision-hasta]").val();
 	var fecha_desde = $("#reportForm input[name=fechadesde]").val();

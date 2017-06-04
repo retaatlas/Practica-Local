@@ -48,18 +48,18 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<label for="id-viaje-desde" class="control-label col-md-3">Id viaje desde:</label>
+					<label for="id-viaje-desde" class="control-label col-md-3">Ciudad orígen:</label>
 					<div class="col-md-3">
 						<div class="input-group">
-							<span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-send"></span></span>
-							<input type="number" class="form-control" min="0" step="1" name="id-viaje-desde" placeholder="Id viaje desde">
+							<span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-upload"></span></span>
+							<input type="text" class="form-control" style="z-index:999" name="id-viaje-desde" placeholder="Orígen">
 						</div>
 					</div>
-					<label for="id-viaje-hasta" class="control-label col-md-2">Id viaje hasta:</label>
+					<label for="id-viaje-hasta" class="control-label col-md-2">Ciudad Destino:</label>
 					<div class="col-md-3">
 						<div class="input-group">
-							<span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-send"></span></span>
-							<input type="number" class="form-control" min="0" step="1" name="id-viaje-hasta" placeholder="Id viaje hasta">
+							<span class="input-group-addon"><span class="glyphicon glyphicon glyphicon-download"></span></span>
+							<input type="text" class="form-control" style="z-index:999" name="id-viaje-hasta" placeholder="Destino">
 						</div>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 					<div class="col-md-3">
 						<div class="input-group">
 							<span class="input-group-addon"><span class="glyphicon glyphicon-credit-card"></span></span>
-							<input type="text" class="form-control" min="0" step="1" name="id-comision-desde" placeholder="Patente">
+							<input type="text" class="form-control" min="0" step="1" style="z-index:950" name="id-comision-desde" placeholder="Patente">
 						</div>
 					</div>
 					<label for="id-comision-hasta" class="control-label col-md-2">Id comisión hasta:</label>
@@ -132,7 +132,7 @@
 					<div class="col-md-3">
 						<div class="input-group">
 							<span class="input-group-addon"><span class="glyphicon glyphicon-education"></span></span>
-							<input type="text" class="form-control" name="conductor" placeholder="Conductor">
+							<input type="text" class="form-control" min="0" step="1" style="z-index:900" name="conductor" placeholder="Conductor">
 						</div>
 					</div>
 					<label for="estado" class="control-label col-md-2">Estado:</label>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-05-25T19:40:36 -->
+<!-- 2017-06-04T14:16:51 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vc_reporte_comisiones" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd66dfab-c34f-4963-b1db-d95541e77117">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
@@ -49,43 +49,70 @@
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
 	<queryString language="SQL">
-		<![CDATA[SELECT * FROM
-    (SELECT
-        v.id_viaje AS Viaje,
-		cc.id_comision_cobrada AS Comision,
-		cc.fecha AS Fecha,
-		u.nombre_usuario AS Conductor,
-        ROUND(pv.kilometros,2) AS Km,
-        ROUND(c.precio,2) AS Tarifa,
-        pv.nro_asientos AS Asientos,
-		ROUND(cc.monto,2) AS monto,
-		ec.nombre_estado AS Estado,
-		veh.patente AS Patente
-	FROM
-		VIAJE v
-		INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
-		INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
-		INNER JOIN COMISION c ON c.id_comision = cc.id_comision
-		INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
-		INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
-		INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo
-	) AS reporte
-    WHERE (Viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
-            and (Viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
-            and (LOWER(Patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
-            and (Comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
-            and (Fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
-            and (Fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
-            and (LOWER(Conductor) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
-            and (Estado LIKE "$P!{estado}%")
-            and (Km >= $P!{km_desde} or $P!{km_desde} is null)
-            and (Km <= $P!{km_hasta} or $P!{km_hasta} is null)
-            and (monto >= $P!{monto_desde} or $P!{monto_desde} is null)
-            and (monto <= $P!{monto_hasta} or $P!{monto_hasta} is null)
-            and (Asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
-            and (Asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)
-    GROUP BY reporte.Comision
-    ORDER BY reporte.Comision, reporte.Viaje
+		<![CDATA[SELECT *
+				FROM
+					
+					    (SELECT
+					        v.id_viaje AS Viaje,
+							cc.id_comision_cobrada AS Comision,
+							cc.fecha AS Fecha,
+							u.nombre_usuario AS Conductor,
+					        ROUND(pv.kilometros,2) AS Km,
+					        ROUND(c.precio,2) AS Tarifa,
+					        pv.nro_asientos AS Asientos,
+							ROUND(cc.monto,2) AS monto,
+							ec.nombre_estado AS Estado,
+							veh.patente AS Patente
+							
+						FROM
+							VIAJE v
+							INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
+							INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
+							INNER JOIN COMISION c ON c.id_comision = cc.id_comision
+							INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
+							INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
+							INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo
+						) AS reporte
+				
+		   				 
+		   
+		   
+		   inner join 
+	            (SELECT u.nombre_usuario as usuario, count(v.id_viaje) as Cant_viajes_x_usuario
+					FROM
+						VIAJE v
+						INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
+						INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
+						INNER JOIN COMISION c ON c.id_comision = cc.id_comision
+						INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
+						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
+						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo				
+						   
+			    GROUP BY u.nombre_usuario) as ViajesXUsuario
+		    
+		    
+            on Reporte.Conductor=ViajesXUsuario.usuario        
+            
+            WHERE (
+		   				 	(Viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+				            and (Viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
+				            and (LOWER(Patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
+				            and (Comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
+				            and (Fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
+				            and (Fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
+				            and (LOWER(Conductor) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
+				            and (Estado LIKE "$P!{estado}%")
+				            and (Km >= $P!{km_desde} or $P!{km_desde} is null)
+				            and (Km <= $P!{km_hasta} or $P!{km_hasta} is null)
+				            and (monto >= $P!{monto_desde} or $P!{monto_desde} is null)
+				            and (monto <= $P!{monto_hasta} or $P!{monto_hasta} is null)
+				            and (Asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
+						    and (Asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)
+						)
+						
+		    GROUP BY reporte.Comision
+		    ORDER BY reporte.Comision, reporte.Viaje
+		    
 ;]]>
 	</queryString>
 	<field name="Patente" class="java.lang.String">
@@ -113,6 +140,7 @@
 	<field name="Estado" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="Cant_viajes_x_usuario" class="java.lang.Integer"/>
 	<variable name="monto_total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -310,7 +338,7 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="30">
+		<band height="328">
 			<textField>
 				<reportElement x="491" y="10" width="65" height="20" backcolor="#FFFFFF" uuid="647da121-d354-4d89-a043-68c5f46461af"/>
 				<textElement textAlignment="Center">
@@ -325,6 +353,32 @@
 				</textElement>
 				<text><![CDATA[Monto total:]]></text>
 			</staticText>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement positionType="Float" isPrintRepeatedValues="false" x="0" y="40" width="279" height="287" uuid="96bbea9a-983b-42f8-9705-8df48dbc51c2"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{Conductor}]]></seriesExpression>
+						<categoryExpression><![CDATA["Viajes por usuario"]]></categoryExpression>
+						<valueExpression><![CDATA[$F{Cant_viajes_x_usuario}]]></valueExpression>
+						<labelExpression><![CDATA[$F{Conductor}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
 		</band>
 	</summary>
 </jasperReport>
