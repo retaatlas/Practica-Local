@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-06-07T22:32:02 -->
+<!-- 2017-06-08T21:40:43 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vc_reporte_comisiones" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd66dfab-c34f-4963-b1db-d95541e77117">
 	<property name="net.sf.jasperreports.chart.pie.ignore.duplicated.key" value="true"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -64,7 +64,7 @@
 							ROUND(cc.monto,2) AS monto,
 							ec.nombre_estado AS Estado,
 							veh.patente AS Patente
-										
+							pv.usuario as Pasajero			
 							
 						FROM
 							VIAJE v
@@ -74,7 +74,22 @@
 							INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
 							INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
 							INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo
-							
+						WHERE (
+							 (V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+				            and (V.id_viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
+				            and (LOWER(veh.patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
+				            and (c.id_comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
+				            and (cc.fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
+				            and (cc.fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
+				            and (LOWER(u.nombre_usuario) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
+				            and (ec.nombre_estado LIKE "$P!{estado}%")				            
+				            and (ROUND(pv.kilometros,2) >= $P!{km_desde} or $P!{km_desde} is null)
+				            and (ROUND(pv.kilometros,2) <= $P!{km_hasta} or $P!{km_hasta} is null)
+				            and (ROUND(cc.monto,2) >= $P!{monto_desde} or $P!{monto_desde} is null)
+				            and (ROUND(cc.monto,2) <= $P!{monto_hasta} or $P!{monto_hasta} is null)
+				            and (pv.nro_asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
+						    and (pv.nro_asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)   
+			    		)	
 						) AS reporte
 				
 		   				 
@@ -90,7 +105,8 @@
 						INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
 						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
 						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo				
-						WHERE (V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+						WHERE (
+							 (V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
 				            and (V.id_viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
 				            and (LOWER(veh.patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
 				            and (c.id_comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
@@ -104,6 +120,7 @@
 				            and (ROUND(cc.monto,2) <= $P!{monto_hasta} or $P!{monto_hasta} is null)
 				            and (pv.nro_asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
 						    and (pv.nro_asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)   
+			    		)
 			    GROUP BY u.nombre_usuario
 			    ) as ViajesXUsuario		    
 		    
@@ -140,7 +157,8 @@
             
            
            
-           inner join (
+           inner join 
+           (
 			Select count(*) as TotalFilas
 			 			from VIAJE v
 						INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
@@ -149,7 +167,23 @@
 						INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
 						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
 						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo	
-										 	
+						 
+            WHERE (
+		   				 	(V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+				            and (V.id_viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
+				            and (LOWER(veh.patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
+				            and (c.id_comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
+				            and (cc.fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
+				            and (cc.fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
+				            and (LOWER(u.nombre_usuario) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
+				            and (ec.nombre_estado LIKE "$P!{estado}%")				            
+				            and (ROUND(pv.kilometros,2) >= $P!{km_desde} or $P!{km_desde} is null)
+				            and (ROUND(pv.kilometros,2) <= $P!{km_hasta} or $P!{km_hasta} is null)
+				            and (ROUND(cc.monto,2) >= $P!{monto_desde} or $P!{monto_desde} is null)
+				            and (ROUND(cc.monto,2) <= $P!{monto_hasta} or $P!{monto_hasta} is null)
+				            and (pv.nro_asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
+						    and (pv.nro_asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)   
+						)				 	
 		) as TablaCuentaFilas
            
            
@@ -163,32 +197,58 @@
 						INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
 						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
 						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo				
-						WHERE (true  
+						WHERE (
+							(V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+				            and (V.id_viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
+				            and (LOWER(veh.patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
+				            and (c.id_comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
+				            and (cc.fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
+				            and (cc.fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
+				            and (LOWER(u.nombre_usuario) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
+				            and (ec.nombre_estado LIKE "$P!{estado}%")				            
+				            and (ROUND(pv.kilometros,2) >= $P!{km_desde} or $P!{km_desde} is null)
+				            and (ROUND(pv.kilometros,2) <= $P!{km_hasta} or $P!{km_hasta} is null)
+				            and (ROUND(cc.monto,2) >= $P!{monto_desde} or $P!{monto_desde} is null)
+				            and (ROUND(cc.monto,2) <= $P!{monto_hasta} or $P!{monto_hasta} is null)
+				            and (pv.nro_asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
+						    and (pv.nro_asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)   
 						)	
 			    GROUP BY date(fecha)) as ComisionesXDia
 			    on (date(Reporte.Fecha) = date(ComisionesXDia.FechaComision))
+            
+            inner join 
+	            (SELECT pv.usuario as Pasajero, count(cc.id_comision_cobrada) as Cant_comision_x_Pasajero
+					FROM
+						VIAJE v
+						INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
+						INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
+						INNER JOIN COMISION c ON c.id_comision = cc.id_comision
+						INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
+						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
+						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo				
+						WHERE (
+							(V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+				            and (V.id_viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
+				            and (LOWER(veh.patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
+				            and (c.id_comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
+				            and (cc.fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
+				            and (cc.fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
+				            and (LOWER(u.nombre_usuario) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
+				            and (ec.nombre_estado LIKE "$P!{estado}%")				            
+				            and (ROUND(pv.kilometros,2) >= $P!{km_desde} or $P!{km_desde} is null)
+				            and (ROUND(pv.kilometros,2) <= $P!{km_hasta} or $P!{km_hasta} is null)
+				            and (ROUND(cc.monto,2) >= $P!{monto_desde} or $P!{monto_desde} is null)
+				            and (ROUND(cc.monto,2) <= $P!{monto_hasta} or $P!{monto_hasta} is null)
+				            and (pv.nro_asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
+						    and (pv.nro_asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)   
+						)	
+			    GROUP BY u.nombre) as ComisionesXPasajero
+			    on (Reporte.Pasajero) =ComisionesXPasajero.Pasajero)
            
            
            
            
-           
-           
-            WHERE (
-		   				 	(Viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
-				            and (Viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
-				            and (LOWER(Patente) = LOWER("$P!{patente}")  or "$P!{patente}" = "")
-				            and (Comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
-				            and (Fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
-				            and (Fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
-				            and (LOWER(Conductor) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
-				            and (Estado LIKE "$P!{estado}%")				            
-				            and (Km >= $P!{km_desde} or $P!{km_desde} is null)
-				            and (Km <= $P!{km_hasta} or $P!{km_hasta} is null)
-				            and (monto >= $P!{monto_desde} or $P!{monto_desde} is null)
-				            and (monto <= $P!{monto_hasta} or $P!{monto_hasta} is null)
-				            and (Asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
-						    and (Asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)
-						)
+          
 			
 						
 		    GROUP BY reporte.Comision
@@ -235,8 +295,8 @@
 		<variableExpression><![CDATA[$F{Viaje}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
-	<variable name="TotalFilas" class="java.lang.Integer" incrementType="Report">
-		<variableExpression><![CDATA[$F{Viaje}]]></variableExpression>
+	<variable name="TotalFilas" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{TotalFilas}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
 	</variable>
 	<background>
@@ -512,9 +572,9 @@
 				</chart>
 				<categoryDataset>
 					<categorySeries>
-						<seriesExpression><![CDATA[ $F{FechaComision}]]></seriesExpression>
+						<seriesExpression><![CDATA[$F{FechaComision}]]></seriesExpression>
 						<categoryExpression><![CDATA[""]]></categoryExpression>
-						<valueExpression><![CDATA[$F{Cant_comision_x_dia} ]]></valueExpression>
+						<valueExpression><![CDATA[$F{Cant_comision_x_dia}]]></valueExpression>
 						<labelExpression><![CDATA[$F{FechaComision}.toString()]]></labelExpression>
 					</categorySeries>
 				</categoryDataset>
@@ -548,6 +608,14 @@
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement x="0" y="27" width="100" height="13" uuid="5e9caf39-4d21-4c6a-b5f9-1f7d1d0ad4f0"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="26" y="5" width="154" height="30" uuid="fb416597-6b45-471d-93ef-45e4c1223086"/>
+				<textFieldExpression><![CDATA[$V{TotalFilas}.toString()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="201" y="0" width="139" height="30" uuid="db5631a1-ee36-4eab-9928-07a7233e1721"/>
+				<textFieldExpression><![CDATA[$F{TotalFilas}.toString()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
