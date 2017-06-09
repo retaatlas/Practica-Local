@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-06-08T21:40:43 -->
+<!-- 2017-06-08T23:16:08 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vc_reporte_comisiones" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd66dfab-c34f-4963-b1db-d95541e77117">
 	<property name="net.sf.jasperreports.chart.pie.ignore.duplicated.key" value="true"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -63,8 +63,9 @@
 					        pv.nro_asientos AS Asientos,
 							ROUND(cc.monto,2) AS monto,
 							ec.nombre_estado AS Estado,
-							veh.patente AS Patente
-							pv.usuario as Pasajero			
+							veh.patente AS Patente, 
+							pasajero.nombre_usuario	as Pasajero
+							 			
 							
 						FROM
 							VIAJE v
@@ -74,6 +75,7 @@
 							INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
 							INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
 							INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo
+							  inner join usuario pasajero on pv.id_cliente = pasajero.id_usuario
 						WHERE (
 							 (V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
 				            and (V.id_viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
@@ -216,16 +218,17 @@
 			    GROUP BY date(fecha)) as ComisionesXDia
 			    on (date(Reporte.Fecha) = date(ComisionesXDia.FechaComision))
             
-            inner join 
-	            (SELECT pv.usuario as Pasajero, count(cc.id_comision_cobrada) as Cant_comision_x_Pasajero
+           inner join 
+	           (SELECT sum(pv.nro_asientos) as CantPorPasajero, (u.nombre_usuario) as Pasajero, cc.id_comision_cobrada
 					FROM
 						VIAJE v
 						INNER JOIN PASAJERO_VIAJE pv ON v.id_viaje=pv.id_viaje
 						INNER JOIN COMISION_COBRADA cc ON pv.id_comision_cobrada=cc.id_comision_cobrada
 						INNER JOIN COMISION c ON c.id_comision = cc.id_comision
-						INNER JOIN USUARIO u ON v.id_cliente = u.id_usuario
+						INNER JOIN USUARIO u ON pv.id_cliente = u.id_usuario
 						INNER JOIN ESTADO_COMISION ec ON ec.id_estado_comision=cc.estado
-						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo				
+						INNER JOIN VEHICULO veh ON veh.id_vehiculo = v.id_vehiculo
+						INNER JOIN USUARIO conductor ON v.id_cliente = conductor.id_usuario			
 						WHERE (
 							(V.id_viaje >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
 				            and (V.id_viaje <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
@@ -233,7 +236,7 @@
 				            and (c.id_comision <= $P!{id_comision_hasta} or $P!{id_comision_hasta} is null)
 				            and (cc.fecha >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
 				            and (cc.fecha <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
-				            and (LOWER(u.nombre_usuario) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
+				            and (LOWER(conductor.nombre_usuario) = LOWER("$P!{conductor}")  or "$P!{conductor}" = "")
 				            and (ec.nombre_estado LIKE "$P!{estado}%")				            
 				            and (ROUND(pv.kilometros,2) >= $P!{km_desde} or $P!{km_desde} is null)
 				            and (ROUND(pv.kilometros,2) <= $P!{km_hasta} or $P!{km_hasta} is null)
@@ -241,9 +244,10 @@
 				            and (ROUND(cc.monto,2) <= $P!{monto_hasta} or $P!{monto_hasta} is null)
 				            and (pv.nro_asientos >= $P!{asientos_desde} or $P!{asientos_desde} is null)
 						    and (pv.nro_asientos <= $P!{asientos_hasta} or $P!{asientos_hasta} is null)   
-						)	
-			    GROUP BY u.nombre) as ComisionesXPasajero
-			    on (Reporte.Pasajero) =ComisionesXPasajero.Pasajero)
+						)
+                        GROUP BY  Pasajero
+             	) as ComisionesXPasajero
+			    on (Reporte.Pasajero) = (ComisionesXPasajero.Pasajero)
            
            
            
@@ -287,6 +291,8 @@
 	<field name="TotalFilas" class="java.lang.Integer"/>
 	<field name="FechaComision" class="java.lang.String"/>
 	<field name="Cant_comision_x_dia" class="java.lang.Integer"/>
+	<field name="CantPorPasajero" class="java.lang.Integer"/>
+	<field name="Pasajero" class="java.lang.String"/>
 	<variable name="monto_total" class="java.math.BigDecimal" calculation="Sum">
 		<variableExpression><![CDATA[$F{monto}]]></variableExpression>
 		<initialValueExpression><![CDATA[0]]></initialValueExpression>
@@ -558,7 +564,7 @@
 				</piePlot>
 			</pieChart>
 		</band>
-		<band height="288">
+		<band height="673">
 			<printWhenExpression><![CDATA[$F{TotalFilas}==$V{TotalFilas}]]></printWhenExpression>
 			<barChart>
 				<chart evaluationTime="Report">
@@ -585,7 +591,49 @@
 						<axisFormat/>
 					</categoryAxisFormat>
 					<valueAxisFormat>
+						<axisFormat tickLabelMask="##"/>
+					</valueAxisFormat>
+					<rangeAxisMaxValueExpression><![CDATA[50]]></rangeAxisMaxValueExpression>
+				</barPlot>
+			</barChart>
+			<barChart>
+				<chart evaluationTime="Report">
+					<reportElement x="0" y="330" width="555" height="271" uuid="0111e758-d852-411e-9416-bca4291f8364"/>
+					<chartTitle>
+						<font size="21"/>
+						<titleExpression><![CDATA["Pasajeros con más cantidad de comisiones"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{Pasajero}]]></seriesExpression>
+						<categoryExpression><![CDATA[""]]></categoryExpression>
+						<valueExpression><![CDATA[$F{CantPorPasajero}]]></valueExpression>
+						<labelExpression><![CDATA[$F{Pasajero}]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot orientation="Horizontal">
+						<seriesColor seriesOrder="0" color="#0808FF"/>
+						<seriesColor seriesOrder="1" color="#9CCFFF"/>
+						<seriesColor seriesOrder="2" color="#FF1C86"/>
+						<seriesColor seriesOrder="3" color="#19FA00"/>
+						<seriesColor seriesOrder="4" color="#E8F70C"/>
+						<seriesColor seriesOrder="5" color="#FF1500"/>
+						<seriesColor seriesOrder="6" color="#050505"/>
+						<seriesColor seriesOrder="7" color="#A3F27C"/>
+						<seriesColor seriesOrder="8" color="#2366E9"/>
+						<seriesColor seriesOrder="9" color="#94B593"/>
+						<seriesColor seriesOrder="10" color="#1567AC"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat>
 						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat tickLabelMask="##"/>
 					</valueAxisFormat>
 				</barPlot>
 			</barChart>
