@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
+<!-- 2017-06-11T22:35:16 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vc_reporte_viajes" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="280e57b1-5c27-4247-82b8-e2a8046a2de7">
+	<property name="net.sf.jasperreports.chart.pie.ignore.duplicated.key" value="true"/>
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Seminario"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="id_viaje_desde" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
@@ -39,48 +44,74 @@
 	<parameter name="pasajeros_hasta" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[null]]></defaultValueExpression>
 	</parameter>
+	<parameter name="TotalFilas2" class="java.lang.Integer"/>
+	<parameter name="pasajeros" class="java.lang.Integer"/>
 	<queryString language="SQL">
-		<![CDATA[SELECT
-Id,Inicio,Conductor, e.nombre_estado AS estado,km,pasajeros,precio
-FROM
-    (SELECT
-        v.id_viaje AS Id,
-        v.fecha_alta AS Inicio,
-        v.estado AS estado,
-        u.nombre_usuario AS Conductor,
-        km_por_viaje.km AS km,
-        pasajeros_por_viaje.pasajeros as pasajeros,
-        ROUND(v.Precio,2) as Precio
-    FROM
-		VIAJE v INNER JOIN
-			(SELECT
-				v.id_viaje, ROUND(SUM(lv.kms_a_localidad_siguiente),1) as km
-			FROM
-				VIAJE v INNER JOIN LOCALIDAD_VIAJE lv
-			ON lv.id_viaje=v.id_viaje group by v.id_viaje) AS km_por_viaje
-		ON v.id_viaje = km_por_viaje.id_viaje
-		INNER JOIN USUARIO u  ON u.id_usuario = v.id_cliente
-        INNER JOIN
-			(SELECT
-				v.id_viaje, COALESCE(SUM(pv.nro_asientos),0) AS pasajeros
-			FROM
-				VIAJE v LEFT JOIN PASAJERO_VIAJE pv
-			ON pv.id_viaje=v.id_viaje GROUP BY v.id_viaje) AS pasajeros_por_viaje
-		ON v.id_viaje = pasajeros_por_viaje.id_viaje) AS reporte
-INNER JOIN ESTADO_VIAJE e ON reporte.estado = e.id_estado_viaje
-WHERE (Id >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
-            and (Id <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
-            and (Inicio >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
-            and (Inicio <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
-            and (LOWER(Conductor) = LOWER("$P!{conductor}") or "$P!{conductor}" = "")
-            and (reporte.estado LIKE "$P!{estado}%")
-            and (km >= $P!{km_desde} or $P!{km_desde} is null)
-            and (km <= $P!{km_hasta} or $P!{km_hasta} is null)
-            and (pasajeros >= $P!{pasajeros_desde} or $P!{pasajeros_desde} is null)
-            and (pasajeros <= $P!{pasajeros_hasta} or $P!{pasajeros_hasta} is null)
-            and (Precio >= $P!{precio_desde} or $P!{precio_desde} is null)
-            and (Precio <= $P!{precio_hasta} or $P!{precio_hasta} is null)
- ORDER BY Id;]]>
+		<![CDATA[SELECT	Id,Inicio,Conductor, ViajesPorConductor, e.nombre_estado AS estado,km,pasajeros,precio, TotalFilas,FechaViaje, ViajesPorDia
+					FROM
+                      
+                                         (Select count(*) as TotalFilas
+											From viaje v inner join usuario u on v.id_cliente = u.id_usuario
+											INNER JOIN ESTADO_VIAJE e ON v.estado = e.id_estado_viaje
+											
+										) as TotalFilas
+					    JOIN (SELECT
+					        v.id_viaje AS Id,
+					        v.fecha_inicio AS Inicio,
+					        v.estado AS estado,
+					        u.nombre_usuario AS Conductor,
+					        km_por_viaje.km AS km,
+					        pasajeros_por_viaje.pasajeros as pasajeros,
+					        ROUND(v.Precio,2) as Precio 
+					    FROM
+							VIAJE v 
+							INNER JOIN
+								(SELECT
+									v.id_viaje, ROUND(SUM(lv.kms_a_localidad_siguiente),1) as km
+									FROM
+										VIAJE v 
+										INNER JOIN LOCALIDAD_VIAJE lv
+										ON lv.id_viaje=v.id_viaje group by v.id_viaje) AS km_por_viaje
+										ON v.id_viaje = km_por_viaje.id_viaje
+										INNER JOIN USUARIO u  ON u.id_usuario = v.id_cliente
+					       				INNER JOIN
+										(SELECT v.id_viaje, COALESCE(SUM(pv.nro_asientos),0) AS pasajeros
+											FROM
+											VIAJE v LEFT JOIN PASAJERO_VIAJE pv
+											ON pv.id_viaje=v.id_viaje GROUP BY v.id_viaje) AS pasajeros_por_viaje
+											ON v.id_viaje = pasajeros_por_viaje.id_viaje) AS reporte
+										INNER JOIN ESTADO_VIAJE e ON reporte.estado = e.id_estado_viaje
+										   
+										
+                                        INNER JOIN 
+                                         (Select count(v.id_viaje) as ViajesPorConductor, u.nombre_usuario as Cond
+											From viaje v inner join usuario u on u.id_usuario = v.id_cliente  
+											 
+											group by u.nombre_usuario) as ViajesPorConductor
+                                           on ViajesPorConductor.Cond = reporte.Conductor 
+                                          			
+ 										inner join (
+									Select count(*) as ViajesPorDia, date(v.fecha_inicio) as FechaViaje
+                                    from viaje v
+                                    group by date(v.fecha_inicio)
+                                ) as CantViajesPorDia
+                                on date(CantViajesPorDia.FechaViaje) = date(Reporte.Inicio)
+ 								
+ 								WHERE (Id >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
+					            and (Id <= $P!{id_viaje_hasta} or $P!{id_viaje_hasta} is null)
+					            and (Inicio >= "$P!{fecha_desde}"  or "$P!{fecha_desde}" = "null")
+					            and (Inicio <= "$P!{fecha_hasta}" or "$P!{fecha_hasta}" = "null")
+					            and (LOWER(Conductor) = LOWER("$P!{conductor}") or "$P!{conductor}" = "")
+					            and (e.nombre_estado LIKE "$P!{estado}%")
+					            and (km >= $P!{km_desde} or $P!{km_desde} is null)
+					            and (km <= $P!{km_hasta} or $P!{km_hasta} is null)
+					            and (pasajeros >= $P!{pasajeros_desde} or $P!{pasajeros_desde} is null)
+					            and (pasajeros <= $P!{pasajeros_hasta} or $P!{pasajeros_hasta} is null)
+					            and (Precio >= $P!{precio_desde} or $P!{precio_desde} is null)
+					            and (Precio <= $P!{precio_hasta} or $P!{precio_hasta} is null)
+ 
+ 	order by ID
+ ;]]>
 	</queryString>
 	<field name="Id" class="java.lang.Integer"/>
 	<field name="Conductor" class="java.lang.String"/>
@@ -91,6 +122,13 @@ WHERE (Id >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
 	<field name="Precio" class="java.lang.Float">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
+	<field name="ViajesPorConductor" class="java.lang.Integer"/>
+	<field name="TotalFilas" class="java.lang.Integer"/>
+	<field name="ViajesPorDia" class="java.lang.Integer"/>
+	<field name="FechaViaje" class="java.sql.Date"/>
+	<variable name="TotalFilas" class="java.lang.Integer" calculation="Count">
+		<variableExpression><![CDATA[$F{Id}]]></variableExpression>
+	</variable>
 	<background>
 		<band/>
 	</background>
@@ -124,54 +162,55 @@ WHERE (Id >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
 	</pageHeader>
 	<columnHeader>
 		<band height="21">
+			<printWhenExpression><![CDATA[($F{TotalFilas}-1>$V{TotalFilas})]]></printWhenExpression>
 			<line>
 				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="c4c9d032-a536-4637-8484-34fb85641e4b"/>
 			</line>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="0" width="42" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="02b3ee9e-e7e0-4a71-ae53-e4096afd0e7b"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Id]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="42" y="0" width="96" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="dd728929-eeb2-4109-b505-b6d904d85f39"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Conductor]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="138" y="0" width="116" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="b7b30564-bb44-4aad-990b-34b4070a190b"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha alta]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="254" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="324749d6-d99a-4443-bd3d-2558df9ad4a1"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="333" y="0" width="64" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="0f098766-a014-4623-9346-0aaf4bf4fbaa"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[KMs]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="397" y="0" width="92" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="09b153ea-a7a2-4355-bd7e-d453997bf525"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[N° pasajeros postulados]]></text>
 			</staticText>
 			<staticText>
 				<reportElement mode="Opaque" x="489" y="0" width="64" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="ed764c17-5f30-4258-b4f0-ebca5e378be6"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Precio]]></text>
@@ -180,6 +219,8 @@ WHERE (Id >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
 	</columnHeader>
 	<detail>
 		<band height="20">
+			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.HorizontalRowLayout"/>
+			<printWhenExpression><![CDATA[$V{TotalFilas}<$F{TotalFilas}]]></printWhenExpression>
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="e64e2923-13ad-4c57-a307-5b0922d555a1"/>
 			</line>
@@ -238,23 +279,150 @@ WHERE (Id >= $P!{id_viaje_desde} or $P!{id_viaje_desde} is null)
 		<band/>
 	</columnFooter>
 	<pageFooter>
-		<band height="17">
+		<band height="41">
 			<textField>
-				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="42f3ae91-3992-4ef5-872d-3523748255c2"/>
+				<reportElement mode="Opaque" x="0" y="20" width="515" height="13" backcolor="#E6E6E6" uuid="42f3ae91-3992-4ef5-872d-3523748255c2"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="6f347660-3cec-4a65-878c-82ddb177d881"/>
+				<reportElement mode="Opaque" x="515" y="20" width="40" height="13" backcolor="#E6E6E6" uuid="6f347660-3cec-4a65-878c-82ddb177d881"/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
-				<reportElement x="0" y="4" width="100" height="13" uuid="e1fc72bc-d876-4f22-8430-b723b6228149"/>
+				<reportElement x="0" y="20" width="100" height="13" uuid="e1fc72bc-d876-4f22-8430-b723b6228149"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="3" width="100" height="30" uuid="098d9844-01e1-4430-94a6-68ee7c6c0e1d"/>
+				<textFieldExpression><![CDATA[$F{TotalFilas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="163" y="8" width="100" height="30" uuid="7ab33301-3162-4507-9781-a094bf6e4b90"/>
+				<textFieldExpression><![CDATA[$V{TotalFilas}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="301" y="8" width="100" height="30" uuid="bbd8f7bb-caea-423e-8226-ea3b4675b48a"/>
+				<textFieldExpression><![CDATA[$F{Id}.toString()]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>
+	<lastPageFooter>
+		<band height="648">
+			<barChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="-2" y="330" width="556" height="281" uuid="125886ef-c763-402a-8b70-64831dac2063"/>
+					<chartTitle>
+						<font size="16"/>
+						<titleExpression><![CDATA["Cantidad de Viajes por Día"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{FechaViaje}]]></seriesExpression>
+						<categoryExpression><![CDATA[""]]></categoryExpression>
+						<valueExpression><![CDATA[$F{ViajesPorDia}]]></valueExpression>
+						<labelExpression><![CDATA[ $F{FechaViaje}.toString()]]></labelExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot isShowLabels="true">
+					<plot orientation="Horizontal"/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<barChart>
+				<chart isShowLegend="false" evaluationTime="Report">
+					<reportElement x="0" y="20" width="555" height="280" uuid="df8d1473-e88e-453a-9144-fb6f341bd7cf"/>
+					<chartTitle>
+						<font size="16"/>
+						<titleExpression><![CDATA["Cantidad de Km por viaje"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<categorySeries>
+						<seriesExpression><![CDATA[$F{Id}]]></seriesExpression>
+						<categoryExpression><![CDATA[""]]></categoryExpression>
+						<valueExpression><![CDATA[$F{km}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot>
+						<seriesColor seriesOrder="0" color="#10F4BC"/>
+						<seriesColor seriesOrder="1" color="#3A42D2"/>
+						<seriesColor seriesOrder="2" color="#D78B46"/>
+						<seriesColor seriesOrder="3" color="#D7A3BE"/>
+						<seriesColor seriesOrder="4" color="#46AB72"/>
+						<seriesColor seriesOrder="5" color="#860948"/>
+						<seriesColor seriesOrder="6" color="#2C87C9"/>
+						<seriesColor seriesOrder="7" color="#4F1BFA"/>
+						<seriesColor seriesOrder="8" color="#3FE531"/>
+						<seriesColor seriesOrder="9" color="#6DB251"/>
+						<seriesColor seriesOrder="10" color="#5ECA2E"/>
+						<seriesColor seriesOrder="11" color="#2662EE"/>
+						<seriesColor seriesOrder="12" color="#EBA94C"/>
+						<seriesColor seriesOrder="13" color="#DB6128"/>
+						<seriesColor seriesOrder="14" color="#BA4485"/>
+						<seriesColor seriesOrder="15" color="#5DB295"/>
+						<seriesColor seriesOrder="16" color="#2AC600"/>
+						<seriesColor seriesOrder="17" color="#C49596"/>
+						<seriesColor seriesOrder="18" color="#A731C0"/>
+						<seriesColor seriesOrder="19" color="#575FA0"/>
+						<seriesColor seriesOrder="20" color="#26B483"/>
+						<seriesColor seriesOrder="21" color="#E640BE"/>
+						<seriesColor seriesOrder="22" color="#6B1C65"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisLabelExpression><![CDATA["Viajes"]]></categoryAxisLabelExpression>
+					<categoryAxisFormat>
+						<axisFormat verticalTickLabels="true">
+							<labelFont>
+								<font fontName="SansSerif"/>
+							</labelFont>
+						</axisFormat>
+					</categoryAxisFormat>
+					<valueAxisLabelExpression><![CDATA["Km"]]></valueAxisLabelExpression>
+					<valueAxisFormat>
+						<axisFormat verticalTickLabels="false"/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</lastPageFooter>
 	<summary>
-		<band/>
+		<band height="802">
+			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
+			<pieChart>
+				<chart evaluationTime="Report">
+					<reportElement x="-2" y="0" width="553" height="316" uuid="709c99a8-1186-46f8-88e8-a0b48b52fb06"/>
+					<chartTitle>
+						<font size="19"/>
+						<titleExpression><![CDATA["Conductores con más viajes - Top 5"]]></titleExpression>
+					</chartTitle>
+					<chartSubtitle>
+						<font fontName="SansSerif" size="11"/>
+						<subtitleExpression><![CDATA["Total de viajes: ".concat($F{TotalFilas}.toString())]]></subtitleExpression>
+					</chartSubtitle>
+					<chartLegend/>
+				</chart>
+				<pieDataset maxCount="5">
+					<keyExpression><![CDATA[$F{Conductor}]]></keyExpression>
+					<valueExpression><![CDATA[$F{ViajesPorConductor}]]></valueExpression>
+				</pieDataset>
+				<piePlot labelFormat="{2}" legendLabelFormat="{0}({1})">
+					<plot/>
+					<itemLabel/>
+				</piePlot>
+			</pieChart>
+		</band>
 	</summary>
 </jasperReport>
