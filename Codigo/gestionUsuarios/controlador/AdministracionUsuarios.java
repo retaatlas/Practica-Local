@@ -176,7 +176,7 @@ public class AdministracionUsuarios extends HttpServlet {
 		JSONArray usuarios;
 		JSONObject[] in;
 		Object id;
-
+                
 		in=dao.selectAllJSON(Usuario.class.getSimpleName());
 		usuarios = new JSONArray ();
 		if(in != null) {

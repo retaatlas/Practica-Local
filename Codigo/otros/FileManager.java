@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.sql.Timestamp;
 import java.util.Base64;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -79,7 +80,11 @@ public class FileManager {
 		createDirectory(pathReal,directorioReportes);
 		
 		// Seteo pdf con nombre generado, formato y el path relativo
-		String imgName = generateFileName();
+		//String imgName = generateFileName();
+                String imgName = (new Timestamp((new java.util.Date()).getTime())).toString();
+                imgName = imgName.replace('.', '-');
+                imgName = imgName.replace(' ', '_');
+                imgName = imgName.replace(':', '-');
 		String imgFormat = ".pdf";
 		String pathRelativo = directorioReportes+imgName+imgFormat;
 		if (generarPdf(jasperPrint,pathReal+pathRelativo)){

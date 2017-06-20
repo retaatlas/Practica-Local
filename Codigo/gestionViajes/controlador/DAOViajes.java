@@ -889,7 +889,7 @@ public class DAOViajes extends DataAccesObject {
 
 	//by pablo
 	public synchronized boolean actualizarEstadoViaje(Integer id_viaje) {
-
+                //this.cerrarConexiones();
 		boolean actualizado = false;
 		Viaje viaje= (Viaje) this.buscarPorPrimaryKey(new Viaje(), id_viaje);
 
@@ -909,8 +909,10 @@ public class DAOViajes extends DataAccesObject {
 			notificacion.setCliente(viaje.getConductor());
 			notificacion.setEstado(EstadoNotificacion.no_leido);
 			notificacion.setFecha(viaje.getFecha_inicio()); 
-			notificacion.setTexto ("Ha llegado el momento de iniciar tu viaje <<" + viaje.getNombre_amigable() + ">> con destino a " + viaje.getDestino().getNombre());
+			notificacion.setTexto ("Ha llegado el momento de iniciar tu viaje <<" + viaje.getNombre_amigable() + ">> con destino a " + viaje.getDestino().getNombre()+ " en el que eres el conductor");
 			notificacion.setLink ("/detalle_viaje.html?id=" + viaje.getId_viaje());
+                        DAONotificaciones daonotif = DAONotificaciones.getInstance();                              
+                                daonotif.enviarNotificacionPorMail(notificacion);
 			this.entitymanager.persist(notificacion);
 			List<PasajeroViaje> pasajeros = viaje.getPasajeros();
 			for(PasajeroViaje pasajero: pasajeros) {
@@ -921,8 +923,7 @@ public class DAOViajes extends DataAccesObject {
 					notificacion.setFecha(new Timestamp((new java.util.Date()).getTime())); 
 					notificacion.setTexto ("Ha llegado la hora de inicio del viaje <<" + viaje.getNombre_amigable() + ">> con destino a " + viaje.getDestino().getNombre() + " en el cual esta inscripto como pasajero");
 					notificacion.setLink ("/detalle_viaje.html?id=" + viaje.getId_viaje());
-					this.entitymanager.persist(notificacion);
-                                        DAONotificaciones daonotif = DAONotificaciones.getInstance();
+					this.entitymanager.persist(notificacion);                                        
                                         daonotif.enviarNotificacionPorMail(notificacion);
 				}
 			}
