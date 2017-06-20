@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.2.2.final using JasperReports Library version 6.2.2  -->
-<!-- 2017-06-11T22:15:53 -->
+<!-- 2017-06-19T22:56:55 -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="vc_reporte_comisiones" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="cd66dfab-c34f-4963-b1db-d95541e77117">
 	<property name="net.sf.jasperreports.chart.pie.ignore.duplicated.key" value="true"/>
 	<property name="ireport.zoom" value="1.0"/>
@@ -658,14 +658,6 @@
 				<reportElement x="0" y="27" width="100" height="13" uuid="5e9caf39-4d21-4c6a-b5f9-1f7d1d0ad4f0"/>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="26" y="5" width="154" height="30" uuid="fb416597-6b45-471d-93ef-45e4c1223086"/>
-				<textFieldExpression><![CDATA[$V{TotalFilas}.toString()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="201" y="0" width="139" height="30" uuid="db5631a1-ee36-4eab-9928-07a7233e1721"/>
-				<textFieldExpression><![CDATA[$F{TotalFilas}.toString()]]></textFieldExpression>
-			</textField>
 		</band>
 	</pageFooter>
 	<lastPageFooter>
@@ -699,7 +691,4 @@
 			</staticText>
 		</band>
 	</lastPageFooter>
-	<summary>
-		<band height="691"/>
-	</summary>
 </jasperReport>
